@@ -12,23 +12,27 @@ import os.path
 import xml.etree.ElementTree as ET
 import sys
 
-#------------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
 # mpfs_configuration_generator.py version
+# 0.3.4 fixed comment formatting bug in hw_memory.h generation
+# 0.3.3 updated copyright format
 # 0.3.2 removed leading zeros from decimal values ( clock rates)
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def get_script_ver():
     '''
     This changes anytime anytime the mpfs_configuration_generator.py script
-    changes. This does not nessesary mean the xml format has been updated in
+    changes. This does not necessarily mean the xml format has been updated in
     get_xml_ver()
     :return: script version
     '''
-    return "0.3.2"
+    return "0.5.1"
 
-#------------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
 # xml description version
 #
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def get_xml_ver():
     '''
     version 0.2.9  Added regs SUBBLK_CLOCK_CR, SOFT_RESET_CR, GPIO_CR, USB_CR,
@@ -40,24 +44,26 @@ def get_xml_ver():
     '''
     return "0.3.1"
 
-#------------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
 # xml file to parse
 # Also an xml files listing tags used for reference
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 reference_xml_file = \
     ('hardware_des_xml,src_example,mpfs_hw_ref_defaults.xml,default',
      'hardware_des_xml,src_example,mpfs_hw_ref_ddr3_100Mhz_ext_clk.xml,ddr3_100Mhz_ref')
 
 xml_tag_file = 'hardware_des_xml,src_example,mpfs_hw_tag_reference.xml'
 
-#------------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
 # xml tags, the structure here should follow the readme.md description
 # contained in the root folder for tags
 # Please note: The tag in the first column ( mss_xxx) is the same as the
-# directory name (/hardware/mss_xxx)
+# directory name (/soc_config/mss_xxx)
 # the fourth item lets program know how to format info in header file
 # the six item lets program know how to format value, decimal or hex
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 xml_tags = ('mss_memory_map,map,mem_elements,fm_define,none,hex',
             'mss_memory_map,apb_split,registers,fm_struct,none,hex',
             'mss_memory_map,cache,registers,fm_struct,none,hex',
@@ -94,59 +100,62 @@ xml_tags = ('mss_memory_map,map,mem_elements,fm_define,none,hex',
             'mss_clocks,sgmii_cfm,registers,fm_reg,SGMII_,hex',
             'mss_general,mss_peripherals,registers,fm_reg,none,hex',)
 
-#------------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
 #  Header files to generate
-#------------------------------------------------------------------------------
-header_files = ('hardware,memory_map,hw_memory.h',
-                'hardware,memory_map,hw_apb_split.h',
-                'hardware,memory_map,hw_cache.h',
-                'hardware,memory_map,hw_pmp_hart0.h',
-                'hardware,memory_map,hw_pmp_hart1.h',
-                'hardware,memory_map,hw_pmp_hart2.h',
-                'hardware,memory_map,hw_pmp_hart3.h',
-                'hardware,memory_map,hw_pmp_hart4.h',
-                'hardware,memory_map,hw_mpu_fic0.h',
-                'hardware,memory_map,hw_mpu_fic1.h',
-                'hardware,memory_map,hw_mpu_fic2.h',
-                'hardware,memory_map,hw_mpu_crypto.h',
-                'hardware,memory_map,hw_mpu_gem0.h',
-                'hardware,memory_map,hw_mpu_gem1.h',
-                'hardware,memory_map,hw_mpu_usb.h',
-                'hardware,memory_map,hw_mpu_mmc.h',
-                'hardware,memory_map,hw_mpu_scb.h',
-                'hardware,memory_map,hw_mpu_trace.h',
-                'hardware,io,hw_mssio_mux.h',
-                'hardware,io,hw_hsio_mux.h',
-                'hardware,sgmii,hw_sgmii_tip.h',
-                'hardware,ddr,hw_ddr_options.h',
-                'hardware,ddr,hw_ddr_io_bank.h',
-                'hardware,ddr,hw_ddr_mode.h',
-                'hardware,ddr,hw_ddr_off_mode.h',
-                'hardware,ddr,hw_ddr_segs.h',
-                'hardware,ddr,hw_ddrc.h',
-                'hardware,clocks,hw_mss_clks.h',
-                'hardware,clocks,hw_clk_sysreg.h',
-                'hardware,clocks,hw_clk_mss_pll.h',
-                'hardware,clocks,hw_clk_sgmii_pll.h',
-                'hardware,clocks,hw_clk_ddr_pll.h',
-                'hardware,clocks,hw_clk_mss_cfm.h',
-                'hardware,clocks,hw_clk_sgmii_cfm.h',
-                'hardware,general,hw_gen_peripherals.h')
+# -----------------------------------------------------------------------------
+header_files = ('soc_config,memory_map,hw_memory.h',
+                'soc_config,memory_map,hw_apb_split.h',
+                'soc_config,memory_map,hw_cache.h',
+                'soc_config,memory_map,hw_pmp_hart0.h',
+                'soc_config,memory_map,hw_pmp_hart1.h',
+                'soc_config,memory_map,hw_pmp_hart2.h',
+                'soc_config,memory_map,hw_pmp_hart3.h',
+                'soc_config,memory_map,hw_pmp_hart4.h',
+                'soc_config,memory_map,hw_mpu_fic0.h',
+                'soc_config,memory_map,hw_mpu_fic1.h',
+                'soc_config,memory_map,hw_mpu_fic2.h',
+                'soc_config,memory_map,hw_mpu_crypto.h',
+                'soc_config,memory_map,hw_mpu_gem0.h',
+                'soc_config,memory_map,hw_mpu_gem1.h',
+                'soc_config,memory_map,hw_mpu_usb.h',
+                'soc_config,memory_map,hw_mpu_mmc.h',
+                'soc_config,memory_map,hw_mpu_scb.h',
+                'soc_config,memory_map,hw_mpu_trace.h',
+                'soc_config,io,hw_mssio_mux.h',
+                'soc_config,io,hw_hsio_mux.h',
+                'soc_config,sgmii,hw_sgmii_tip.h',
+                'soc_config,ddr,hw_ddr_options.h',
+                'soc_config,ddr,hw_ddr_io_bank.h',
+                'soc_config,ddr,hw_ddr_mode.h',
+                'soc_config,ddr,hw_ddr_off_mode.h',
+                'soc_config,ddr,hw_ddr_segs.h',
+                'soc_config,ddr,hw_ddrc.h',
+                'soc_config,clocks,hw_mss_clks.h',
+                'soc_config,clocks,hw_clk_sysreg.h',
+                'soc_config,clocks,hw_clk_mss_pll.h',
+                'soc_config,clocks,hw_clk_sgmii_pll.h',
+                'soc_config,clocks,hw_clk_ddr_pll.h',
+                'soc_config,clocks,hw_clk_mss_cfm.h',
+                'soc_config,clocks,hw_clk_sgmii_cfm.h',
+                'soc_config,general,hw_gen_peripherals.h')
 
 MAX_LINE_WIDTH = 80
 
-#------------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
 # Read the xml file into ET
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def read_xml_file(s):
     file_dir = os.path.join(*s)
     tree = ET.parse(file_dir.strip())
     root = tree.getroot()  # type: object
     return root
 
-#------------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
 #  Routine to make a folder
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def safe_make_folder(i):
     '''Makes a folder (and its parents) if not present'''
     try:
@@ -154,22 +163,24 @@ def safe_make_folder(i):
     except:
         pass
 
-#------------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
 # Create the directory structure
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def create_hw_dir_struct(root_folder, TOP):
     '''Creates directory structure off root, subdirectories passed in a tupple'''
     for folder in TOP:
         safe_make_folder(root_folder + '/' + folder)
 
-#------------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
 #  Generate the copyright notice at the top of the header file
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def WriteCopyright(root, theFile, filename, creator):
     '''
     generate copyright notice based on the following:
     #/*******************************************************************************
-    # * Copyright 2019 Microchip Corporation.
+    # * Copyright 2019-2020 Microchip FPGA Embedded Systems Solutions.
     # *
     # * SPDX-License-Identifier: MIT
     # *
@@ -184,7 +195,7 @@ def WriteCopyright(root, theFile, filename, creator):
     '''
     theFile.write('/**********************************************************'
                   '*********************\n')
-    theFile.write(" * Copyright " + str(datetime.datetime.now().year) + " Microchip Corporation.\n")
+    theFile.write(" * Copyright 2019-" + str(datetime.datetime.now().year) + " Microchip FPGA Embedded Systems Solutions.\n")
     theFile.write(' * \n')
     theFile.write(' * SPDX-License-Identifier: MIT\n')
     theFile.write(' * \n')
@@ -220,38 +231,43 @@ def WriteCopyright(root, theFile, filename, creator):
         theFile.write(' * ' + string + "\n")
     theFile.write(' *\n */ \n')
 
-#------------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
 #  the header start define
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def start_define(theFile, filename):
     filename = filename[:-2]  # remove .h from file name
     theFile.write('\n#ifndef ' + filename.upper() + '_H_')
     theFile.write('\n#define ' + filename.upper() + '_H_\n\n')
 
-#------------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
 #  start c plus define
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def start_cplus(theFile, filename):
     theFile.write('\n#ifdef __cplusplus\n')
     theFile.write('extern ' + ' \"C\"' + ' {\n')
     theFile.write('#endif\n\n')
 
-#------------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
 #  end define associated with header start define
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def end_define(theFile, filename):
     filename = filename[:-2]  # remove .h from file name
     theFile.write('\n#endif /*' + ' #ifdef ' + filename.upper() + '_H_ */\n\n')
 
-#------------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
 #  end c++ define
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def end_cplus(theFile, filename):
     theFile.write('\n#ifdef __cplusplus\n}\n#endif\n\n')
 
-#------------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
 #  write line, break into chunks
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def write_line(headerFile , reg_description):
     ''' write line, break into chunks '''
     word_list = reg_description.split()  # list of words
@@ -266,9 +282,10 @@ def write_line(headerFile , reg_description):
     if len(sentence) > 0:
         headerFile.write(sentence + '\n')
 
-#------------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
 # Iterate through registers and produce header file output
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def generate_register(headerFile, registers, tags):
     '''
     Parse registers tag for register tags and print to header file
@@ -337,10 +354,11 @@ def generate_register(headerFile, registers, tags):
             headerFile.write(field_list[x])
         headerFile.write('#endif\n')
 
-#------------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
 # Iterate through tag mem_elements looking for mem elements produce header file
 # output
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def generate_mem_elements(headerFile, mem_elements, tags):
     '''
     Parse registers tag for mem tags and print to header file
@@ -370,7 +388,7 @@ def generate_mem_elements(headerFile, mem_elements, tags):
         if len(s1) >= name_size_gap:
             name_size_gap = len(s1) + 4
         # create the strings for writing
-        s = s.ljust(name_gap, ' ') + mem_value +  ' */ \n'
+        s = s.ljust(name_gap, ' ') + mem_value +  '\n'
         reg_description = '/*' + description + ' */ \n'
         s1 = s1.ljust(name_size_gap, ' ') + mem_size \
              + '    /* Length of memory block*/ \n'
@@ -379,9 +397,11 @@ def generate_mem_elements(headerFile, mem_elements, tags):
         headerFile.write(s)
         headerFile.write(s1)
         headerFile.write('#endif\n')
-#------------------------------------------------------------------------------
+
+
+# -----------------------------------------------------------------------------
 # generate a header file
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def generate_header( file, real_root, root, file_name, tags):
     creator = "Microchip-FPGA Embedded Systems Solutions"
     with open(file, 'w+') as headerFile:
@@ -400,9 +420,10 @@ def generate_header( file, real_root, root, file_name, tags):
         end_cplus(headerFile, file_name)
         end_define(headerFile, file_name)
 
-#------------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
 #
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def generate_reference_header_file(ref_header_file, root, header_files):
     creator = "Embedded Software"
     # itemName ="io_mux configuration"
@@ -418,7 +439,7 @@ def generate_reference_header_file(ref_header_file, root, header_files):
         index = 0
         for child in header_files:
             c = header_files[index].split(',')
-            c.remove('hardware')
+            c.remove('soc_config')
             # include_file = os.path.join(*c)
             # as we need formatting correct for linux and windows
             include_file = c[0] + '/' + c[1]
@@ -433,9 +454,10 @@ def generate_reference_header_file(ref_header_file, root, header_files):
         end_cplus(headerFile, file_name)
         end_define(headerFile, file_name)
 
-#------------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
 #  Generate all the header files, passed in output_header_files
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def generate_header_files(output_header_files, input_xml_file, input_xml_tags):
     # read in an xml file
     s = input_xml_file.split(',')
@@ -464,52 +486,115 @@ def generate_header_files(output_header_files, input_xml_file, input_xml_tags):
     '''
     generate a header which references all the generated headers
     '''
-    file_name = 'hardware,hw_platform.h'
+    file_name = 'soc_config,hw_platform.h'
     generate_reference_header_file(file_name, root, output_header_files)
 
 
+# -----------------------------------------------------------------------------
+# Return absolute path created from working directory location and relative
+# path passed as argument. Handles path to an XML file and path to a folder.
+# -----------------------------------------------------------------------------
+def get_full_path(in_path):
+    cwd = os.getcwd()
+    filename = ''
+    if in_path.endswith('.xml'):
+        path_comp = in_path.split('/')
+        last = len(path_comp) - 1
+        filename = path_comp[last]
+        in_path = in_path.replace(filename, '')
+    else:
+        dir_entries = os.listdir(in_path)
+        for dir_entry in dir_entries:
+            if dir_entry.endswith('.xml'):
+                filename = dir_entry
+            else:
+                if dir_entry.endswith('_mss_cfg.xml'):
+                    filename = dir_entry
+                    break
 
-#------------------------------------------------------------------------------
+    try:
+        os.chdir(in_path)
+        full_path = os.getcwd()
+    except IOError:
+        sys.exit()
+
+    os.chdir(cwd)
+    full_path = full_path + '/' + filename
+    return full_path
+
+
+# -----------------------------------------------------------------------------
+# Check if the source XML file is more recent than the already generated
+# SoC configuration. Used to avoid regenerating the configuration and hence
+# forcing a rebuild of software using the generated configuration files.
+# ----------------------------------------------------------------------------
+def is_xml_more_recent(xml_file_path, output_folder_name):
+    xml_timestamp = os.path.getmtime(xml_file_path)
+    for header_file_desc in header_files:
+        hfd = header_file_desc.split(',')
+        header_path = os.path.join(output_folder_name, *hfd)
+        try:
+            header_timestamp = os.path.getmtime(header_path)
+            if header_timestamp < xml_timestamp:
+                return True
+        except FileNotFoundError:
+            return True
+
+    return False
+
+
+# -----------------------------------------------------------------------------
 # helper for showing help information
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def show_help():
-    print ('no of args you entered = ' + str(len(sys.argv)))
-    print ('pfsoc-baremetal-software-cfg-gen.py :')
+    print ('no of args you entered = ' + str(len(sys.argv) - 1))
+    print ('mpfs_configuration_generator.py :')
     print (' This program reads xml hardware definition, outputs: header files')
     print \
-        ('Usage: py -3 pfsoc-baremetal-software-cfg-gen.py [xml file name] ')
-    input('Please run again with correct argments')
+        (' Usage: python3 mpfs_configuration_generator.py [xml file name] [output folder location] ')
+    input(' Please run again with correct arguments')
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #    main function
 #    todo: add options from the command line
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def main():
     '''
-    Currently three command line arguments
+    Currently four command line arguments
     arg0: required- the xml file to be parsed. Only one used in normal flow.
-    arg1: Command parsed, if prent and equals 'generate_refernce_xml' creates
-        xml example file, If so, an eample xml is generated from .csv
+    arg1: name of the folder where the soc_config will be generated. This is optional unless arg2 and arg3 are required.
+    arg2: Command parsed, if prent and equals 'generate_reference_xml' creates
+        xml example file, If so, an example xml is generated from .csv
         definitions located in the reg_descriptions directory
-    arg2: Cmmand parsed, if present and equals 'debug_regs' outputs .csv with
+    arg3: Command parsed, if present and equals 'debug_regs' outputs .csv with
         all reg names.
     '''
+
     #
     #  check/parse  arguments
     #
-    if(len(sys.argv) < 2):
+    nb_arguments = len(sys.argv) - 1
+    if nb_arguments < 2:
         show_help()
+        sys.exit()
     fullCmdArguments = sys.argv
     # - further arguments
     argumentList = fullCmdArguments[1:]
     input_xml_file = argumentList[0]
+    input_xml_file = get_full_path(input_xml_file)
+
+    if nb_arguments >= 2:
+        output_folder_name = argumentList[1]
+        output_folder_name = get_full_path(output_folder_name)
+        os.chdir(output_folder_name)
+
     debug_reg_csv = False
-    if (len(sys.argv) >= 4):
-        if (argumentList[2] == 'debug_regs'):
+    if nb_arguments >= 4:
+        if argumentList[3] == 'debug_regs':
             debug_reg_csv = True
-    if (len(sys.argv) >= 3):
-        if (argumentList[1] == 'generate_refernce_xml'):
+    if nb_arguments >= 3:
+        if argumentList[2] == 'generate_refernce_xml':
             gen_xml = True
         else:
             gen_xml = False
@@ -517,38 +602,48 @@ def main():
     # Check version of python interpreter, helps debugging
     # Currently runs on python version 2 and 3
     #
-    print ('python interpreter details:',sys.version_info)
-    if (sys.version_info > (3, 0)):
+    #print ('python interpreter details:',sys.version_info)
+    #if sys.version_info > (3, 0):
         # Python 3 code in this block
-        print ('python interpreter running is version 3')
-    else:
+    #    print ('python interpreter running is version 3')
+    #else:
         # Python 2 code in this block
-        print ('python interpreter running is version 2')
+    #    print ('python interpreter running is version 2')
     #
     #  Create one xml file containing all xml information from .csv defines
     #  This is only used for internal testing. Not available for external use.
     #
-    if (len(sys.argv) >= 3):
+    if len(sys.argv) >= 4:
         if gen_xml == True:
             import generate_xml_from_csv
             generate_xml_from_csv.generate_full_xml_file(reference_xml_file, xml_tags , get_xml_ver())
-            #print('xml file created: ' + reference_xml_file.split(',')[-1])
+            # print('xml file created: ' + reference_xml_file.split(',')[-1])
     #
-    # Create directory structure for the header files
+    # Check if the XML file is more recent than the already existing soc_config directory content and only generate the
+    # soc_config folder content if the XML description is more recent.
     #
-    root_folder = 'hardware'
-    TOP = ['clocks', 'ddr', 'io', 'memory_map', 'sgmii', 'general']
-    create_hw_dir_struct(root_folder, TOP)
-    #
-    # Next, read in XML content and create header files
-    #
-    generate_header_files(header_files, input_xml_file, xml_tags)
-    print('output header files created in hardware/ directory')
+    root_folder = 'soc_config'
+    if is_xml_more_recent(input_xml_file, output_folder_name):
+        #
+        # Create directory structure for the header files
+        #
+        TOP = ['clocks', 'ddr', 'io', 'memory_map', 'sgmii', 'general']
+        create_hw_dir_struct(root_folder, TOP)
+        #
+        # Next, read in XML content and create header files
+        #
+        generate_header_files(header_files, input_xml_file, xml_tags)
+        print('Hardware configuration header files created in directory:', os.path.join(output_folder_name, 'soc_config'))
+    else:
+        print('The input XML configuration description is older than the existing generated configuration files.')
+        print('Touch/modify the XML configuration description file if you wish to force configuration header files regeneration.')
+
     #
     #  generate an xml example with tags - only for reference
     #
 #    generate_xml_from_csv.generate_xml_description_for_reference\
 #        (xml_tag_file, xml_tags)
+
 
 if __name__ == "__main__":
     main()
