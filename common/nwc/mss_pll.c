@@ -217,7 +217,7 @@ static void mss_mux_pre_mss_pll_config(void)
  * The mb() makes sure order of processing is not changed by the compiler
  ******************************************************************************/
 __attribute__((section(".ram_codetext"))) \
-        void mss_mux_post_mss_pll_config(void)
+        static void mss_mux_post_mss_pll_config(void)
 {
    /*
     * Modify the eNVM clock, so it now matches new MSS clock

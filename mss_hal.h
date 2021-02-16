@@ -66,7 +66,6 @@ typedef long            ssize_t;
 #include "common/nwc/mss_sgmii.h"
 #include "startup_gcc/system_startup.h"
 #include "common/nwc/mss_ddr_debug.h"
-#include "common/mss_low_power.h"
 #ifdef SIMULATION_TEST_FEEDBACK
 #include "nwc/simulation.h"
 #endif

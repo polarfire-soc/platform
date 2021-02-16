@@ -337,20 +337,6 @@ void sgmii_mux_config_via_scb(uint8_t option);
  */
 void pre_configure_sgmii_and_ddr_pll_via_scb(uint8_t option);
 
-
-/***************************************************************************//**
-  mss_mux_post_mss_pll_config()
-
-  @param
-
-  Example:
-  @code
-      mss_mux_post_mss_pll_config();
-
-  @endcode
-
- */
-void mss_mux_post_mss_pll_config(void);
 #ifdef __cplusplus
 }
 #endif
