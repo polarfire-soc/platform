@@ -54,9 +54,9 @@
 #endif
 
 #ifdef MICROCHIP_STDIO_THRU_MMUART0
-static mss_uart_instance_t * const gp_my_uart = &g_mss_uart0;
+static mss_uart_instance_t * const gp_my_uart = &g_mss_uart0_lo;
 #else
-static mss_uart_instance_t * const gp_my_uart = &g_mss_uart1;
+static mss_uart_instance_t * const gp_my_uart = &g_mss_uart1_lo;
 #endif
 
 /*------------------------------------------------------------------------------
