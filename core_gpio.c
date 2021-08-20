@@ -1,5 +1,5 @@
 /*******************************************************************************
- * (c) Copyright 2021 Microchip FPGA Embedded Systems Solutions.
+ * (c) Copyright 2008-2021 Microchip FPGA Embedded Systems Solutions.
  * 
  * @file core_gpio.c
  * @author Microchip FPGA Embedded Systems Solutions

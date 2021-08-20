@@ -1,5 +1,5 @@
 /*******************************************************************************
- * (c) Copyright 2021 Microchip FPGA Embedded Systems Solutions.
+ * (c) Copyright 2008-2021 Microchip FPGA Embedded Systems Solutions.
  * 
  * @file coregpio_regs.h
  * @author Microchip FPGA Embedded Systems Solutions
