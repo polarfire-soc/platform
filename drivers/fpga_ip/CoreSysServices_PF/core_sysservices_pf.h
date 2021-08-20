@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2019-2020 Microchip FPGA Embedded Systems Solutions.
+ * Copyright 2019-2021 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
@@ -23,9 +23,6 @@
  *
  * This file contains the application programming interface for the
  * CoreSysServices_PF bare metal driver.
- *
- * SVN $Revision$
- * SVN $Date$
  */
 /*=========================================================================*//**
   @mainpage CoreSysServices_PF Bare Metal Driver.
@@ -73,6 +70,7 @@
             Read Digests
             Query Security
             Read Debug Info
+            Read eNVM param
 
     Design services
             Bitstream authentication service
@@ -135,7 +133,7 @@
 #ifndef __CORE_SYSSERV_PF_H
 #define __CORE_SYSSERV_PF_H 1
 
-#include "cpu_types.h"
+#include "hal/cpu_types.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -148,32 +146,47 @@ extern "C" {
  * successfully. A non-zero return value indicates that the service was not 
  * executed successfully. For all the services, the return value represents the 
  * status code returned by the system controller for the respective service, 
- * except the values SYS_BUSY_AMBA, SYS_BUSY_NON_AMBA and SYS_PARAM_ERR. These 
- * three value indicate the error conditions detected by this driver and they 
- * do not overlap with the status code returned by the system controller for any 
- * of the system service.
+ * except the values SYS_PARAM_ERR, SS_USER_BUSY_TIMEOUT and SS_USER_RDVLD_TIMEOUT.
+ * These three value indicate the error conditions detected by this driver and
+ * they do not overlap with the status code returned by the system controller for
+ * any of the system service.
  */
 /*
-  SYS_SUCCESS
-    System service executed successfully.
-
-  SYS_BUSY_AMBA
-    CoreSysService_PF is busy executing system service which was initiated using
-    its AMBA interface.
-
-  SYS_BUSY_NON_AMBA
-    CoreSysService_PF is busy executing system service which was initiated using
-    its NON-AMBA interface.
-
-  SYS_PARAM_ERR
-    System service cannot be executed as one or more parameters are not as
-    expected by this driver.
+ * SYS_SUCCESS
+ *   System service executed successfully.
+ *
+ * SYS_PARAM_ERR
+ *      System service cannot be executed as one or more parameters are not as
+ *      expected by this driver. No read/write access will be performed with the
+ *      IP.
+ *
+ * SS_USER_BUSY_TIMEOUT
+ *      The System service request was initiated and the driver timed-out while
+ *      waiting for the system service to complete. The System Service
+ *      completion is indicated by de-assertion of the SS_USER_BUSY bit by the
+ *      IP.
+ * 
+ * SS_USER_RDVLD_TIMEOUT
+ *      The System service request was initiated and the driver timed-out while
+ *      waiting for SS_USER_RDVLD bit, which indicates availability of data to
+ *      be read from the mailbox, to become active.
 */
 #define SYS_SUCCESS                                     0u
-#define SYS_BUSY_AMBA                                   0xEFu
-#define SYS_BUSY_NON_AMBA                               0xFEu
 #define SYS_PARAM_ERR                                   0xFFu
+#define SS_USER_BUSY_TIMEOUT                            0xFAu
+#define SS_USER_RDVLD_TIMEOUT                           0xFBu
 
+/*
+ * SS_TIMEOUT_COUNT 
+ *      The SS_TIMEOUT_COUNT  value will be used by the driver as a timeout count 
+ *      while waiting for either the SS_USER_BUSY or SS_USER_RDVLD. This empirical 
+ *      value is sufficiently large so that the operations will not falsely 
+ *      timeout in the normal circumstance. It is provided as a way to provide 
+ *      more debug information to the application in case there are some 
+ *      unforeseen issues. You may change this value for your need based on your 
+ *      system design.
+ */
+#define SS_TIMEOUT_COUNT                                40000u
 /*
   SYS_DCF_DEVICE_MISMATCH
     Public key or FSN do not match device
@@ -512,6 +525,13 @@ extern "C" {
 
 #define USER_SECRET_KEY_LEN                             12u
 
+/* Same driver can be used on PolarFire SoC platform and the response length
+ * is different for PolarFire SoC. Constants defined below are used only when the
+ * PF System services driver is used with PolarFire SoC Platform.
+ */
+#define READ_DIGEST_MPFS_RESP_LEN                      576u
+#define QUERY_SECURITY_MPFS_RESP_LEN                   33u
+
 /* SNVM Input data length from sNVM write. */
 
 /* SNVMADDR + RESERVED + PT + USK */
@@ -581,7 +601,7 @@ extern "C" {
  * this driver. Currently this function is empty.
  *
  * @param base_addr  The base_addr parameter specifies the base address of the
-                     CoreSysServices_PF IP.
+                     PF_System_services core.
  *
  * @return      This function does not return a value.
  *
@@ -815,6 +835,43 @@ uint8_t SYS_read_debug_info
     uint16_t mb_offset
 );
 
+#ifdef CORESYSSERVICES_PFSOC
+/***************************************************************************//**
+ * The function SYS_read_envm_param() is used to retrieve all parameters needed 
+ * for eNVM operation and programming.
+ * 
+ * NOTE: This service is available only on PolarFire SoC Platform.
+ *       This service is not yet supported by PF_SYSTEM_SERVICES 3.0.100.
+ *
+ * @param p_envm_param  The p_envm_param parameter is a pointer to a buffer
+ *                      in which the data returned by G5CONTROL will be copied.
+ *                      This buffer will store all the eNVM parameters.
+ *
+ * @param mb_offset     The mb_offset parameter specifies the offset from
+ *                      the start of Mailbox where the data related to this service
+ *                      will be available. Note that all accesses to the mailbox
+ *                      are of word length(4 bytes). A Value '10' of this parameter
+ *                      would mean that the data access area for this service
+ *                      starts from 11th word (offset 10) in the Mailbox.
+ *
+ * @return              The SYS_read_envm_param service will return one of the 
+ *                      following status:
+ *                      
+ *                      STATUS                  Description
+ *                        0               SUCCESS
+ *                        1               Page digest mismatch. Parameter values 
+ *                                        still returned.
+ *
+ * Example:
+ * @code
+ * @endcode
+ */
+uint8_t SYS_read_envm_parameter
+(
+    uint8_t * p_envm_param,
+    uint16_t mb_offset
+);
+#endif
 /***************************************************************************//**
  * The function SYS_puf_emulation_service() is used to authenticating a device.
  *
@@ -1207,6 +1264,9 @@ uint8_t SYS_IAP_image_authenticate_service
  *              Below is the list of options. You can OR these options to indicate
  *              to perform digest check on multiple segments.
  *
+ *              Note: The options parameter will be of 2 bytes when used with PF
+ *              device and 4 bytes when used with PolarFire SoC device.
+ *
  *                  Options[i]      Description
  *                     0x01         Fabric digest
  *                     0x02         Fabric Configuration (CC) segment
@@ -1221,6 +1281,11 @@ uint8_t SYS_IAP_image_authenticate_service
  *                     0x400        UKDIGEST6 in User Key segment (UK2)
  *                     0x800        UFS Permanent lock (UPERM) segment
  *                     0x1000       Factory and Factory Key Segments.
+ *                     0x2000       UKDIGEST7 in User Key segment (HWM) (PFSoC)
+ *                     0x4000       ENVMDIGEST (PFSoC only)
+ *                     0x8000       UKDIGEST8 for MSS Boot Info (PFSoC only)
+ *                     0x10000      SNVM_RW_ACCESS_MAP Digest (PFSoC only)
+ *                     0x20000      SBIC revocation digest (PFSoC only)
  *
  * @param mb_offset    The mb_offset parameter specifies the offset from
  *                     the start of Mailbox where the data related to this service
