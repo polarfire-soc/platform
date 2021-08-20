@@ -1,16 +1,14 @@
 /*******************************************************************************
- * (c) Copyright 2019-2020 Microchip SoC Products Group. All rights reserved.
+ * (c) Copyright 2019-2021 Microchip SoC Products Group. All rights reserved.
  *
- * CoreSysService_pf driver implementation. See file "core_syservices_pf.h" for
+ * PF_System_Services driver implementation. See file "core_syservices_pf.h" for
  * description of the functions implemented in this file.
  *
- * SVN $Revision$
- * SVN $Date$
  */
-#include "hal.h"
+#include "hal/hal.h"
 #include "coresysservicespf_regs.h"
 #include "core_sysservices_pf.h"
-#include "hal_assert.h"
+#include "hal/hal_assert.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -55,10 +53,15 @@ SYS_get_serial_number
     uint16_t mb_offset
 )
 {
-    uint8_t status = 0xFFu;
+    uint8_t status = SYS_PARAM_ERR;
+
+    if (p_serial_number == NULL_BUFFER)
+    {
+        return status;
+    }
 
     status = execute_ss_command(SERIAL_NUMBER_REQUEST_CMD,
-                               ((uint8_t*)0),
+                               NULL_BUFFER,
                                0u,
                                p_serial_number,
                                SERIAL_NUMBER_RESP_LEN,
@@ -79,10 +82,15 @@ SYS_get_user_code
     uint16_t mb_offset
 )
 {
-    uint8_t status = 0xFFu;
+    uint8_t status = SYS_PARAM_ERR;
+
+    if(p_user_code  == NULL_BUFFER)
+    {
+        return status;
+    }
 
     status = execute_ss_command(USERCODE_REQUEST_CMD,
-                               (uint8_t* )0,
+                               NULL_BUFFER,
                                0u,
                                p_user_code,
                                USERCODE_RESP_LEN,
@@ -102,10 +110,15 @@ SYS_get_design_info
     uint16_t mb_offset
 )
 {
-    uint8_t status = 0xFFu;
+    uint8_t status = SYS_PARAM_ERR;
+
+    if(p_design_info  == NULL_BUFFER)
+    {
+        return status;
+    }
 
     status = execute_ss_command(DESIGN_INFO_REQUEST_CMD,
-                               (uint8_t* )0,
+                               NULL_BUFFER,
                                0u,
                                p_design_info,
                                DESIGN_INFO_RESP_LEN,
@@ -125,10 +138,15 @@ SYS_get_device_certificate
     uint16_t mb_offset
 )
 {
-    uint8_t status = 0xFFu;
+    uint8_t status = SYS_PARAM_ERR;
+
+    if(p_device_certificate  == NULL_BUFFER)
+    {
+        return status;
+    }
 
     status = execute_ss_command(DEVICE_CERTIFICATE_REQUEST_CMD,
-                                (uint8_t* )0,
+                                NULL_BUFFER,
                                 0u,
                                 p_device_certificate,
                                 DEVICE_CERTIFICATE_RESP_LEN,
@@ -147,16 +165,30 @@ uint8_t SYS_read_digest
    uint16_t mb_offset
 )
 {
-    uint8_t status = 0xFFu;
+    uint8_t status = SYS_PARAM_ERR;
 
+    if(p_digest  == NULL_BUFFER)
+    {
+        return status;
+    }
+
+#ifndef CORESYSSERVICES_MPFS
     status = execute_ss_command(READ_DIGEST_REQUEST_CMD,
-                               (uint8_t* )0,
+                               NULL_BUFFER,
                                0u,
                                p_digest,
                                READ_DIGEST_RESP_LEN,
                                mb_offset,
                                0u);
-
+#else
+    status = execute_ss_command(READ_DIGEST_REQUEST_CMD,
+                               NULL_BUFFER,
+                               0u,
+                               p_digest,
+                               READ_DIGEST_MPFS_RESP_LEN,
+                               mb_offset,
+                               0u);
+#endif
     return status;
 
 }
@@ -171,23 +203,49 @@ uint8_t SYS_query_security
     uint16_t mb_offset
 )
 {
-    uint8_t status = 0xFFu;
+    uint8_t status = SYS_PARAM_ERR;
     uint8_t idx = 0u;
-    uint8_t buf[12] = {0};
 
-    /* Actual QUERY_SECURITY_RESP_LEN is 9 but CoreSysService_PF IP needs number
-    of words instead of number of bytes to be written to or read from MailBox */
+    if(p_security_locks  == NULL_BUFFER)
+    {
+        return status;
+    }
+
+#ifndef CORESYSSERVICES_MPFS
+    uint8_t buf[12] = {0};
+    /* Actual QUERY_SECURITY_RESP_LEN is 9 or 33 but PF_System_Services core
+     * needs number of words instead of number of bytes to be written to or read
+     * from MailBox */
     status = execute_ss_command(QUERY_SECURITY_REQUEST_CMD,
-                               (uint8_t* )0,
+                               NULL_BUFFER,
                                0u,
                                buf,
                                (QUERY_SECURITY_RESP_LEN + 3u),
                                mb_offset,
                                0u);
-    for (idx=0u; idx<9u; idx++)
+
+    for (idx = 0u; idx < 9u; idx++)
     {
         *(p_security_locks+idx) = buf[idx];
     }
+
+#else
+    uint8_t buf[36] = {0};
+
+    status = execute_ss_command(QUERY_SECURITY_REQUEST_CMD,
+                               NULL_BUFFER,
+                               0u,
+                               buf,
+                               (QUERY_SECURITY_MPFS_RESP_LEN + 3u),
+                               mb_offset,
+                               0u);
+
+    for (idx = 0u; idx < 33u; idx++)
+    {
+        *(p_security_locks+idx) = buf[idx];
+    }
+
+#endif
 
     return status;
 }
@@ -202,11 +260,15 @@ uint8_t SYS_read_debug_info
     uint16_t mb_offset
 )
 {
+    uint8_t status = SYS_PARAM_ERR;
 
-    uint8_t status = 0xFFu;
+    if(p_debug_info  == NULL_BUFFER)
+    {
+        return status;
+    }
 
     status = execute_ss_command(READ_DEBUG_INFO_REQUEST_CMD,
-                               (uint8_t* )0,
+                               NULL_BUFFER,
                                0u,
                                p_debug_info,
                                READ_DEBUG_INFO_RESP_LEN,
@@ -215,18 +277,23 @@ uint8_t SYS_read_debug_info
     return status;
 }
 
+#ifdef CORESYSSERVICES_MPFS
 /***************************************************************************//**
- * SYS_read_envm_param()
+ * SYS_read_envm_parameter()
  * See "core_sysservices_pf.h" for details of how to use this function.
  */
-uint8_t SYS_read_envm_param
+uint8_t SYS_read_envm_parameter
 (
     uint8_t * p_envm_param,
     uint16_t mb_offset
 )
 {
-
     uint8_t status = SYS_PARAM_ERR;
+
+    if(p_envm_param  == NULL_BUFFER)
+    {
+        return status;
+    }
 
     status = execute_ss_command(READ_ENVM_PARAM_REQUEST_CMD,
                                NULL_BUFFER,
@@ -237,6 +304,8 @@ uint8_t SYS_read_envm_param
                                0);
     return status;
 }
+
+#endif
 
 /***************************************************************************//**
  * SYS_puf_emulation_service()
@@ -250,9 +319,14 @@ uint8_t SYS_puf_emulation_service
     uint16_t mb_offset
 )
 {
-    uint8_t status = 0x00u;
+    uint8_t status = SYS_PARAM_ERR;
     uint8_t mb_format[20] = {0x00};
     uint8_t index = 0u;
+
+    if((p_response  == NULL_BUFFER) || (p_challenge == NULL_BUFFER))
+    {
+        return status;
+    }
 
     /* Frame the data required for mailbox */
     mb_format[index] = op_type;
@@ -285,7 +359,12 @@ uint8_t SYS_digital_signature_service
     uint16_t mb_offset
 )
 {
-    uint8_t status = 0xFFu;
+    uint8_t status = SYS_PARAM_ERR;
+
+    if((p_hash  == NULL_BUFFER) || (p_response == NULL_BUFFER))
+    {
+        return status;
+    }
 
     if (format == DIGITAL_SIGNATURE_RAW_FORMAT_REQUEST_CMD)
     {
@@ -327,11 +406,24 @@ uint8_t SYS_secure_nvm_write
     uint8_t frame[256] = {0x00};
     uint8_t* p_frame = &frame[0];
     uint16_t index = 0u;
-    uint8_t status = 0u;
+    uint8_t status = SYS_PARAM_ERR;
 
     HAL_ASSERT(!(NULL_BUFFER == p_data));
     HAL_ASSERT(!(NULL_BUFFER == p_user_key));
     HAL_ASSERT(!(snvm_module >= 221u));
+
+    if((p_data  == NULL_BUFFER) || (p_user_key == NULL_BUFFER) 
+                                || (snvm_module >= 221))
+    {
+        return status;
+    }
+
+    if ((format != SNVM_NON_AUTHEN_TEXT_REQUEST_CMD) 
+       || (format != SNVM_AUTHEN_TEXT_REQUEST_CMD) 
+       || (format != SNVM_AUTHEN_CIPHERTEXT_REQUEST_CMD))
+    {
+        return status;
+    }
 
     *p_frame = snvm_module; /* SNVMADDR - SNVM module */
 
@@ -400,7 +492,7 @@ uint8_t SYS_secure_nvm_read
     /* Frame the message. */
     uint8_t frame[16] = {0x00u};
     uint8_t* p_frame = &frame[0u];
-    uint8_t status = 0u;
+    uint8_t status = SYS_PARAM_ERR;
     uint8_t response[256] = {0x00u};
     uint16_t index = 0u;
 
@@ -410,6 +502,13 @@ uint8_t SYS_secure_nvm_read
 
     HAL_ASSERT(data_len == 236u || data_len == 252u);
 
+    if((p_data  == NULL_BUFFER) ||
+       (snvm_module >= 221) ||
+       (p_admin == NULL_BUFFER))
+    {
+        return status;
+    }
+
     *p_frame = snvm_module; /* SNVMADDR - SNVM module */
 
     p_frame += 4u; /* RESERVED - For alignment */
@@ -417,9 +516,15 @@ uint8_t SYS_secure_nvm_read
     /* Copy user key */
     if (236u == data_len)
     {
+        HAL_ASSERT(p_user_key !=  NULL_BUFFER);
+
+        if(p_user_key ==  NULL_BUFFER)
+        {
+            return status;
+        }
+
         for (index = 0u; index < 12u; index++)
         {
-            HAL_ASSERT(p_user_key !=  NULL_BUFFER);
             *p_frame = p_user_key[index];
             p_frame++;
         }
@@ -469,10 +574,15 @@ uint8_t SYS_nonce_service
     uint16_t mb_offset
 )
 {
-    uint8_t status = 0xFFu;
+    uint8_t status = SYS_PARAM_ERR;
+
+    if((p_nonce  == NULL_BUFFER))
+    {
+        return status;
+    }
 
     status = execute_ss_command(NONCE_SERVICE_REQUEST_CMD,
-                               (uint8_t* )0,
+                               NULL_BUFFER,
                                0u,
                                p_nonce,
                                NONCE_SERVICE_RESP_LEN,
@@ -497,7 +607,7 @@ uint8_t SYS_bitstream_authenticate_service
     status = execute_ss_command(BITSTREAM_AUTHENTICATE_CMD,
                                 (uint8_t* )&l_spi_flash_address,
                                 4u,
-                                (uint8_t* )0,
+                                NULL_BUFFER,
                                 0u,
                                 mb_offset,
                                 0u);
@@ -518,10 +628,15 @@ uint8_t SYS_IAP_image_authenticate_service
 
     HAL_ASSERT(!(spi_idx == 1u));
 
+    if (spi_idx == 1u)
+    {
+        return status;
+    }
+
     status = execute_ss_command(IAP_BITSTREAM_AUTHENTICATE_CMD,
-                                (uint8_t*)0,
+                                NULL_BUFFER,
                                 0u,
-                                (uint8_t* )0,
+                                NULL_BUFFER,
                                 0u,
                                 spi_idx,
                                 0u);
@@ -545,7 +660,7 @@ uint8_t SYS_digest_check_service
     status = execute_ss_command(DIGEST_CHECK_CMD,
                                 (uint8_t* )&l_options,
                                 4u,
-                                (uint8_t*)0,
+                                NULL_BUFFER,
                                 0u,
                                 mb_offset,
                                 0u);
@@ -573,7 +688,7 @@ uint8_t SYS_iap_service
     status = execute_ss_command(iap_cmd,
                                 (uint8_t*)&l_spiaddr,
                                 4u,
-                                (uint8_t* )0,
+                                NULL_BUFFER,
                                 0u,
                                 spiaddr,
                                 0u);
@@ -605,18 +720,19 @@ static uint8_t execute_ss_command
     uint16_t idx = 0u;
     uint16_t ss_command = 0u;
     uint32_t* word_buf;
+    uint16_t timeout_count = SS_TIMEOUT_COUNT;
 
-    if (0u != HAL_get_32bit_reg_field(g_css_pf_base_addr, SS_REQ_NABUSY))
+    /* making sure that the system controller is not executing any service i.e. 
+       SS_USER_BUSY is gone 0 */
+
+    while (1u == HAL_get_32bit_reg_field(g_css_pf_base_addr, SS_USER_BUSY))
     {
-        return SYS_BUSY_NON_AMBA;
-    }
-    else if (0u != HAL_get_32bit_reg_field(g_css_pf_base_addr, SS_REQ_ABUSY))
-    {
-        return SYS_BUSY_AMBA;
-    }
-    else
-    {
-        /* Do nothing */
+        --timeout_count;
+
+        if (timeout_count == 0)
+        {
+            return SS_USER_BUSY_TIMEOUT;
+        }
     }
 
     /* Form the SS command: bit 0to6 is the opcode, bit 7to15 is the Mailbox offset
@@ -655,7 +771,7 @@ static uint8_t execute_ss_command
         /*
          Load the MBX_RADRDESC register with offset address within the mailbox
          format for that particular service.
-         It will be 0 for the services where there is no output data from G%CONTROL
+         It will be 0 for the services where there is no output data from G5CONTROL
          is expected.
          This function assumes that this value is pre-calculated by service specific
          functions as this value is fixed for each service.
@@ -677,51 +793,41 @@ static uint8_t execute_ss_command
         }
     }
 
+    timeout_count = SS_TIMEOUT_COUNT;
     if (response_size > 0u)
     {
         word_buf = (uint32_t*)p_response;
 
         for (idx = 0u; idx < (response_size/4u); idx++)
         {
-            while (0u == HAL_get_32bit_reg_field(g_css_pf_base_addr, SS_USER_RDVLD))
-		{};
+            while (0u == HAL_get_32bit_reg_field(g_css_pf_base_addr, 
+            SS_USER_RDVLD))
+            {
+                --timeout_count;
+                
+                if (timeout_count == 0)
+                {
+                    return SS_USER_RDVLD_TIMEOUT;
+                }
+            }
             word_buf[idx] = HAL_get_32bit_reg(g_css_pf_base_addr, MBX_RDATA);
         }
     }
 
+    timeout_count = SS_TIMEOUT_COUNT;
     /* make sure that service is complete i.e. SS_USER_BUSY is gone 0 */
     while (1u == HAL_get_32bit_reg_field(g_css_pf_base_addr, SS_USER_BUSY))
-    {};
+    {
+        --timeout_count;
+
+        if (timeout_count == 0)
+        {
+            return SS_USER_RDVLD_TIMEOUT;
+        }
+    }
 
     /* Read the status returned by System Controller */
     status = HAL_get_32bit_reg(g_css_pf_base_addr, SS_STAT);
-
-    if (0u != status)
-    {
-        if ((cmd_opcode == SNVM_AUTHEN_TEXT_REQUEST_CMD) ||
-           (cmd_opcode == SNVM_AUTHEN_CIPHERTEXT_REQUEST_CMD) ||
-           (cmd_opcode == SNVM_READ_REQUEST_CMD))
-        {
-
-            HAL_set_32bit_reg( g_css_pf_base_addr, MBX_WCNT, 512u); /* 2048 / 4*/
-            HAL_set_32bit_reg( g_css_pf_base_addr, MBX_WADDR, 0x0u);
-
-            for (idx = 0u; idx < 512u; idx++)
-            {
-                HAL_set_32bit_reg( g_css_pf_base_addr, MBX_WDATA, 0xa5a5a5a5u);
-            }
-        }
-
-        if (cmd_opcode == SNVM_READ_REQUEST_CMD)
-        {
-            word_buf = (uint32_t*)p_response;
-
-            for (idx = 0u; idx < (response_size/4u); idx++)
-            {
-                word_buf[idx] = 0x5a5a5a5au;
-            }
-        }
-    }
 
     return (uint8_t)status;
 }

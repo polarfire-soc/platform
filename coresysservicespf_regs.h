@@ -1,8 +1,7 @@
 /*******************************************************************************
- * (c) Copyright 2019-2020 Microchip SoC Products Group. All rights reserved.
+ * (c) Copyright 2019-2021 Microchip SoC Products Group. All rights reserved.
  *
- * SVN $Revision$
- * SVN $Date$
+ * Register bit offsets and masks definitions for CoreSysServices_PF driver.
  */
 
 #ifndef __CORE_SYSSERV_PF_REGISTERS
