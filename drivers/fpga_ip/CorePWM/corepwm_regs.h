@@ -1,12 +1,12 @@
 /*******************************************************************************
- * (c) Copyright 2021 Microchip FPGA Embedded Systems Solutions.
+ * (c) Copyright 2008-2018 Microsemi SoC Products Group. All rights reserved.
  *
- * @file corepwm_regs.h
- * @author Microchip FPGA Embedded Systems Solutions
- * @brief IP core registers definitions. This file contains the definitions required
+ * IP core registers definitions. This file contains the definitions required
  * for accessing the IP core through the hardware abstraction layer (HAL).
  *
- */
+ * SVN $Revision$
+ * SVN $Date$
+*******************************************************************************/
 #ifndef COREPWM_REGISTERS_H_
 #define COREPWM_REGISTERS_H_
 

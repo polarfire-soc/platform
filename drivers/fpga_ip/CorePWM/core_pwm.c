@@ -1,14 +1,15 @@
 /*******************************************************************************
- * (c) Copyright 2021 Microchip FPGA Embedded Systems Solutions.
+ * (c) Copyright 2008-2018 Microsemi SoC Products Group. All rights reserved.
  *
- * @file core_pwm.c
- * @author Microchip FPGA Embedded Systems Solutions
- * @brief CorePWM driver implementation.
+ * CorePWM driver implementation.
  *
+ * SVN $Revision$
+ * SVN $Date$
  */
 #include "core_pwm.h"
 #include "corepwm_regs.h"
-#include "hal/hal.h"
+#include "hal.h"
+#include "hal_assert.h"
 
 #ifdef __cplusplus
 extern "C" {
