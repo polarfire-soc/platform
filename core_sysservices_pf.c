@@ -1,14 +1,13 @@
 /*******************************************************************************
- * (c) Copyright 2019-2021 Microchip SoC Products Group. All rights reserved.
+ * (c) Copyright 2019-2021 Microchip FPGA Embedded Systems Solutions.
  *
  * PF_System_Services driver implementation. See file "core_syservices_pf.h" for
  * description of the functions implemented in this file.
  *
  */
 #include "hal/hal.h"
-#include "coresysservicespf_regs.h"
 #include "core_sysservices_pf.h"
-#include "hal/hal_assert.h"
+#include "coresysservicespf_regs.h"
 
 #ifdef __cplusplus
 extern "C" {

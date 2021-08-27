@@ -1,5 +1,5 @@
 /*******************************************************************************
- * (c) Copyright 2019-2021 Microchip SoC Products Group. All rights reserved.
+ * (c) Copyright 2019-2021 Microchip FPGA Embedded Systems Solutions.
  *
  * Register bit offsets and masks definitions for CoreSysServices_PF driver.
  */
