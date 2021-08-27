@@ -133,8 +133,6 @@
 #ifndef __CORE_SYSSERV_PF_H
 #define __CORE_SYSSERV_PF_H 1
 
-#include "hal/cpu_types.h"
-
 #ifdef __cplusplus
 extern "C" {
 #endif
