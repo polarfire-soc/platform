@@ -210,7 +210,6 @@ void MSS_GPIO_set_output
     uint8_t value
 )
 {
-    uint32_t gpio_setting;
     
     if (0U == gpio_number_validate(gpio, port_id))
     {
@@ -245,7 +244,6 @@ void MSS_GPIO_drive_inout
     mss_gpio_inout_state_t inout_state
 )
 {
-    uint32_t outputs_state;
     uint32_t config;
     
     if (0U == gpio_number_validate(gpio, port_id))
