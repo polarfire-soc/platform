@@ -6,10 +6,8 @@
  * @brief CoreGPIO bare metal driver implementation.
  *
  */
- 
-#include "core_gpio.h"
 #include "coregpio_regs.h"
-#include "hal/hal.h"
+#include "core_gpio.h"
 
 /*-------------------------------------------------------------------------*//**
  *
