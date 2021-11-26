@@ -663,7 +663,7 @@ extern "C" {
 #define MSS_SYS_USERCODE_RESP_LEN                               4u
 #define MSS_SYS_DESIGN_INFO_RESP_LEN                            36u
 #define MSS_SYS_DEVICE_CERTIFICATE_RESP_LEN                     1024u
-#define MSS_SYS_READ_DIGEST_RESP_LEN                            544u
+#define MSS_SYS_READ_DIGEST_RESP_LEN                            576u
 #define MSS_SYS_QUERY_SECURITY_RESP_LEN                         33u
 #define MSS_SYS_READ_DEBUG_INFO_RESP_LEN                        94u
 #define MSS_SYS_NONCE_SERVICE_RESP_LEN                          32u
