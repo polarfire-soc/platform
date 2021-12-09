@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2020 Microchip Corporation.
+ * Copyright 2019-2021 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
@@ -261,7 +261,7 @@
 #define MSS_ETHERNET_MAC_H_
 
 #include <stdbool.h>
-#include "drivers/mss_ethernet_mac/mss_ethernet_mac_types.h"
+#include "drivers/mss/mss_ethernet_mac/mss_ethernet_mac_types.h"
 
 #ifdef __cplusplus
 extern "C" {
