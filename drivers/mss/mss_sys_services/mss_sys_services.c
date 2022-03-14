@@ -623,18 +623,22 @@ MSS_SYS_secure_nvm_write
     uint16_t status = MSS_SYS_PARAM_ERR;
 
     ASSERT(!(NULL_BUFFER == p_data));
-    ASSERT(!(NULL_BUFFER == p_user_key));
+    if (format != MSS_SYS_SNVM_NON_AUTHEN_TEXT_REQUEST_CMD)
+        ASSERT(!(NULL_BUFFER == p_user_key));
     ASSERT(!(snvm_module >= 221u));
 
-    if((p_data  == NULL_BUFFER) || (p_user_key == NULL_BUFFER)
-                                || (snvm_module >= 221))
-    {
+    if ((p_data == NULL_BUFFER) || (snvm_module >= 221)) {
         return status;
     }
 
+    if (format != MSS_SYS_SNVM_NON_AUTHEN_TEXT_REQUEST_CMD) {
+        if (p_user_key == NULL_BUFFER)
+            return status;
+    }
+
     if ((format != MSS_SYS_SNVM_NON_AUTHEN_TEXT_REQUEST_CMD)
-      || (format !=  MSS_SYS_SNVM_AUTHEN_TEXT_REQUEST_CMD)
-      || (format != MSS_SYS_SNVM_AUTHEN_CIPHERTEXT_REQUEST_CMD))
+        && (format !=  MSS_SYS_SNVM_AUTHEN_TEXT_REQUEST_CMD)
+        && (format != MSS_SYS_SNVM_AUTHEN_CIPHERTEXT_REQUEST_CMD))
     {
         return status;
     }
