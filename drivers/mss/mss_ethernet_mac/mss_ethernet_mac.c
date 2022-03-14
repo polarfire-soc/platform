@@ -13,19 +13,19 @@
 #include "mpfs_hal/mss_hal.h"
 
 #if defined(MSS_MAC_PHY_HW_RESET) || defined(MSS_MAC_PHY_HW_SRESET)
-#include "drivers/mss_gpio/mss_gpio.h"
+#include "drivers/mss/mss_gpio/mss_gpio.h"
 #endif
 
-#include "drivers/mss_ethernet_mac/mss_ethernet_registers.h"
-#include "drivers/mss_ethernet_mac/mss_ethernet_mac_regs.h"
-#include "drivers/mss_ethernet_mac/mss_ethernet_mac_sw_cfg.h"
+#include "drivers/mss/mss_ethernet_mac/mss_ethernet_registers.h"
+#include "drivers/mss/mss_ethernet_mac/mss_ethernet_mac_regs.h"
+#include "drivers/mss/mss_ethernet_mac/mss_ethernet_mac_sw_cfg.h"
 
 #if defined(USING_FREERTOS)
 #include "FreeRTOS.h"
 #endif
 
-#include "drivers/mss_ethernet_mac/mss_ethernet_mac.h"
-#include "drivers/mss_ethernet_mac/phy.h"
+#include "drivers/mss/mss_ethernet_mac/mss_ethernet_mac.h"
+#include "drivers/mss/mss_ethernet_mac/phy.h"
 #include "hal/hal.h"
 
 #ifdef __cplusplus
@@ -2425,17 +2425,14 @@ MSS_MAC_send_pkts_fast
 extern BaseType_t g_mac_context_switch;
 #endif
 
-#if defined(USING_FREERTOS)
-extern UBaseType_t uxCriticalNesting;
-#endif
 #if defined(TARGET_ALOE)
 uint8_t  MAC0_plic_53_IRQHandler(void);
 uint8_t  MAC0_plic_53_IRQHandler(void)
 {
 #if defined(USING_FREERTOS)
-    uxCriticalNesting++;
+    portENTER_CRITICAL();
     generic_mac_irq_handler(&g_mac0, 0U);
-    uxCriticalNesting--;
+    portEXIT_CRITICAL;
 #else
     generic_mac_irq_handler(&g_mac0, 0U);
 #endif
@@ -2450,9 +2447,9 @@ uint8_t  MAC0_plic_53_IRQHandler(void)
 uint8_t mac0_int_plic_IRQHandler(void)
 {
 #if defined(USING_FREERTOS)
-    uxCriticalNesting++;
+    portENTER_CRITICAL();
     generic_mac_irq_handler(&g_mac0, 0U);
-    uxCriticalNesting--;
+    portEXIT_CRITICAL();
 #else
     generic_mac_irq_handler(&g_mac0, 0U);
 #endif
@@ -2467,9 +2464,9 @@ uint8_t mac0_int_plic_IRQHandler(void)
 uint8_t mac0_queue1_plic_IRQHandler(void)
 {
 #if defined(USING_FREERTOS)
-    uxCriticalNesting++;
+    portENTER_CRITICAL();
     generic_mac_irq_handler(&g_mac0, 1U);
-    uxCriticalNesting--;
+    portEXIT_CRITICAL();
 #else
     generic_mac_irq_handler(&g_mac0, 1U);
 #endif
@@ -2483,9 +2480,9 @@ uint8_t mac0_queue1_plic_IRQHandler(void)
 uint8_t mac0_queue2_plic_IRQHandler(void)
 {
 #if defined(USING_FREERTOS)
-    uxCriticalNesting++;
+    portENTER_CRITICAL();
     generic_mac_irq_handler(&g_mac0, 2U);
-    uxCriticalNesting--;
+    portEXIT_CRITICAL();
 #else
     generic_mac_irq_handler(&g_mac0, 2U);
 #endif
@@ -2499,9 +2496,9 @@ uint8_t mac0_queue2_plic_IRQHandler(void)
 uint8_t mac0_queue3_plic_IRQHandler(void)
 {
 #if defined(USING_FREERTOS)
-    uxCriticalNesting++;
+    portENTER_CRITICAL();
     generic_mac_irq_handler(&g_mac0, 3U);
-    uxCriticalNesting--;
+    portEXIT_CRITICAL();
 #else
     generic_mac_irq_handler(&g_mac0, 3U);
 #endif
@@ -2515,9 +2512,9 @@ uint8_t mac0_queue3_plic_IRQHandler(void)
 uint8_t mac0_emac_plic_IRQHandler(void)
 {
 #if defined(USING_FREERTOS)
-    uxCriticalNesting++;
+    portENTER_CRITICAL();
     generic_mac_irq_handler(&g_emac0, 0U);
-    uxCriticalNesting--;
+    portEXIT_CRITICAL();
 #else
     generic_mac_irq_handler(&g_emac0, 0U);
 #endif
@@ -2542,9 +2539,9 @@ uint8_t mac0_mmsl_plic_IRQHandler(void)
 uint8_t mac1_int_plic_IRQHandler(void)
 {
 #if defined(USING_FREERTOS)
-    uxCriticalNesting++;
+    portENTER_CRITICAL();
     generic_mac_irq_handler(&g_mac1, 0U);
-    uxCriticalNesting--;
+    portEXIT_CRITICAL();
 #else
     generic_mac_irq_handler(&g_mac1, 0U);
 #endif
@@ -2558,9 +2555,9 @@ uint8_t mac1_int_plic_IRQHandler(void)
 uint8_t mac1_queue1_plic_IRQHandler(void)
 {
 #if defined(USING_FREERTOS)
-    uxCriticalNesting++;
+    portENTER_CRITICAL();
     generic_mac_irq_handler(&g_mac1, 1U);
-    uxCriticalNesting--;
+    portEXIT_CRITICAL();
 #else
     generic_mac_irq_handler(&g_mac1, 1U);
 #endif
@@ -2574,9 +2571,9 @@ uint8_t mac1_queue1_plic_IRQHandler(void)
 uint8_t mac1_queue2_plic_IRQHandler(void)
 {
 #if defined(USING_FREERTOS)
-    uxCriticalNesting++;
+    portENTER_CRITICAL();
     generic_mac_irq_handler(&g_mac1, 2U);
-    uxCriticalNesting--;
+    portEXIT_CRITICAL();
 #else
     generic_mac_irq_handler(&g_mac1, 2U);
 #endif
@@ -2590,9 +2587,9 @@ uint8_t mac1_queue2_plic_IRQHandler(void)
 uint8_t mac1_queue3_plic_IRQHandler(void)
 {
 #if defined(USING_FREERTOS)
-    uxCriticalNesting++;
+    portENTER_CRITICAL();
     generic_mac_irq_handler(&g_mac1, 3U);
-    uxCriticalNesting--;
+    portEXIT_CRITICAL();
 #else
     generic_mac_irq_handler(&g_mac1, 3U);
 #endif
@@ -2606,9 +2603,9 @@ uint8_t mac1_queue3_plic_IRQHandler(void)
 uint8_t mac1_emac_plic_IRQHandler(void)
 {
 #if defined(USING_FREERTOS)
-    uxCriticalNesting++;
+    portENTER_CRITICAL();
     generic_mac_irq_handler(&g_emac1, 0U);
-    uxCriticalNesting--;
+    portEXIT_CRITICAL();
 #else
     generic_mac_irq_handler(&g_emac1, 0U);
 #endif
@@ -2642,9 +2639,9 @@ void mac_mmsl_u54_1_local_IRQHandler_3(void)
 void mac_emac_u54_1_local_IRQHandler_4(void)
 {
 #if defined(USING_FREERTOS)
-    uxCriticalNesting++;
+    portENTER_CRITICAL();
     generic_mac_irq_handler(&g_emac0, 0U);
-    uxCriticalNesting--;
+    portEXIT_CRITICAL();
 #else
     generic_mac_irq_handler(&g_emac0, 0U);
 #endif
@@ -2664,9 +2661,9 @@ void mac_emac_u54_1_local_IRQHandler_4(void)
 void mac_queue3_u54_1_local_IRQHandler_5(void)
 {
 #if defined(USING_FREERTOS)
-    uxCriticalNesting++;
+    portENTER_CRITICAL();
     generic_mac_irq_handler(&g_mac0, 3U);
-    uxCriticalNesting--;
+    portEXIT_CRITICAL();
 #else
     generic_mac_irq_handler(&g_mac0, 3U);
 #endif
@@ -2686,9 +2683,9 @@ void mac_queue3_u54_1_local_IRQHandler_5(void)
 void mac_queue2_u54_1_local_IRQHandler_6(void)
 {
 #if defined(USING_FREERTOS)
-    uxCriticalNesting++;
+    portENTER_CRITICAL();
     generic_mac_irq_handler(&g_mac0, 2U);
-    uxCriticalNesting--;
+    portEXIT_CRITICAL();
 #else
     generic_mac_irq_handler(&g_mac0, 2U);
 #endif
@@ -2708,9 +2705,9 @@ void mac_queue2_u54_1_local_IRQHandler_6(void)
 void mac_queue1_u54_1_local_IRQHandler_7(void)
 {
 #if defined(USING_FREERTOS)
-    uxCriticalNesting++;
+    portENTER_CRITICAL();
     generic_mac_irq_handler(&g_mac0, 1U);
-    uxCriticalNesting--;
+    portEXIT_CRITICAL();
 #else
     generic_mac_irq_handler(&g_mac0, 1U);
 #endif
@@ -2730,9 +2727,9 @@ void mac_queue1_u54_1_local_IRQHandler_7(void)
 void mac_int_u54_1_local_IRQHandler_8(void)
 {
 #if defined(USING_FREERTOS)
-    uxCriticalNesting++;
+    portENTER_CRITICAL();
     generic_mac_irq_handler(&g_mac0, 0U);
-    uxCriticalNesting--;
+    portEXIT_CRITICAL();
 #else
     generic_mac_irq_handler(&g_mac0, 0U);
 #endif
@@ -2762,9 +2759,9 @@ void mac_mmsl_u54_2_local_IRQHandler_3(void)
 void mac_emac_u54_2_local_IRQHandler_4(void)
 {
 #if defined(USING_FREERTOS)
-    uxCriticalNesting++;
+    portENTER_CRITICAL();
     generic_mac_irq_handler(&g_emac0, 0U);
-    uxCriticalNesting--;
+    portEXIT_CRITICAL();
 #else
     generic_mac_irq_handler(&g_emac0, 0U);
 #endif
@@ -2784,9 +2781,9 @@ void mac_emac_u54_2_local_IRQHandler_4(void)
 void mac_queue3_u54_2_local_IRQHandler_5(void)
 {
 #if defined(USING_FREERTOS)
-    uxCriticalNesting++;
+    portENTER_CRITICAL();
     generic_mac_irq_handler(&g_mac0, 3U);
-    uxCriticalNesting--;
+    portEXIT_CRITICAL();
 #else
     generic_mac_irq_handler(&g_mac0, 3U);
 #endif
@@ -2806,9 +2803,9 @@ void mac_queue3_u54_2_local_IRQHandler_5(void)
 void mac_queue2_u54_2_local_IRQHandler_6(void)
 {
 #if defined(USING_FREERTOS)
-    uxCriticalNesting++;
+    portENTER_CRITICAL();
     generic_mac_irq_handler(&g_mac0, 2U);
-    uxCriticalNesting--;
+    portEXIT_CRITICAL();
 #else
     generic_mac_irq_handler(&g_mac0, 2U);
 #endif
@@ -2828,9 +2825,9 @@ void mac_queue2_u54_2_local_IRQHandler_6(void)
 void mac_queue1_u54_2_local_IRQHandler_7(void)
 {
 #if defined(USING_FREERTOS)
-    uxCriticalNesting++;
+    portENTER_CRITICAL();
     generic_mac_irq_handler(&g_mac0, 1U);
-    uxCriticalNesting--;
+    portEXIT_CRITICAL();
 #else
     generic_mac_irq_handler(&g_mac0, 1U);
 #endif
@@ -2850,9 +2847,9 @@ void mac_queue1_u54_2_local_IRQHandler_7(void)
 void mac_int_u54_2_local_IRQHandler_8(void)
 {
 #if defined(USING_FREERTOS)
-    uxCriticalNesting++;
+    portENTER_CRITICAL();
     generic_mac_irq_handler(&g_mac0, 0U);
-    uxCriticalNesting--;
+    portEXIT_CRITICAL();
 #else
     generic_mac_irq_handler(&g_mac0, 0U);
 #endif
@@ -2882,9 +2879,9 @@ void mac_mmsl_u54_3_local_IRQHandler_3(void)
 void mac_emac_u54_3_local_IRQHandler_4(void)
 {
 #if defined(USING_FREERTOS)
-    uxCriticalNesting++;
+    portENTER_CRITICAL();
     generic_mac_irq_handler(&g_emac1, 0U);
-    uxCriticalNesting--;
+    portEXIT_CRITICAL();
 #else
     generic_mac_irq_handler(&g_emac1, 0U);
 #endif
@@ -2904,9 +2901,9 @@ void mac_emac_u54_3_local_IRQHandler_4(void)
 void mac_queue3_u54_3_local_IRQHandler_5(void)
 {
 #if defined(USING_FREERTOS)
-    uxCriticalNesting++;
+    portENTER_CRITICAL();
     generic_mac_irq_handler(&g_mac1, 3U);
-    uxCriticalNesting--;
+    portEXIT_CRITICAL();
 #else
     generic_mac_irq_handler(&g_mac1, 3U);
 #endif
@@ -2926,9 +2923,9 @@ void mac_queue3_u54_3_local_IRQHandler_5(void)
 void mac_queue2_u54_3_local_IRQHandler_6(void)
 {
 #if defined(USING_FREERTOS)
-    uxCriticalNesting++;
+    portENTER_CRITICAL();
     generic_mac_irq_handler(&g_mac1, 2U);
-    uxCriticalNesting--;
+    portEXIT_CRITICAL();
 #else
     generic_mac_irq_handler(&g_mac1, 2U);
 #endif
@@ -2948,9 +2945,9 @@ void mac_queue2_u54_3_local_IRQHandler_6(void)
 void mac_queue1_u54_3_local_IRQHandler_7(void)
 {
 #if defined(USING_FREERTOS)
-    uxCriticalNesting++;
+    portENTER_CRITICAL();
     generic_mac_irq_handler(&g_mac1, 1U);
-    uxCriticalNesting--;
+    portEXIT_CRITICAL();
 #else
     generic_mac_irq_handler(&g_mac1, 1U);
 #endif
@@ -2970,9 +2967,9 @@ void mac_queue1_u54_3_local_IRQHandler_7(void)
 void mac_int_u54_3_local_IRQHandler_8(void)
 {
 #if defined(USING_FREERTOS)
-    uxCriticalNesting++;
+    portENTER_CRITICAL();
     generic_mac_irq_handler(&g_mac1, 0U);
-    uxCriticalNesting--;
+    portEXIT_CRITICAL();
 #else
     generic_mac_irq_handler(&g_mac1, 0U);
 #endif
@@ -3002,9 +2999,9 @@ void mac_mmsl_u54_4_local_IRQHandler_3(void)
 void mac_emac_u54_4_local_IRQHandler_4(void)
 {
 #if defined(USING_FREERTOS)
-    uxCriticalNesting++;
+    portENTER_CRITICAL();
     generic_mac_irq_handler(&g_emac1, 0U);
-    uxCriticalNesting--;
+    portEXIT_CRITICAL();
 #else
     generic_mac_irq_handler(&g_emac1, 0U);
 #endif
@@ -3024,9 +3021,9 @@ void mac_emac_u54_4_local_IRQHandler_4(void)
 void mac_queue3_u54_4_local_IRQHandler_5(void)
 {
 #if defined(USING_FREERTOS)
-    uxCriticalNesting++;
+    portENTER_CRITICAL();
     generic_mac_irq_handler(&g_mac1, 3U);
-    uxCriticalNesting--;
+    portEXIT_CRITICAL();
 #else
     generic_mac_irq_handler(&g_mac1, 3U);
 #endif
@@ -3046,9 +3043,9 @@ void mac_queue3_u54_4_local_IRQHandler_5(void)
 void mac_queue2_u54_4_local_IRQHandler_6(void)
 {
 #if defined(USING_FREERTOS)
-    uxCriticalNesting++;
+    portENTER_CRITICAL();
     generic_mac_irq_handler(&g_mac1, 2U);
-    uxCriticalNesting--;
+    portEXIT_CRITICAL();
 #else
     generic_mac_irq_handler(&g_mac1, 2U);
 #endif
@@ -3068,9 +3065,9 @@ void mac_queue2_u54_4_local_IRQHandler_6(void)
 void mac_queue1_u54_4_local_IRQHandler_7(void)
 {
 #if defined(USING_FREERTOS)
-    uxCriticalNesting++;
+    portENTER_CRITICAL();
     generic_mac_irq_handler(&g_mac1, 1U);
-    uxCriticalNesting--;
+    portEXIT_CRITICAL();
 #else
     generic_mac_irq_handler(&g_mac1, 1U);
 #endif
@@ -3090,9 +3087,9 @@ void mac_queue1_u54_4_local_IRQHandler_7(void)
 void mac_int_u54_4_local_IRQHandler_8(void)
 {
 #if defined(USING_FREERTOS)
-    uxCriticalNesting++;
+    portENTER_CRITICAL();
     generic_mac_irq_handler(&g_mac1, 0U);
-    uxCriticalNesting--;
+    portEXIT_CRITICAL();
 #else
     generic_mac_irq_handler(&g_mac1, 0U);
 #endif
