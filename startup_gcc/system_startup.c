@@ -1,5 +1,5 @@
 /******************************************************************************************
- * Copyright 2019-2021 Microchip FPGA Embedded Systems Solutions.
+ * Copyright 2019-2022 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
@@ -180,6 +180,8 @@ __attribute__((weak)) int main_first_hart(HLS_DATA* hls)
         (void)mss_config_clk_rst(MSS_PERIPH_FIC1, (uint8_t)MPFS_HAL_FIRST_HART, PERIPHERAL_ON);
         (void)mss_config_clk_rst(MSS_PERIPH_FIC2, (uint8_t)MPFS_HAL_FIRST_HART, PERIPHERAL_ON);
         (void)mss_config_clk_rst(MSS_PERIPH_FIC3, (uint8_t)MPFS_HAL_FIRST_HART, PERIPHERAL_ON);
+        /* enable the fabric */
+        mss_enable_fabric();
 
 #endif /* MPFS_HAL_HW_CONFIG */
         (void)main_other_hart(hls);
@@ -523,7 +525,6 @@ __attribute__((weak)) void u54_4(void)
 
 __attribute__((weak)) uint8_t init_bus_error_unit(void)
 {
-#ifndef SIFIVE_HIFIVE_UNLEASHED
     uint8_t hart_id;
     /* Init BEU in all harts - enable local interrupt */
     for(hart_id = MPFS_HAL_FIRST_HART; hart_id <= MPFS_HAL_LAST_HART; hart_id++)
@@ -535,7 +536,6 @@ __attribute__((weak)) uint8_t init_bus_error_unit(void)
         BEU->regs[hart_id].ACCRUED     = 0ULL;
         BEU->regs[hart_id].VALUE       = 0ULL;
     }
-#endif
     return (0U);
 }
 
@@ -546,9 +546,7 @@ __attribute__((weak)) uint8_t init_bus_error_unit(void)
  */
 __attribute__((weak)) uint8_t init_mem_protection_unit(void)
 {
-#ifndef SIFIVE_HIFIVE_UNLEASHED
     mpu_configure();
-#endif
     return (0U);
 }
 
@@ -561,25 +559,5 @@ __attribute__((weak)) uint8_t init_pmp(uint8_t hart_id)
 {
     pmp_configure(hart_id);
     return (0U);
-}
-
-/**
- * set_apb_bus_cr(void)
- * todo: add check to see if value valid re. mss configurator
- * @return
- */
-__attribute__((weak)) uint8_t mss_set_apb_bus_cr(uint32_t reg_value)
-{
-    SYSREG->APBBUS_CR = reg_value;
-    return (0U);
-}
-
-/**
- * get_apb_bus_cr(void)
- * @return
- */
-__attribute__((weak)) uint8_t mss_get_apb_bus_cr(void)
-{
-    return (SYSREG->APBBUS_CR);
 }
 
