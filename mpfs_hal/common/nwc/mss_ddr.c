@@ -3590,7 +3590,7 @@ static uint8_t \
     SIM_FEEDBACK1(0x08000000);
     SIM_FEEDBACK1(result);
     SIM_FEEDBACK1(0x08000000);
-    return result;
+    return (uint8_t)result;
 }
 
 
@@ -5267,9 +5267,9 @@ static uint8_t ddr_manual_addcmd_refclk_offset(DDR_TYPE ddr_type, uint8_t * refc
     {
         case DDR3L:
         case DDR3:
-            if(LIBERO_SETTING_DDR_CLK+ DDR_FREQ_MARGIN < DDR_1333_MHZ)
+            if(LIBERO_SETTING_DDR_CLK + DDR_FREQ_MARGIN < DDR_1333_MHZ)
             {
-                type_array_index = type_array_index + (uint8_t)LPDDR4 + 1U;
+                type_array_index = (uint8_t)(type_array_index + (uint8_t)LPDDR4 + (uint8_t)1U);
             }
             break;
         case DDR4:
@@ -5277,7 +5277,7 @@ static uint8_t ddr_manual_addcmd_refclk_offset(DDR_TYPE ddr_type, uint8_t * refc
         case LPDDR4:
             if(LIBERO_SETTING_DDR_CLK + DDR_FREQ_MARGIN < DDR_1600_MHZ)
             {
-                type_array_index = type_array_index + (uint8_t)LPDDR4 + 1U;
+                type_array_index = (uint8_t)(type_array_index + (uint8_t)LPDDR4 + (uint8_t)1U);
             }
             break;
         default:
@@ -5292,7 +5292,7 @@ static uint8_t ddr_manual_addcmd_refclk_offset(DDR_TYPE ddr_type, uint8_t * refc
 
     refclk_offset = REFCLK_OFFSETS[type_array_index][*refclk_sweep_index + 1U];
 
-    *refclk_sweep_index = (*refclk_sweep_index + 1U);
+    *refclk_sweep_index = (uint8_t)(*refclk_sweep_index + 1U);
 
     return refclk_offset;
 }

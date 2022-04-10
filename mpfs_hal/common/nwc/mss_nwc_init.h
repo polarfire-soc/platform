@@ -99,20 +99,35 @@ extern "C" {
   MSS_SCB_ACCESS_CONFIG_ON_RESET
 
   SCB access settings on reset.
+
+  Bits 23:16 Sets the number of cycles that the bus is held mastered by the MSS
+  after grant removal. During this period the MSS must not start any new SCB
+  cycles. This allows for any active SCB cycles to complete.
+  This must be four greater than the number of pipelines (4) in the SCB ring  from
+  the MSS to G5C
+
   Bits 15:8 Sets how long SCB request is held active after SCB bus granted.
   Allows SCB bus master-ship to maintained across multiple SCB access
   cycles
   Bits 7:0 Set the timeout for an SCB access in CPU cycles.
 
   Note: These settings are used even after we change the MSS clock from SCB
-  80MHz default setting. todo: This needs to be confirmed as OK, there will be
-  no potential timing issues:
+  80MHz default setting.
   Min 143 Hclk cycles for simulation set-up, making 160
-  todo: review setting
   */
+#ifndef MSS_SCB_ACCESS_CONFIG_TIMEOUT
+#define MSS_SCB_ACCESS_CONFIG_TIMEOUT           ((0x80U)&(0xFFU))
+#endif
+#ifndef MSS_SCB_ACCESS_CONFIG_REQUST_TIME
+#define MSS_SCB_ACCESS_CONFIG_REQUST_TIME       ((160UL<<8U)&(0xFFU<<8U))
+#endif
+#ifndef MSS_SCB_ACCESS_CONFIG_BUSHOLD
+#define MSS_SCB_ACCESS_CONFIG_BUSHOLD           ((8UL<<16U)&(0xFFU<<16U))
+#endif
 
-#define MSS_SCB_ACCESS_CONFIG   ((160UL<<8U)|(0x80U))
-
+#ifndef MSS_SCB_ACCESS_CONFIG
+#define MSS_SCB_ACCESS_CONFIG   (MSS_SCB_ACCESS_CONFIG_BUSHOLD|MSS_SCB_ACCESS_CONFIG_REQUST_TIME|MSS_SCB_ACCESS_CONFIG_TIMEOUT)
+#endif
 
 /***************************************************************************//**
   mss_nwc_init()

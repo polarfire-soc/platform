@@ -72,6 +72,8 @@ static uint32_t ddr_write ( volatile uint64_t *DDR_word_ptr,\
         uint32_t no_of_access, uint8_t data_ptrn, DDR_ACCESS_SIZE data_size );
 static uint32_t ddr_read ( volatile uint64_t *DDR_word_ptr,\
         uint32_t no_of_access, uint8_t data_ptrn,  DDR_ACCESS_SIZE data_size );
+static void load_test_buffers(uint32_t * p_cached_ddr,\
+        uint32_t * p_not_cached_ddr, uint64_t length);
 
 #ifdef HSS
 __attribute__((weak)) int rand(void)
@@ -753,7 +755,7 @@ void load_ddr_pattern(uint64_t base, uint32_t size, uint8_t pattern_offset)
     int alive = 0;
 
     uint8_t *p_ddr = (uint8_t *)base;
-    uint32_t pattern_length = sizeof(ddr_test_pattern) - pattern_offset ;
+    uint32_t pattern_length = (uint32_t)(sizeof(ddr_test_pattern) - pattern_offset) ;
 
 #ifdef DEBUG_DDR_INIT
     uprint(g_debug_uart, (const char*)(const uint8_t*)"\r\nLoading test pattern\r\n");
@@ -825,7 +827,7 @@ void execute_ddr_pattern(uint64_t start_addr)
  * @param p_not_cached_ddr
  * @param length
  */
-void load_test_buffers(uint32_t * p_cached_ddr, uint32_t * p_not_cached_ddr, uint64_t length)
+static void load_test_buffers(uint32_t * p_cached_ddr, uint32_t * p_not_cached_ddr, uint64_t length)
 {
     (void)length;
 
@@ -873,7 +875,7 @@ uint32_t test_ddr(uint32_t no_of_iterations, uint32_t size)
 #ifdef DEBUG_DDR_INIT
                     uprint64(g_debug_uart, "  Mismatch, 0x", (uint64_t)p_ddr_cached);
                     uprint32(g_debug_uart, "  offset:, 0x", (uint64_t)word_offset);
-                    uprint32(g_debug_uart, "  address: 0x", (uint64_t)(p_ddr_cached + word_offset));
+                    uprint64(g_debug_uart, "  address: 0x", (uint64_t)(p_ddr_cached + word_offset));
                     uprint32(g_debug_uart, "  expected (non-cached): 0x", g_test_buffer_not_cached[word_offset]);
                     uprint32(g_debug_uart, "  found  (cached): 0x", (uint64_t)g_test_buffer_cached[word_offset]);
                     uprint32(g_debug_uart, "  direct cached read: 0x", (uint32_t)*(p_ddr_cached + word_offset));

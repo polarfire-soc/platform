@@ -84,24 +84,24 @@ void __enable_local_irq(uint8_t local_interrupt)
 
         set_csr(mie, (0x1LLU << (int8_t)(local_interrupt + LOCAL_INT_OFFSET_IN_MIE)));  /* mie Register- Machine Interrupt Enable Register */
 
-        /* Enable F2H interrupts as local instead of PLIC interrupts */
-        if (local_interrupt >= LOCAL_INT_F2H_OFFSET)
+        /* Enable F2M interrupts as local instead of PLIC interrupts */
+        if (local_interrupt >= LOCAL_INT_F2M_OFFSET)
         {
             if (mhart_id == 1)
             {
-                SYSREG->FAB_INTEN_U54_1 |= (1u << (local_interrupt - LOCAL_INT_F2H_OFFSET));
+                SYSREG->FAB_INTEN_U54_1 |= (1u << (local_interrupt - LOCAL_INT_F2M_OFFSET));
             }
             else if (mhart_id == 2)
             {
-                SYSREG->FAB_INTEN_U54_2 |= (1u << (local_interrupt - LOCAL_INT_F2H_OFFSET));
+                SYSREG->FAB_INTEN_U54_2 |= (1u << (local_interrupt - LOCAL_INT_F2M_OFFSET));
             }
             else if (mhart_id == 3)
             {
-                SYSREG->FAB_INTEN_U54_3 |= (1u << (local_interrupt - LOCAL_INT_F2H_OFFSET));
+                SYSREG->FAB_INTEN_U54_3 |= (1u << (local_interrupt - LOCAL_INT_F2M_OFFSET));
             }
             else if (mhart_id == 4)
             {
-                SYSREG->FAB_INTEN_U54_4 |= (1u << (local_interrupt - LOCAL_INT_F2H_OFFSET));
+                SYSREG->FAB_INTEN_U54_4 |= (1u << (local_interrupt - LOCAL_INT_F2M_OFFSET));
             }
         }
     }

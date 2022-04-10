@@ -60,8 +60,6 @@ uint8_t mss_nwc_init(void)
 {
     uint8_t error = 0U;
 
-#ifndef SIFIVE_HIFIVE_UNLEASHED
-
 #ifdef SIMULATION_TEST_FEEDBACK
     /*
      * set the test version- this is read in Simulation environment
@@ -107,10 +105,6 @@ uint8_t mss_nwc_init(void)
 
     /*
      * SCB access settings
-     * Bits 15:8 Sets how long SCB request is held active after SCB bus granted.
-     * Allows SCB bus master-ship to maintained across multiple SCB access
-     * cycles
-     * Bits 7:0 Set the timeout for an SCB access in CPU cycles.
      */
     SCBCFG_REGS->TIMER.TIMER = MSS_SCB_ACCESS_CONFIG;
 
@@ -353,7 +347,6 @@ uint8_t mss_nwc_init(void)
 #endif
     }
 
-#endif /* end of !define SIFIVE_HIFIVE_UNLEASHED */
     SIM_FEEDBACK0(0x12345678U);
     SIM_FEEDBACK0(error);
     SIM_FEEDBACK0(0x87654321U);
