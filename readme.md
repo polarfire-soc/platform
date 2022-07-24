@@ -47,5 +47,10 @@
   
 ```
 
+This repository will always contain the latest and greatest of the platform contents. Some of the example projects under [polarfire-soc-bare-metal-examples](https://mi-v-ecosystem.github.io/redirects/repo-polarfire-soc-bare-metal-examples)
+may not contain all the contents or latest versions of of the contents from this repository. In such cases, please download this repository and replace the src/platform repository in the project with it.
+
+When you update the _platform_ repository in your project, you must make sure that the reference design (and the xml configuration) is compatible with it.
+
 For detailed description about the contents of the platform sub-directories and the overall bare metal software project folder structure, please refer to the
-[Bare Metal Software Projects Structure](https://github.com/polarfire-soc/polarfire-soc-documentation/blob/master/bare-metal-project-structure/bare-metal-software-project-structure.md)
+[Bare Metal Software Projects Structure](https://mi-v-ecosystem.github.io/redirects/bare-metal-project-structure_bare-metal-software-project-structure)
