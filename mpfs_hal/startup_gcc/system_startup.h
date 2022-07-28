@@ -89,6 +89,7 @@ extern unsigned long __text_load;
 extern unsigned long __text_start;
 extern unsigned long __text_end;
 
+extern unsigned long __l2lim_start;
 extern unsigned long __l2lim_end;
 
 extern unsigned long __e51itim_start;

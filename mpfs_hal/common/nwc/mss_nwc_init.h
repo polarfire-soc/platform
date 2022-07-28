@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2019-2021 Microchip FPGA Embedded Systems Solutions.
+ * Copyright 2019-2022 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
@@ -88,12 +88,42 @@
 
 #include <stddef.h>
 #include <stdint.h>
-
+#include "../encoding.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+#define DELAY_CYCLES_500_NS            ((uint32_t)(0.0000005 * LIBERO_SETTING_MSS_COREPLEX_CPU_CLK))
+#define DELAY_CYCLES_1_MICRO           ((uint32_t)(DELAY_CYCLES_500_NS * 2U))
+#define DELAY_CYCLES_5_MICRO           ((uint32_t)(DELAY_CYCLES_500_NS * 10U))
+#define DELAY_CYCLES_50_MICRO          ((uint32_t)(DELAY_CYCLES_500_NS * 100U))
+#define DELAY_CYCLES_150_MICRO         ((uint32_t)(DELAY_CYCLES_500_NS * 300U))
+#define DELAY_CYCLES_250_MICRO         ((uint32_t)(DELAY_CYCLES_500_NS * 500U))
+#define DELAY_CYCLES_500_MICRO         ((uint32_t)(DELAY_CYCLES_500_NS * 1000U))
+#define DELAY_CYCLES_2MS               ((uint32_t)(DELAY_CYCLES_500_NS * 4000U))
+#define DELAY_CYCLES_100MS             ((uint32_t)(DELAY_CYCLES_2MS * 50U))
+
+/***************************************************************************//**
+
+ */
+typedef enum {
+    DDR_BOOT_PROGRESS      = 0x00      //!< DDR_BOOT_PROGRESS
+} MSS_REPORT_STATUS;
+
+/*-------------------------------------------------------------------------*//**
+ * delay()
+ * Simple wait delay based on mcycles count
+ * @param n Number of mcycles to wait.
+ */
+static inline void delay(uint32_t n)
+{
+    volatile uint64_t cycles_end = rdcycle() + n ;
+    while (rdcycle() < cycles_end)
+    {
+
+    }
+}
 
 /***************************************************************************//**
   MSS_SCB_ACCESS_CONFIG_ON_RESET
@@ -139,6 +169,16 @@ mss_nwc_init
     void
 );
 
+/***************************************************************************//**
+  mss_nwc_init_ddr()
+  Called on start-up, initializes ddr
+ */
+uint8_t
+mss_nwc_init_ddr
+(
+    void
+);
+
 
 /***************************************************************************//**
   mtime_delay(x) delay function, passes microseconds
@@ -159,6 +199,29 @@ void
 mtime_delay
 (
     uint32_t microseconds
+);
+
+/***************************************************************************//**
+    ddr_status()
+
+    Application can create own function to show progress
+
+    Example:
+    @code
+
+    ddr_status(void){
+        static uint32_ count = 0U;
+        count++;
+        display_progress_banner(count);
+    }
+
+    @endcode
+
+ */
+void
+ddr_report_progress
+(
+    void
 );
 
 
