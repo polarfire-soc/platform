@@ -437,6 +437,15 @@ typedef enum DDR_MEMORY_ACCESS_
 #define TRANSITION_A5_THRESHOLD                     18U
 #endif
 
+/* Value used during write leveling */
+#ifndef DPC_VRGEN_H_LPDDR4_WR_LVL_VAL
+#define DPC_VRGEN_H_LPDDR4_WR_LVL_VAL   0x5U
+#endif
+/* Value used during write leveling */
+#ifndef DPC_VRGEN_H_DDR3_WR_LVL_VAL
+#define DPC_VRGEN_H_DDR3_WR_LVL_VAL     0x2U
+#endif
+
 #if !defined (DDR_FULL_32BIT_NC_CHECK_EN)
 #define DDR_FULL_32BIT_NC_CHECK_EN  1
 #endif
@@ -476,9 +485,21 @@ typedef enum DDR_MEMORY_ACCESS_
 
 #define NUM_RPC_166_VALUES (MAX_RPC_166_VALUE - MIN_RPC_166_VALUE)
 
-/* This is a fixed setting, will move into driver in next commit */
-#if !defined (SW_TRAING_BCLK_SCLK_OFFSET)
-#define SW_TRAING_BCLK_SCLK_OFFSET                  0x00000005UL
+/* Offsets for each mem type- fixed values */
+#if !defined (LIBERO_SETTING_SW_TRAING_BCLK_SCLK_OFFSET_LPDDR4)
+#define LIBERO_SETTING_SW_TRAING_BCLK_SCLK_OFFSET_LPDDR4            0x00000005UL
+#endif
+#if !defined (LIBERO_SETTING_SW_TRAING_BCLK_SCLK_OFFSET_LPDDR3)
+#define LIBERO_SETTING_SW_TRAING_BCLK_SCLK_OFFSET_LPDDR3            0x00000007UL
+#endif
+#if !defined (LIBERO_SETTING_SW_TRAING_BCLK_SCLK_OFFSET_DDR4)
+#define LIBERO_SETTING_SW_TRAING_BCLK_SCLK_OFFSET_DDR4              0x00000006UL
+#endif
+#if !defined (LIBERO_SETTING_SW_TRAING_BCLK_SCLK_OFFSET_DDR3)
+#define LIBERO_SETTING_SW_TRAING_BCLK_SCLK_OFFSET_DDR3              0x00000006UL
+#endif
+#if !defined (LIBERO_SETTING_SW_TRAING_BCLK_SCLK_OFFSET_DDR3L)
+#define LIBERO_SETTING_SW_TRAING_BCLK_SCLK_OFFSET_DDR3L             0x00000006UL
 #endif
 /*
  * 0x6DU => setting vref_ca to 40%
