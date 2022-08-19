@@ -32,9 +32,13 @@
  * Local Defines
  */
 /* This string is updated if any change to ddr driver */
-#define DDR_DRIVER_VERSION_STRING   "0.4.015"
+#define DDR_DRIVER_VERSION_STRING   "0.4.018"
 /* Version     |  Comment                                                     */
-/* 0.4.015     |  Added some debug feedback in verify state               .   */
+/* 0.4.018     |  Corrected error introduced for DDR3 in 0.4.14               */
+/* 0.4.017     |  made SW_TRAING_BCLK_SCLK_OFFSET seperate for each mem type  */
+/* 0.4.016     |  DDR3-Added support for DDR3L removed in v0.3.027            */
+/*             |  Corrected dpc value update during write leveling            */
+/* 0.4.015     |  Added some debug feedback in verify state.                  */
 /* 0.4.014     |  Tidy-up, replace some majic numbers.No functional change.   */
 /* 0.4.013     |  ddr3- Corrected dpc value update during write leveling      */
 /* 0.4.012     |  ADD_CMD_CLK_MOVE_ORDER 0,1,2 for 1333Mhz, 1,2,0 for 1600MHz */
@@ -194,6 +198,7 @@ static void set_ddr_rpc_regs(DDR_TYPE ddr_type);
 static uint8_t get_num_lanes(void);
 static void load_dq(uint8_t lane);
 static uint8_t use_software_bclk_sclk_training(DDR_TYPE ddr_type);
+static uint8_t bclk_sclk_offset(DDR_TYPE ddr_type);
 static void config_ddr_io_pull_up_downs_rpc_bits(DDR_TYPE ddr_type);
 #ifdef MANUAL_ADDCMD_TRAINIG
 static uint8_t ddr_manual_addcmd_refclk_offset(DDR_TYPE ddr_type, uint8_t * refclk_sweep_index);
@@ -533,13 +538,14 @@ static uint32_t ddr_setup(void)
             if (ddr_type == LPDDR4)
             {
             	/* vrgen, modify during write leveling,  turns off ODT */
-                CFG_DDR_SGMII_PHY->DPC_BITS.DPC_BITS = (dpc_bits & ~DDR_DPC_VRGEN_H_MASK)| (0x5U<<DDR_DPC_VRGEN_H_SHIFT);
+                CFG_DDR_SGMII_PHY->DPC_BITS.DPC_BITS =\
+                        (dpc_bits & ~DDR_DPC_VRGEN_H_MASK)| (DPC_VRGEN_H_LPDDR4_WR_LVL_VAL << DDR_DPC_VRGEN_H_SHIFT);
                 CFG_DDR_SGMII_PHY->rpc3_ODT.rpc3_ODT = 0x0;
             }
-            else if (ddr_type == DDR3)
+            else if ((ddr_type == DDR3)||(ddr_type == DDR3L))
             {
                 /* vrgen, modify during write leveling */
-                CFG_DDR_SGMII_PHY->DPC_BITS.DPC_BITS = dpc_bits | (0x2U<<DDR_DPC_VRGEN_H_SHIFT);
+                CFG_DDR_SGMII_PHY->DPC_BITS.DPC_BITS = dpc_bits | (DPC_VRGEN_H_DDR3_WR_LVL_VAL<<DDR_DPC_VRGEN_H_SHIFT);
             }
             ddr_training_state = DDR_TRAINING_FLASH_REGS;
             break;
@@ -812,7 +818,7 @@ static uint32_t ddr_setup(void)
                      * Initiate IP training and wait for dfi_init_complete
                      */
                     /*asserting training_reset */
-                    if (ddr_type != DDR3)
+                    if (!((ddr_type == DDR3)||(ddr_type == DDR3L)))
                     {
                         CFG_DDR_SGMII_PHY->training_reset.training_reset =\
                             0x00000000U;
@@ -897,8 +903,8 @@ static uint32_t ddr_setup(void)
                      * BCLK_SCLK_OFFSET_BASE
                      */
                     {
-                        bclk_phase = ((bclk_answer+SW_TRAING_BCLK_SCLK_OFFSET)    & 0x07UL ) << 8U;
-                        bclk90_phase=((bclk_answer+SW_TRAING_BCLK_SCLK_OFFSET+2U)  & 0x07UL ) << 11U;
+                        bclk_phase = ((bclk_answer+bclk_sclk_offset(ddr_type))    & 0x07UL ) << 8U;
+                        bclk90_phase=((bclk_answer+bclk_sclk_offset(ddr_type)+2U)  & 0x07UL ) << 11U;
                         MSS_SCB_DDR_PLL->PLL_PHADJ      = (0x00004003UL | bclk_phase | bclk90_phase);
                         MSS_SCB_DDR_PLL->PLL_PHADJ      = (0x00000003UL | bclk_phase | bclk90_phase);
                         MSS_SCB_DDR_PLL->PLL_PHADJ      = (0x00004003UL | bclk_phase | bclk90_phase);
@@ -906,7 +912,7 @@ static uint32_t ddr_setup(void)
                     }
 #ifdef DEBUG_DDR_INIT
                     (void)uprint32(g_debug_uart,  "\n\r bclk_phase ", bclk_phase);
-                    (void)uprint32(g_debug_uart,  "\n\r SW_TRAING_BCLK_SCLK_OFFSET value ", SW_TRAING_BCLK_SCLK_OFFSET);
+                    (void)uprint32(g_debug_uart,  "\n\r bclk_sclk_offset value ", bclk_sclk_offset(ddr_type));
 #endif
                     /* SET Store DRV & VREF initial values (to be re-applied after CA training) */
                     uint32_t ca_drv=CFG_DDR_SGMII_PHY->rpc1_DRV.rpc1_DRV;
@@ -1111,7 +1117,7 @@ static uint32_t ddr_setup(void)
 
                     }/* end vref_training; */
 
-                    if (ddr_type == DDR3)
+                    if ((ddr_type == DDR3)||(ddr_type == DDR3L))
                     {
                         ddr3_address_cmd_training(ddr_type, &refclk_sweep_index, retry_count, &bclk_phase, &bclk90_phase, &refclk_phase, &refclk_offset );
                     }
@@ -1157,7 +1163,7 @@ static uint32_t ddr_setup(void)
             {
                 CFG_DDR_SGMII_PHY->training_skip.training_skip      =\
                                         LIBERO_SETTING_TRAINING_SKIP_SETTING;
-                if ((ddr_type == DDR3)||(ddr_type == LPDDR3)||(ddr_type == LPDDR4)||(ddr_type == DDR4))
+                if ((ddr_type == DDR3)||(ddr_type == DDR3L)||(ddr_type == LPDDR3)||(ddr_type == LPDDR4)||(ddr_type == DDR4))
                 {
                     /* RX_MD_CLKN */
                     CFG_DDR_SGMII_PHY->rpc168.rpc168 = 0x0U;
@@ -1575,7 +1581,7 @@ static uint32_t ddr_setup(void)
             CFG_DDR_SGMII_PHY->expert_mode_en.expert_mode_en = 0x0000008U;
             if(error == 0U)
             {
-                if(ddr_type == DDR3) /* Changing WPU and WPD */
+                if((ddr_type == DDR3)||(ddr_type == DDR3L)) /* Changing WPU and WPD */
                 {
                     /* only run when ECC is on - sar121393 */
                     if (LIBERO_SETTING_DDRPHY_MODE & DDRPHY_MODE_ECC_MASK)
@@ -4402,6 +4408,39 @@ static uint8_t use_software_bclk_sclk_training(DDR_TYPE ddr_type)
 }
 
 /**
+ * bclk_sclk_offset()
+ * @param ddr_type
+ * @return
+ */
+static uint8_t bclk_sclk_offset(DDR_TYPE ddr_type)
+{
+    uint8_t result = 0U;
+    switch (ddr_type)
+    {
+        default:
+        case DDR_OFF_MODE:
+            result = LIBERO_SETTING_SW_TRAING_BCLK_SCLK_OFFSET_LPDDR4;
+            break;
+        case DDR3L:
+            result = LIBERO_SETTING_SW_TRAING_BCLK_SCLK_OFFSET_DDR3L;
+            break;
+        case DDR3:
+            result = LIBERO_SETTING_SW_TRAING_BCLK_SCLK_OFFSET_DDR3;
+            break;
+        case DDR4:
+            result = LIBERO_SETTING_SW_TRAING_BCLK_SCLK_OFFSET_DDR4;
+            break;
+        case LPDDR3:
+            result = LIBERO_SETTING_SW_TRAING_BCLK_SCLK_OFFSET_LPDDR3;
+            break;
+        case LPDDR4:
+            result = LIBERO_SETTING_SW_TRAING_BCLK_SCLK_OFFSET_LPDDR4;
+            break;
+    }
+    return(result);
+}
+
+/**
  * config_ddr_io_pull_up_downs_rpc_bits()
  *
  * This function overrides the RPC bits related to weak pull up and
@@ -5751,11 +5790,11 @@ static void ddr3_address_cmd_training(DDR_TYPE ddr_type, uint8_t * refclk_sweep_
     a5_offset_status = DDR_ADD_CMD_A5_OFFSET_FAIL;
 #ifdef DEBUG_DDR_INIT
     (void)uprint32(g_debug_uart,  "\n\r\n\r\r ADDCMD_OFFSET  used in this testing ", *refclk_offset);
-    (void)uprint32(g_debug_uart,  "\n\r\n\r\r BCLK_OFFSET  used in this testing ",SW_TRAING_BCLK_SCLK_OFFSET);
+    (void)uprint32(g_debug_uart,  "\n\r\n\r\r BCLK_OFFSET  used in this testing ",bclk_sclk_offset(ddr_type));
 #endif
     while(a5_offset_status != DDR_ADD_CMD_A5_OFFSET_PASS)
     {
-        a5_offset_status = DDR_ADD_CMD_A5_OFFSET_FAIL;
+        a5_offset_status = DDR_ADD_CMD_A5_OFFSET_PASS;
         //ADDCMD Training improvement , adds delay on DDR clock loopback path
         CFG_DDR_SGMII_PHY->rpc147.rpc147 = init_del_offset + rpc147_offset;
         //ADDCMD Training improvement , adds delay on A9 loopback path

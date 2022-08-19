@@ -204,6 +204,24 @@ void display_address_of_interest(uint64_t * address_of_interest, int nb_location
 }
 #endif
 
+/*------------------------------------------------------------------------------
+ * This function disables dynamic branch prediction on the hart from which it
+ * executes. It is enabled by default.
+ */
+void disable_branch_prediction(void)
+{
+    write_csr(0x7C0, 0x1u);
+}
+
+/*------------------------------------------------------------------------------
+ * This function enables dynamic branch prediction on the hart from which it
+ * executes.
+ */
+void enable_branch_prediction(void)
+{
+    write_csr(0x7C0, 0x0u);
+}
+
 #ifdef __cplusplus
 }
 #endif
