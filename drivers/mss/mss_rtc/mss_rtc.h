@@ -188,6 +188,8 @@
 #ifndef MSS_RTC_H_
 #define MSS_RTC_H_
 
+#include "mpfs_hal/mss_hal.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif 
