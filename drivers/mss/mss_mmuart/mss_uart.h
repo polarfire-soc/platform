@@ -1573,6 +1573,10 @@ MSS_UART_get_rx
   Note:     You can disable the RDA interrupt when required by calling the 
   MSS_UART_disable_irq() function. This is your choice and is dependent upon
   your application.
+
+  Note:     The trigger level is actually applied only if the this_uart is set 
+  to ready mode 1. See the MSS_UART_set_ready_mode() function for more 
+  information.
   
   @param this_uart
     The this_uart parameter is a pointer to an mss_uart_instance_t
@@ -3194,7 +3198,8 @@ MSS_UART_set_address
 /***************************************************************************//**
   The MSS_UART_set_ready_mode() function is used to configure the MODE0 or MODE1 
   to the TXRDY and RXRDY signals of the MSS UART referenced by this_uart 
-  parameter. The mode parameter is used to provide the mode to be configured.
+  parameter. The mode parameter is used to provide the mode to be configured. 
+  See below for MODE0 and MODE1 description.
 
   @param this_uart
     The this_uart parameter is a pointer to an mss_uart_instance_t
@@ -3210,6 +3215,12 @@ MSS_UART_set_address
   @param mode
     The mode parameter is the mss_uart_ready_mode_t type which is used to 
     configure the TXRDY and RXRDY signal modes.
+    MODE0: RXRDY will go high active when there is at least one character 
+    in the RX FIFO (i.e. the RDA is triggered when there is at least one 
+    character in the RX FIFO). TXRDY will go inactive after the first 
+    character is loaded in the TX FIFO.
+    MODE1: RXRDY will go active high when the trigger level or the timeout is 
+    reached. TXRDY will go inactive when the TX FIFO is completely full.
 
   @return
     This function does not return a value.
