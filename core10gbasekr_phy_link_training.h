@@ -29,6 +29,12 @@
 #ifndef CORE10GBASEKR_PHY_LINK_TRAINING_H_
 #define CORE10GBASEKR_PHY_LINK_TRAINING_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/// @cond @private
+
 #include "phy.h"
 
 /***************************************************************************//**
@@ -215,5 +221,11 @@ lt_get_optimal_tap_index
     uint32_t * prbs_arr,
     uint32_t prbs_arr_size
 );
+
+/// @endcond
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* CORE10GBASEKR_PHY_LINK_TRAINING_H_ */

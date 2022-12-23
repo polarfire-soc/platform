@@ -34,6 +34,8 @@
 extern "C" {
 #endif
 
+/// @cond @private
+
 #include "uint_32_bit_masks.h"
 
 #define __I  const volatile
@@ -1093,9 +1095,9 @@ extern "C" {
                                                 C10GB_LT_PRBS_ERR_WRD_CNT_SHIFT
 
 /*------------------------------------------------------------------------------
- * Status register of Interrupts
+ * 10GBASE-KR Status
  */
-#define C10GB_LT_INT_STATUS_REG_OFFSET         (0x26U << 2U)
+#define C10GB_LT_STATUS_REG_OFFSET             (0x26U << 2U)
 
 /*
  *  RX calibration done
@@ -1105,9 +1107,9 @@ extern "C" {
  *  This Bit will clear the Bit 2 of this Register.
  *
  */
-#define C10GB_LT_INT_RX_CAL_DONE_OFFSET        C10GB_LT_INT_STATUS_REG_OFFSET
-#define C10GB_LT_INT_RX_CAL_DONE_SHIFT         (6U)
-#define C10GB_LT_INT_RX_CAL_DONE_MASK          MASK_BIT_6
+#define C10GB_LT_RX_CAL_DONE_OFFSET            C10GB_LT_STATUS_REG_OFFSET
+#define C10GB_LT_RX_CAL_DONE_SHIFT             (6U)
+#define C10GB_LT_RX_CAL_DONE_MASK              MASK_BIT_6
 
 /*
  *  Request TX equalization
@@ -1116,9 +1118,9 @@ extern "C" {
  *  request.
  *
  */
-#define C10GB_LT_INT_REQ_TX_EQUAL_OFFSET       C10GB_LT_INT_STATUS_REG_OFFSET
-#define C10GB_LT_INT_REQ_TX_EQUAL_SHIFT        (5U)
-#define C10GB_LT_INT_REQ_TX_EQUAL_MASK         MASK_BIT_5
+#define C10GB_LT_REQ_TX_EQUAL_OFFSET           C10GB_LT_STATUS_REG_OFFSET
+#define C10GB_LT_REQ_TX_EQUAL_SHIFT            (5U)
+#define C10GB_LT_REQ_TX_EQUAL_MASK             MASK_BIT_5
 
 /*
  *  Signal detect
@@ -1126,9 +1128,9 @@ extern "C" {
  *  ‘1’ indicated both local and remote receiver ready.
  *
  */
-#define C10GB_LT_INT_SIGNAL_DETECT_OFFSET      C10GB_LT_INT_STATUS_REG_OFFSET
-#define C10GB_LT_INT_SIGNAL_DETECT_SHIFT       (4U)
-#define C10GB_LT_INT_SIGNAL_DETECT_MASK        MASK_BIT_4
+#define C10GB_LT_SIGNAL_DETECT_OFFSET          C10GB_LT_STATUS_REG_OFFSET
+#define C10GB_LT_SIGNAL_DETECT_SHIFT           (4U)
+#define C10GB_LT_SIGNAL_DETECT_MASK            MASK_BIT_4
 
 /*
  *  Training Fail
@@ -1136,9 +1138,9 @@ extern "C" {
  *  ‘1’ indicates 500ms of time is expired during link training
  *
  */
-#define C10GB_LT_INT_TRAINING_FAIL_OFFSET      C10GB_LT_INT_STATUS_REG_OFFSET
-#define C10GB_LT_INT_TRAINING_FAIL_SHIFT       (3U)
-#define C10GB_LT_INT_TRAINING_FAIL_MASK        MASK_BIT_3
+#define C10GB_LT_TRAINING_FAIL_OFFSET          C10GB_LT_STATUS_REG_OFFSET
+#define C10GB_LT_TRAINING_FAIL_SHIFT           (3U)
+#define C10GB_LT_TRAINING_FAIL_MASK            MASK_BIT_3
 
 /*
  *  Request RX calibration
@@ -1146,9 +1148,9 @@ extern "C" {
  *  ‘1’ Indicates remote receiver is requested for its calibration
  *
  */
-#define C10GB_LT_INT_REQ_RX_CAL_OFFSET         C10GB_LT_INT_STATUS_REG_OFFSET
-#define C10GB_LT_INT_REQ_RX_CAL_SHIFT          (2U)
-#define C10GB_LT_INT_REQ_RX_CAL_MASK           MASK_BIT_2
+#define C10GB_LT_REQ_RX_CAL_OFFSET             C10GB_LT_STATUS_REG_OFFSET
+#define C10GB_LT_REQ_RX_CAL_SHIFT              (2U)
+#define C10GB_LT_REQ_RX_CAL_MASK               MASK_BIT_2
 
 /*
  *  Link training frame lock
@@ -1156,9 +1158,9 @@ extern "C" {
  *  ‘1’ indicates link training frame is detected
  *
  */
-#define C10GB_LT_INT_FRAME_LOCK_OFFSET         C10GB_LT_INT_STATUS_REG_OFFSET
-#define C10GB_LT_INT_FRAME_LOCK_SHIFT          (1U)
-#define C10GB_LT_INT_FRAME_LOCK_MASK           MASK_BIT_1
+#define C10GB_LT_FRAME_LOCK_OFFSET             C10GB_LT_STATUS_REG_OFFSET
+#define C10GB_LT_FRAME_LOCK_SHIFT              (1U)
+#define C10GB_LT_FRAME_LOCK_MASK               MASK_BIT_1
 
 /*
  *  Auto-negotiation good link check
@@ -1166,9 +1168,9 @@ extern "C" {
  *  ‘1’ indicates Auto negotiation is completed
  *
  */
-#define C10GB_AN_INT_GOOD_CHECK_OFFSET         C10GB_LT_INT_STATUS_REG_OFFSET
-#define C10GB_AN_INT_GOOD_CHECK_SHIFT          (0U)
-#define C10GB_AN_INT_GOOD_CHECK_MASK           MASK_BIT_0
+#define C10GB_AN_GOOD_CHECK_OFFSET             C10GB_LT_STATUS_REG_OFFSET
+#define C10GB_AN_GOOD_CHECK_SHIFT              (0U)
+#define C10GB_AN_GOOD_CHECK_MASK               MASK_BIT_0
 
 /******************************************************************************/
 /*                    Core10GBaseKR PHY Transmit Control                      */
@@ -1272,6 +1274,8 @@ extern "C" {
  #define C10GB_LT_BASE_OFFSET		           (0x4U << 8U)
  #define C10GB_TX_CTRL_BASE_OFFSET             (0x8U << 8U)
  #define C10GB_RX_STATUS_BASE_OFFSET           (0x9U << 8U)
+
+/// @endcond
 
 #ifdef __cplusplus
 }

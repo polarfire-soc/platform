@@ -274,7 +274,7 @@ typedef struct __lt_instance
 } phy10gkr_lt_instance_t;
 
 /***************************************************************************//**
-  The c10gbkr_state_t enumeration identifies the state of the 10GBASE-KR state-
+  The c10gbkr_state_t enumeration identifies the state of the 10GBASE-KR state
   machine.
  */
 typedef enum __c10gbkr_state

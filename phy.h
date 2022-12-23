@@ -34,7 +34,7 @@
   Introduction
   ==============================================================================
   Core10GBaseKR_PHY is designed for the IEEE® 802.3-2012 specification and
-  supports the Core10GBaseKR_PHY interface for the Backplane operations. This
+  supports the Core10GBaseKR_PHY interface for Backplane operations. This
   configurable core provides the Physical (PHY) layer when used with a
   transceiver interface. This IP interfaces with the Ten Gigabit Media
   Independent Interface (XGMII) compliant Media Access Control (MAC) at the
@@ -55,11 +55,12 @@
   ==============================================================================
   Software Flow Dependencies
   ==============================================================================
-  A PHY software configuration file should be included when implementing
-  this driver, which includes the macro definition "CORE10GBASEKR_PHY". The 
-  purpose of this file is to configure desired PHY model and to override driver
-  default values. This driver should be stored in a location with the following 
-  path:
+  A PHY software configuration file must be included when using this driver.
+  This will include the macro definition "CORE10GBASEKR_PHY". The purpose of
+  this file is to configure desired PHY model and to override driver default
+  values as required. The driver configuration should be stored in a location
+  away from the driver source code. The following with path is used in our
+  recommended directory structure:
 
   \`
   <project-root>/boards/<board-name>/platform_config/driver_config/phy_sw_cfg.h
@@ -87,7 +88,7 @@
   Configuration
   --------------------------------
   An instance of the Core10GBaseKR_PHY is configured with a call to the
-  PHY10GKR_config().The configuration function resets all the PHY instance
+  PHY10GKR_config(). The configuration function resets all the PHY instance
   structure members other than information such as performance counters.
   Default configurations can be overridden be defining any of the
   Core10GBaseKR_PHY constants before loading the driver using a PHY software
@@ -102,7 +103,7 @@
   --------------------------------
   Clause72: Link Training
   --------------------------------
-  The IEEE802.3 clause 72 link training is enabled and executed by a call to
+  The IEEE802.3 clause 72 link training is enabled and executed by a calling
   PHY10GKR_link_training_sm(). The Core10GBaseKR_PHY IP and the
   Core10GBaseKR_PHY embedded software driver together carry out the link
   training. The driver initiates the link training and takes appropriate actions
@@ -112,12 +113,13 @@
 
   \include resources/link_training_10gbasekr_status.txt
 
-  Training Failure: The training failure bit is set when the Core10GBaseKR_PHY
-  link training timer exceeds 500 ms. This driver also implements a soft timer
-  as an additional protection layer, override the
-  PHY10GKR_get_current_time_ms() so that the current time of a timer will be
-  returned in milli-seconds. When this status is set by Core10GBaseKR_PHY, the
-  embedded software must reduce the XCVR data rate by calling
+  Training Failure: The training failure bit is set by the IP when the
+  Core10GBaseKR_PHY link training timer exceeds 500 ms. The driver also
+  implements a soft timer as an additional protection layer. The
+  PHY10GKR_get_current_time_ms() function must be overridden by instantiating
+  this function in user code so that the current time of a timer will be
+  returned in milli-seconds. When this status is set by Core10GBaseKR_PHY,
+  the embedded software must reduce the XCVR data rate by calling
   PHY10GKR_serdes_an_config() and restart the auto-negotiation state machine by
   calling PHY10GKR_autonegotiate_sm().
 
@@ -183,7 +185,7 @@ extern "C" {
   CORE10GBASEKR_PHY LT MAX/MIN LIMITS
   ============================
   The max/min limit constants define the XCVR tap coefficient limits. These
-  constants can be overridden based on the XCVR which, is integrated into a
+  constants can be overridden based on the XCVR, which is integrated into a
   specific design.
 
   Note: Post and Pre tap maximum limits are absolute.
@@ -270,7 +272,7 @@ extern "C" {
   CORE10GBASEKR_PHY AN LINK FAIL INHIBIT TIMER
   ============================
   This constant defines the auto-negotiation link fail inhibit timer timeout in
-  milli-secounds.
+  milli-seconds.
 
  */
 #ifndef C10GBKR_AN_LINK_FAIL_INHITBIT_TIMER
@@ -438,7 +440,6 @@ PHY10GKR_link_training_sm
         PHY10GKR_init(&g_phy, CORE10GBKR_0_PHY_BASE_ADDR);
         while(1)
         {
-            status PHY10GKR_10gbasekr_sm(&g_phy);
             status = PHY10GKR_10gbasekr_sm(&g_phy);
             if(LINK_ESTABLISHED == status)
             {
