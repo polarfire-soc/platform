@@ -1,11 +1,6 @@
 #include "phy.h"
 #include "core10gbasekr_phy_link_training.h"
 
-#undef IP_SOLTIONS_ALGO
-
-
-#undef RX_CAL_DONE_ALL_SWEEP
-
 /*------------------------Private Definitions---------------------------------*/
 #define AN_RESET                        (1U)
 #define AN_ENABLE                       (1U)
@@ -228,7 +223,7 @@ PHY10GKR_link_training_sm
     phy10gkr_instance_t * this_phy
 )
 {
-    uint32_t interrupt_status = 0;
+    uint32_t c10gbkr_status = 0;
 
     this_phy->lt.state = HAL_get_32bit_reg_field(this_phy->lt_base_addr,
                                                     C10GB_LT_TRAINING_SM);
@@ -252,13 +247,13 @@ PHY10GKR_link_training_sm
         break;
 
         case LT_API_SM_STATUS_UPDATE:
-            interrupt_status = HAL_get_32bit_reg(this_phy->lt_base_addr,
-                                                    C10GB_LT_INT_STATUS);
+            c10gbkr_status = HAL_get_32bit_reg(this_phy->lt_base_addr,
+                                                    C10GB_LT_STATUS);
 
             this_phy->lt.timer.end = PHY10GKR_get_current_time_ms() -
                                         this_phy->lt.timer.start;
 
-            if((interrupt_status & C10GB_LT_INT_TRAINING_FAIL_MASK) ||
+            if((c10gbkr_status & C10GB_LT_TRAINING_FAIL_MASK) ||
                     this_phy->lt.timer.end > LT_SOFTWARE_WAIT_TIMER_MS)
             {
                 this_phy->lt.fail_cnt++;
@@ -273,7 +268,7 @@ PHY10GKR_link_training_sm
                 break;
             }
 
-            if(interrupt_status & C10GB_LT_INT_REQ_TX_EQUAL_MASK)
+            if(c10gbkr_status & C10GB_LT_REQ_TX_EQUAL_MASK)
             {
                 uint32_t tx_main_tap;
                 uint32_t tx_post_tap;
@@ -303,16 +298,16 @@ PHY10GKR_link_training_sm
                                     C10GB_LT_TX_EQUAL_DONE_MASK);
             }
 
-            if((interrupt_status & C10GB_LT_INT_REQ_RX_CAL_MASK) &&
+            if((c10gbkr_status & C10GB_LT_REQ_RX_CAL_MASK) &&
                     LOCAL_RXCVR_UNLOCKED == this_phy->lt.local_rxcvr)
             {
                 /* signal to hardware to set tx coefficient update field */
                 HAL_set_32bit_reg_field(this_phy->lt_base_addr,
-                                        C10GB_LT_INT_RX_CAL_DONE,
+                                        C10GB_LT_RX_CAL_DONE,
                                         1U);
 
                 HAL_set_32bit_reg_field(this_phy->lt_base_addr,
-                                        C10GB_LT_INT_RX_CAL_DONE,
+                                        C10GB_LT_RX_CAL_DONE,
                                         0U);
 
                 this_phy->lt.rx_cal_cnt++;
@@ -333,7 +328,7 @@ PHY10GKR_link_training_sm
 
             }
 
-            if(interrupt_status & C10GB_LT_INT_SIGNAL_DETECT_MASK)
+            if(c10gbkr_status & C10GB_LT_SIGNAL_DETECT_MASK)
             {
                 this_phy->lt.complete_cnt++;
 

@@ -259,14 +259,14 @@ link_partner_pre_sweep
             while((PHY10GKR_serdes_dfe_cal() == 1) &&
                     (STATUS_LT_FAILURE != this_phy->lt.status))
             {
-                uint32_t interrupt_status = HAL_get_32bit_reg(
+                uint32_t c10gbkr_status = HAL_get_32bit_reg(
                                                         this_phy->lt_base_addr,
-                                                        C10GB_LT_INT_STATUS);
+                                                        C10GB_LT_STATUS);
 
                 this_phy->lt.timer.end = PHY10GKR_get_current_time_ms() -
                                             this_phy->lt.timer.start;
 
-                if((interrupt_status & C10GB_LT_INT_TRAINING_FAIL_MASK) ||
+                if((c10gbkr_status & C10GB_LT_TRAINING_FAIL_MASK) ||
                         this_phy->lt.timer.end > LT_SOFTWARE_WAIT_TIMER_MS)
                 {
                     this_phy->lt.status = STATUS_LT_FAILURE;
@@ -334,14 +334,14 @@ link_partner_pre_sweep
                     while((PHY10GKR_serdes_dfe_cal() == 1) &&
                             (STATUS_LT_FAILURE != this_phy->lt.status))
                     {
-                        uint32_t interrupt_status = HAL_get_32bit_reg(
+                        uint32_t c10gbkr_status = HAL_get_32bit_reg(
                                                         this_phy->lt_base_addr,
-                                                        C10GB_LT_INT_STATUS);
+                                                        C10GB_LT_STATUS);
 
                         this_phy->lt.timer.end = PHY10GKR_get_current_time_ms()
                                                     - this_phy->lt.timer.start;
 
-                        if((interrupt_status & C10GB_LT_INT_TRAINING_FAIL_MASK)
+                        if((c10gbkr_status & C10GB_LT_TRAINING_FAIL_MASK)
                                 || (this_phy->lt.timer.end >
                                 LT_SOFTWARE_WAIT_TIMER_MS))
                         {
