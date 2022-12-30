@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2019-2020 Microchip FPGA Embedded Systems Solutions.
+ * Copyright 2019-2023 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
@@ -352,7 +352,7 @@ typedef enum __mss_spi_protocol_mode_t
 } mss_spi_protocol_mode_t;
 
 /***************************************************************************//**
- This enumeration is used to select a specific SPI slave device (0 to 7). It is
+ This enumeration is used to select a specific SPI slave device (0,1). It is
  used as a parameter to the MSS_SPI_configure_master_mode(),
  MSS_SPI_set_slave_select() and MSS_SPI_clear_slave_select () functions.
  */
@@ -360,13 +360,7 @@ typedef enum __mss_spi_protocol_mode_t
  {
     MSS_SPI_SLAVE_0             = 0,
     MSS_SPI_SLAVE_1             = 1,
-    MSS_SPI_SLAVE_2             = 2,
-    MSS_SPI_SLAVE_3             = 3,
-    MSS_SPI_SLAVE_4             = 4,
-    MSS_SPI_SLAVE_5             = 5,
-    MSS_SPI_SLAVE_6             = 6,
-    MSS_SPI_SLAVE_7             = 7,
-    MSS_SPI_MAX_NB_OF_SLAVES    = 8
+    MSS_SPI_MAX_NB_OF_SLAVES    = 2
 } mss_spi_slave_t;
 
 /***************************************************************************//**
@@ -572,12 +566,6 @@ void MSS_SPI_configure_slave_mode
     slave, as specified by the other function parameters. Allowed values are:
        * MSS_SPI_SLAVE_0
        * MSS_SPI_SLAVE_1
-       * MSS_SPI_SLAVE_2
-       * MSS_SPI_SLAVE_3
-       * MSS_SPI_SLAVE_4
-       * MSS_SPI_SLAVE_5
-       * MSS_SPI_SLAVE_6
-       * MSS_SPI_SLAVE_7
     
   @param protocol_mode
     This parameter is used to specify the SPI operating mode. Allowed values are:
