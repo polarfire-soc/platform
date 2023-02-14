@@ -238,7 +238,7 @@ load_ddr_pattern
 uint64_t base,
 uint64_t size,
 uint32_t pattern_type,
-uint8_t pattern_offset
+volatile uint8_t pattern_offset
 );
 
 /***************************************************************************//**

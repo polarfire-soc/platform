@@ -668,23 +668,22 @@ uint32_t tip_register_status (mss_uart_instance_t *g_mss_uart_debug_pt)
 /**
  * Load a pattern to DDR
  */
-
 void load_ddr_pattern(uint64_t base, uint64_t size, uint32_t pattern_type, \
-        uint8_t pattern_offset)
+        volatile uint8_t pattern_offset)
 {
     int alive = 0;
     uint32_t *pattern;
-    uint32_t pattern_size;
+    volatile uint32_t pattern_size;
     uint8_t *p_ddr = (uint8_t *)base;
 
     if (pattern_type == DDR_TEST_FILL)
     {
-        pattern = ddr_test_pattern;
+        pattern = (uint32_t *)ddr_test_pattern;
         pattern_size = sizeof(ddr_test_pattern);
     }
     else
     {
-        pattern = ddr_init_pattern;
+        pattern = (uint32_t *)ddr_init_pattern;
         pattern_size = sizeof(ddr_init_pattern);
     }
 
@@ -695,7 +694,7 @@ void load_ddr_pattern(uint64_t base, uint64_t size, uint32_t pattern_type, \
     uprint32(g_debug_uart, (const char*)(const uint8_t*)"\r\npattern_length = \r\n",pattern_length);
 #endif
 
-    while(((uint64_t)p_ddr + pattern_length) <  (base + size))
+    while(((uint64_t)p_ddr + pattern_length) <=  (base + size))
     {
 
         switch ( ((uint64_t)p_ddr)%8U )
