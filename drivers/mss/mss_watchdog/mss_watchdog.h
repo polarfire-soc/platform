@@ -751,7 +751,7 @@ static inline uint32_t MSS_WD_timeout_occured(mss_watchdog_num_t wd_num)
 static inline void MSS_WD_force_reset(mss_watchdog_num_t wd_num)
 {
     if (MSS_WDOG_TRIGGERED_MASK ==
-                       (uint32_t)(wdog_hw_base[wd_num]->STATUS |
+                       (uint32_t)(wdog_hw_base[wd_num]->STATUS &
                                                        MSS_WDOG_TRIGGERED_MASK))
     {
         wdog_hw_base[wd_num]->FORCE = 0xDEADu;
