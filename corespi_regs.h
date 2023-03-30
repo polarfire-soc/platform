@@ -1,11 +1,14 @@
-/*******************************************************************************
- * (c) Copyright 2011-2018 Microsemi SoC Products Group. All rights reserved.
- * 
- * CoreSPI hardware registers definitions.
+/***************************************************************************//**
+ * Copyright 2011-2023 Microchip FPGA Embedded Systems Solutions.
  *
- * SVN $Revision$
- * SVN $Date$
+ * SPDX-License-Identifier: MIT
+ *
+ * @file corespi_regs.h
+ * @author Microchip FPGA Embedded Systems Solutions
+ * @brief CoreSPI memory map
+ * 
  */
+
 #ifndef CORESPI_REGS_H_
 #define CORESPI_REGS_H_
 
