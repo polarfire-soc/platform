@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2019-2020 Microchip FPGA Embedded Systems Solutions.
+ * Copyright 2019-2023 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
@@ -111,11 +111,12 @@ extern "C" {
 #define USB_HS_BULK_MAX_PKT_SIZE                        512u
 #define USB_HS_INTERRUPT_MAX_PKT_SIZE                   1024u
 #define USB_HS_ISO_MAX_PKT_SIZE                         1024u
+#define USB_HS_HB_ISO_MAX_PKT_SIZE                      (1024u *3)
 
 #define USB_FS_BULK_MAX_PKT_SIZE                        64u
 #define USB_FS_INTERRUPT_MAX_PKT_SIZE                   64u
 #define USB_FS_ISO_MAX_PKT_SIZE                         1023u
-
+#define USB_FS_HB_ISO_MAX_PKT_SIZE                      1023u
 /*-------------------------------------------------------------------------*//**
  MSC class related definitions
  */
