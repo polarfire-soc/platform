@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2019-2020 Microchip FPGA Embedded Systems Solutions.
+ * Copyright 2019-2023 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
@@ -121,6 +121,7 @@ MSS_USBD_CIF_tx_ep_configure
                 MSS_USB_CIF_tx_ep_set_autoset(device_ep->num);
         break;
 
+        case MSS_USB_XFR_HB_ISO:
         case MSS_USB_XFR_ISO:
             /*Error check and Data toggle is ignored in ISO transfers*/
             MSS_USB_CIF_tx_ep_enable_iso(device_ep->num);
@@ -166,6 +167,7 @@ MSS_USBD_CIF_rx_ep_configure
             MSS_USB_CIF_rx_ep_set_autoclr(device_ep->num);
         break;
 
+        case MSS_USB_XFR_HB_ISO:
         case MSS_USB_XFR_ISO:
             MSS_USB_CIF_rx_ep_clr_autoclr(device_ep->num);
             MSS_USB_CIF_rx_ep_enable_iso(device_ep->num);
