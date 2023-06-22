@@ -35,7 +35,7 @@
 #define __MSS_USB_CONFIG_H_
 
 #include "mpfs_hal/mss_hal.h"
-#include "drivers_config/mss/mss_usb/mss_usb_sw_config.h"
+
 /*-------------------------------------------------------------------------*//**
   Definitions Internally generated for use in the Core and logical layer.
 */
