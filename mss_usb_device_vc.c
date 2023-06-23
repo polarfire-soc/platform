@@ -3,13 +3,17 @@
  *
  * SPDX-License-Identifier: MIT
  *
- * PolarFire SoC MSS USB Driver Stack
- *      USB Logical Layer (USB-LL)
- *          USBD Video class driver.
+ * @file mss_usb_device_vc.c
+ * @author Microchip FPGA Embedded Systems Solutions
+ * @brief PolarFire SoC Microprocessor Subsystem (MSS) USB Driver Stack
+ *          USB Logical Layer (USB-LL)
+ *            USBD Video class driver
  *
  * USBD Video class driver implementation:
  * This source file implements USB video class functionality.
+ *
  */
+
 #include "mss_usb_device_vc.h"
 #include "mss_usb_device.h"
 #include "mss_usb_std_def.h"
