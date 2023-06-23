@@ -1,13 +1,16 @@
 /*******************************************************************************
- * Copyright 2019-2023 Microchip FPGA Embedded Systems Solutions.
+ * Copyright 2019 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
- * PolarFire SoC MSS USB Driver Stack
+ * @file mss_usb_std_def.h
+ * @author Microchip FPGA Embedded Systems Solutions
+ * @brief PolarFire SoC Microprocessor Subsystem (MSS) USB Driver Stack
  *
  * Standard USB definitions.
  *
  */
+
 #ifndef __MSS_USB_STD_DEF_H_
 #define __MSS_USB_STD_DEF_H_
 

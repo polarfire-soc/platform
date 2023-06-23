@@ -1,11 +1,13 @@
 /*******************************************************************************
- * Copyright 2019-2023 Microchip FPGA Embedded Systems Solutions.
+ * Copyright 2019 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
- * PolarFire SoC MSS USB Driver Stack
- *      USB Core Interface Layer (USB-CIFL)
- *          USBD-CIF driver
+ * @file mss_usb_device_cif.c
+ * @author Microchip FPGA Embedded Systems Solutions
+ * @brief PolarFire SoC Microprocessor Subsystem (MSS) USB Driver Stack
+ *          USB Core Interface Layer (USB-CIFL)
+ *            USBD-CIF driver
  *
  * USBD-CIF driver implementation:
  * This file implements MSS USB core initialization in device mode and
@@ -13,6 +15,7 @@
  * MSS USB core in USB Device mode.
  *
  */
+
 #include "mpfs_hal/mss_hal.h"
 #include "mss_usb_device_cif.h"
 #include "mss_usb_common_cif.h"

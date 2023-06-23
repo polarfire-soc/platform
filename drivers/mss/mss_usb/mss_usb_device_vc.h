@@ -1,11 +1,15 @@
 /*******************************************************************************
  * Copyright 2023 Microchip FPGA Embedded Systems Solutions.
  *
- * MSS USB Driver Stack.
- *      USB Logical Layer (USB-LL)
- *          USBD Video class driver.
+ * SPDX-License-Identifier: MIT
  *
- *  USBD Video class driver public API.
+ * @file mss_usb_device_vc.h
+ * @author Microchip FPGA Embedded Systems Solutions
+ * @brief PolarFire SoC Microprocessor Subsystem (MSS) USB Driver Stack
+ *         USB Logical Layer (USB-LL)
+ *           USBD Video class driver
+ *
+ * USBD Video class driver public API.
  *
  */
 
