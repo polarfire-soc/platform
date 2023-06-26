@@ -5,8 +5,8 @@
  *
  * @file mss_pdma.h
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief PolarFire SoC Microprocessor subsystem PDMA bare metal software driver 
- * public APIs.
+ * @brief PolarFire SoC Microprocessor Subsystem (MSS) PDMA bare metal software
+ * driver public APIs.
  *
  */
 

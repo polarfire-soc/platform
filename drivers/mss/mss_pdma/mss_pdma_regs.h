@@ -5,7 +5,8 @@
  *
  * @file mss_pdma_regs.h
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief Register bit offsets and masks definitions for PolarFire SoC MSS PDMA
+ * @brief Register bit offsets and masks definitions for PolarFire SoC
+ * Microprocessor Subsystem (MSS) PDMA
  *
  */
 
