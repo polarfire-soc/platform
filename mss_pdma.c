@@ -5,7 +5,7 @@
  *
  * @file mss_pdma.c
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief PolarFire SoC Microprocessor Subsystem PDMA bare metal driver
+ * @brief PolarFire SoC Microprocessor Subsystem (MSS) PDMA bare metal driver
  * implementation.
  *
  */
