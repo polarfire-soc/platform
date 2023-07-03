@@ -1,15 +1,16 @@
 /*******************************************************************************
- * (c) Copyright 2007-2022 Microchip FPGA Embedded Systems Solutions.
+ * (c) Copyright 2007-2018 Microsemi SoC Products Group. All rights reserved.
  * 
- * @file core_timer.c
- * @author Microchip FPGA Embedded Systems Solutions
- * @brief CoreTimer driver implementation. See file "core_timer.h" for 
- * description of the functions implemented in this file.
+ * CoreTimer driver implementation.
  * 
+ * SVN $Revision$
+ * SVN $Date$
  */
- 
+
 #include "core_timer.h"
 #include "coretimer_regs.h"
+#include "hal.h"
+#include "hal_assert.h"
 
 #ifndef NDEBUG
 static timer_instance_t* NULL_timer_instance;
