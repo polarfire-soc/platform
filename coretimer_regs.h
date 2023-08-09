@@ -1,8 +1,12 @@
 /*******************************************************************************
- * (c) Copyright 2007-2018 Microsemi SoC Products Group. All rights reserved.
+ * (c) Copyright 2007 Microchip FPGA Embedded Systems Solutions.
  * 
- * SVN $Revision$
- * SVN $Date$
+ * SPDX-License-Identifier: MIT
+ *
+ * @file coretimer_regs.h
+ * @author Microchip FPGA Embedded Systems Solutions
+ * @brief CoreTimer register definitions
+ *
  */
 
 #ifndef __CORE_TIMER_REGISTERS
