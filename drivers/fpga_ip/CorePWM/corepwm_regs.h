@@ -1,12 +1,14 @@
 /*******************************************************************************
- * (c) Copyright 2008-2018 Microsemi SoC Products Group. All rights reserved.
+ * Copyright 2008 Microchip FPGA Embedded Systems Solutions.
  *
- * IP core registers definitions. This file contains the definitions required
- * for accessing the IP core through the hardware abstraction layer (HAL).
+ * SPDX-License-Identifier: MIT
  *
- * SVN $Revision$
- * SVN $Date$
-*******************************************************************************/
+ * @file core_pwm_regs.h
+ * @author Microchip FPGA Embedded Systems Solutions
+ * @brief IP core registers definitions. This file contains the definitions 
+ * required for accessing the IP core through the hardware abstraction layer(HAL).
+ *
+ */
 #ifndef COREPWM_REGISTERS_H_
 #define COREPWM_REGISTERS_H_
 
@@ -278,7 +280,7 @@ extern "C" {
  * When this bit is set to "1" and SHADOW_REG_EN is selected, all POSEDGE and 
  * NEGEDGE registers are updated synchronously. Synchronous updates to the PWM 
  * waveform occur only when SHADOW_REG_EN is asserted and SYNC_UPDATE is set to 
- * “1”.When this bit is set to "0", all the POSEDGE and NEGEDGE registers are 
+ * "1".When this bit is set to "0", all the POSEDGE and NEGEDGE registers are 
  * updated asynchronously. 
  */
 #define SYNC_UPDATE_REG_OFFSET           0xE4u
@@ -319,7 +321,7 @@ extern "C" {
  * TACH status register which contains one bit per TACH input, indicating
  * whether the respective TACHPULSEDUR register has been updated at
  * least once since the bit was cleared. The bits in this register gets cleared
- * by writing “1”, “0” does not have any effect. 
+ * by writing "1", "0" does not have any effect. 
  */
 #define TACHSTATUS_REG_OFFSET            0x98u
 
