@@ -6,7 +6,7 @@
  *
  * @file null_phy.c
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief NULL PHY implementation 
+ * @brief NULL PHY implementation
  *
  */
 
@@ -20,13 +20,13 @@
 #include "fpga_design_config/fpga_design_config.h"
 #else
 #include "hw_platform.h"
-#endif  /*LEGACY_DIR_STRUCTURE*/
+#endif /*LEGACY_DIR_STRUCTURE*/
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#if !defined(M88E1340_PHY) && !defined(M88E1111_PHY)
+#if !defined(M88E1340_PHY) && !defined(M88E1111_PHY) && !defined(VSC8575_PHY)
 
 void
 TSE_phy_init(tse_instance_t *this_tse, uint8_t phy_addr)
