@@ -245,10 +245,6 @@ mmc_transfer_status_t MMC_single_block_write(const mmc_instance_t *this_mmc,
    * FIFO, one byte at a time through the Write Data Register.
    */
   MMC_init_fifo(this_mmc);
-  while ((BLK_SIZE / 4) > word_cnt) {
-    HAL_set_32bit_reg(this_mmc->base_addr, WDR, src_addr[word_cnt]);
-    ++word_cnt;
-  }
 
   do {
     response_status =
@@ -263,6 +259,11 @@ mmc_transfer_status_t MMC_single_block_write(const mmc_instance_t *this_mmc,
   response_status = cif_send_cmd(this_mmc->base_addr, dst_addr,
                                  MMC_CMD_24_WRITE_SINGLE_BLOCK);
   HAL_set_8bit_reg_field(this_mmc->base_addr, BCSR_BWSTRT, SET_BIT);
+
+  while ((BLK_SIZE / 4) > word_cnt) {
+    HAL_set_32bit_reg(this_mmc->base_addr, WDR, src_addr[word_cnt]);
+    ++word_cnt;
+  }
 
   /* Check is block write complete */
   do {
