@@ -499,9 +499,12 @@ static void init_global_constructors(void)
 static void park_hart(void)
 {
     clear_csr(mstatus, MSTATUS_MIE);
-    __asm volatile("fence.i");
-    __asm volatile("li ra,0x20003120");
-    __asm volatile("ret");
+    __asm volatile(".option push\n"
+                   ".option arch, +zifencei\n"
+                   "fence.i\n"
+                   ".option pop\n"
+                   "li ra,0x20003120\n"
+                   "ret");
 }
 
 /*==============================================================================

@@ -18,6 +18,8 @@
 #define NUM_CACHEWAYS_AT_RESET 1
 
   .option norvc
+  .option arch, +zicsr
+  .option arch, +zifencei
   .section .text.init,"ax", %progbits
   .globl reset_vector
   .globl _start
