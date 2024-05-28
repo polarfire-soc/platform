@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2019 Microchip FPGA Embedded Systems Solutions.
+ * Copyright 2019-2024 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
@@ -219,7 +219,6 @@ typedef uint8_t (*mss_mac_phy_get_link_status_t)
 );
 
 
-#if MSS_MAC_USE_PHY_DP83867
 /***************************************************************************//**
  * Pointer to PHY extended read function.
  *
@@ -238,7 +237,7 @@ typedef uint8_t (*mss_mac_phy_get_link_status_t)
  *
  * - The _reg_ parameter identifies the register to read from.
  */
-typedef uint16_t (*mss_mac_phy_extended_read_t)(/* mss_mac_instance_t */ const void *this_mac, uint16_t reg);
+typedef uint16_t (*mss_mac_phy_extended_read_t)(/* mss_mac_instance_t */ const void *this_mac, uint16_t dev, uint16_t reg);
 
 
 /***************************************************************************//**
@@ -261,8 +260,7 @@ typedef uint16_t (*mss_mac_phy_extended_read_t)(/* mss_mac_instance_t */ const v
  *
  * - The _data_ parameter is the value to write to the register.
  */
-typedef void (*mss_mac_phy_extended_write_t)(/* mss_mac_instance_t */ const void *this_mac, uint16_t reg, uint16_t data);
-#endif
+typedef void (*mss_mac_phy_extended_write_t)(/* mss_mac_instance_t */ const void *this_mac, uint16_t dev, uint16_t reg, uint16_t data);
 
 
 /***************************************************************************//**
@@ -613,10 +611,8 @@ typedef struct __mss_mac_cfg_t
     mss_mac_phy_autonegotiate_t   phy_autonegotiate; /*!< Pointer to PHY initiate autonegotiation function */
     mss_mac_phy_autonegotiate_t   phy_mac_autonegotiate; /*!< Pointer to PHY initiate autonegotiation for SGMII link function */
     mss_mac_phy_get_link_status_t phy_get_link_status; /*!< Pointer to PHY get link status function */
-#if MSS_MAC_USE_PHY_DP83867
     mss_mac_phy_extended_read_t   phy_extended_read; /*!< Pointer to PHY extended read function */
     mss_mac_phy_extended_write_t  phy_extended_write; /*!< Pointer to PHY extended write function */
-#endif
     uint32_t queue_enable[MSS_MAC_QUEUE_COUNT]; /*!< Enables for additional queues */
     mss_mac_speed_mode_t speed_mode;    /*!< Link speed mode of operation */
     uint32_t speed_duplex_select;       /*!< Link speed and duplex mode allowed to setup a link when autonegotiation is enabled. */
