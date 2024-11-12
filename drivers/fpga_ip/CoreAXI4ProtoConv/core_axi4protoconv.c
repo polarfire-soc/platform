@@ -34,29 +34,16 @@ void
 PCDMA_init
 (
     PCDMA_instance_t  * this_PCDMA,
-    PCDMA_mode_t mode,
     addr_t base_addr
 )
 {
         HAL_ASSERT( this_PCDMA != NULL_INSTANCE );
         HAL_ASSERT( base_addr != 0u );
 
-        switch(mode)
+        if( this_PCDMA != NULL_INSTANCE )
         {
-            /* Set base address of S2MM hardware used by this instance.*/
-            case S2MM:
-                this_PCDMA->S2MM_base_addr = base_addr;
-            break;
-
-            /* Set base address of MM2S hardware used by this instance.*/
-            case MM2S:
-                this_PCDMA->MM2S_base_addr = base_addr;
-            break;
-
-            default:
-                this_PCDMA->S2MM_base_addr = NULL_VAL;
-                this_PCDMA->MM2S_base_addr = NULL_VAL;
-            break;
+            /* Set base address of CoreAXI4ProtoConv hardware. */
+            this_PCDMA->base_address = base_addr;
         }
 }
 

@@ -231,21 +231,8 @@ extern "C" {
 
 typedef struct PCDMA_instance
 {
-    addr_t    S2MM_base_addr;
-    addr_t    MM2S_base_addr;
+    addr_t    base_address;
 }PCDMA_instance_t;
-
-/***************************************************************************//**
- * This enumeration is used to select a specific mode, which can be either S2MM
- * (Stream to Memory Map) or MM2S (Memory Map to Stream). It is used as a
- * parameter to the PCDMA_init() function.
- */
-
-typedef enum PCDMA_mode
-{
-    S2MM = 0u,
-    MM2S = 1u
-}PCDMA_mode_t;
 
 /***************************************************************************//**
  * This enumeration is used to program the burst type, which can be either
@@ -307,7 +294,6 @@ void
 PCDMA_init
 (
     PCDMA_instance_t  * this_PCDMA,
-    PCDMA_mode_t mode,
     addr_t base_addr
 );
 
