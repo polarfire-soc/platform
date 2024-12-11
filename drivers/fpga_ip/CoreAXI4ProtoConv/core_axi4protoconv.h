@@ -52,11 +52,11 @@
   ==============================================================================
   Driver Configuration
   ==============================================================================
-  Your application software must configure the CoreAXI4ProtoConv driver through
-  calls to PCDMA_init() for each CoreAXI4ProtoConv instance in the hardware
-  design. PCDMA_init() function configures CoreAXI4ProtoConv S2MM and MM2S hardware
-  instance base address. The PCDMA_init() function must be called before any
-  other CoreAXI4ProtoConv driver functions can be called.
+  Your application software must configure the PCDMA driver through calls to
+  PCDMA_init() for each CoreAXI4ProtoConv instance in the hardware design.
+  PCDMA_init() function configures CoreAXI4ProtoConv hardware instance base
+  address. The PCDMA_init() function must be called before any other PCDMA
+  driver functions can be called.
 
   ==============================================================================
   Theory of Operation
@@ -182,8 +182,8 @@ extern "C" {
 #endif
 
 /*-------------------------------------------------------------------------*//**
-  S2MM Interrupt Identifier Number
-  =======================================
+  S2MM Interrupt Identifier
+  ============================
   The following constants specify the interrupt identifier number which is
   specifically used by the driver API. The S2MM_IE_DONE_IRQ,
   S2MM_IE_AXI4_ERR_IRQ, S2MM_IE_PKT_DROP_OVF_IRQ, and S2MM_IE_PKT_DROP_ERR_IRQ
@@ -205,7 +205,7 @@ extern "C" {
 #define S2MM_IE_PKT_DROP_ERR_IRQ     0x10u
 
 /*-------------------------------------------------------------------------*//**
-  MM2S Interrupt Identifier Number
+  MM2S Interrupt Identifier
   =======================================
   The following constants specify the interrupt identifier number which is
   specifically used by the driver API. The MM2S_IE_DONE_IRQ, and
@@ -241,14 +241,14 @@ typedef struct PCDMA_instance
 
   @example
   @code
-  PCDMA_S2MM_configure(&g_pcdma, 0x20, 0x80000000, 0xa1, FIXED);
+  PCDMA_S2MM_configure(&g_pcdma, 0x20, 0x80000000, 0xa1, PCDMA_BURST_TYPE_FIXED);
   @endcode
  */
 
 typedef enum PCDMA_burst_type
 {
-    FIXED = 0u,
-    INCR  = 1u
+    PCDMA_BURST_TYPE_FIXED = 0u,
+    PCDMA_BURST_TYPE_INCR  = 1u
 }PCDMA_burst_type_t;
 
 /*------------------------Public Function-------------------------------------*/
@@ -259,15 +259,11 @@ typedef enum PCDMA_burst_type
   structure. This function must be called before any other CoreAXI4ProtoConv
   driver functions are called.
 
-  @param this_PCDMA
-  The this_PCDMA parameter is a pointer to a PCDMA_instance_t structure that
+  @param this_pcdma
+  The this_pcdma parameter is a pointer to a PCDMA_instance_t structure that
   holds all the data related to the CoreAXI4ProtoConv instance being
   initialized. A pointer to this data structure is used in all subsequent calls
   to the PCDMA driver functions that operate on this CoreAXI4ProtoConv instance.
-
-  @param mode
-  The mode parameter is used to select a specific mode, which can be either S2MM
-  (Stream to Memory Map) or MM2S (Memory Map to Stream).
 
   @param base_addr
   The base_addr parameter is the base address in the processor's memory map for
@@ -278,22 +274,20 @@ typedef enum PCDMA_burst_type
 
   @example
   @code
-  #define COREAXI4PROTOCONV_MM2S_BASE_ADDR            0x60020000u
-  #define COREAXI4PROTOCONV_S2MM_BASE_ADDR            0x60030000u
+    #define COREAXI4PROTOCONV_BASE_ADDR            0x60030000u
 
-  PCDMA_instance_t  g_pcdma;
+    PCDMA_instance_t  g_pcdma;
 
-  void system_init( void )
-  {
-       PCDMA_init(&g_pcdma, S2MM, COREAXI4PROTOCONV_S2MM_BASE_ADDR);
-       PCDMA_init(&g_pcdma, MM2S, COREAXI4PROTOCONV_MM2S_BASE_ADDR);
-  }
+    void system_init( void )
+    {
+       PCDMA_init(&g_pcdma, COREAXI4PROTOCONV_BASE_ADDR);
+    }
   @endcode
  */
 void
 PCDMA_init
 (
-    PCDMA_instance_t  * this_PCDMA,
+    PCDMA_instance_t  * this_pcdma,
     addr_t base_addr
 );
 
@@ -302,8 +296,8 @@ PCDMA_init
   (Indicates the total number of bytes to be transferred), 64-bit address,
   command id, and burst type.
 
-  @param this_PCDMA
-  The this_PCDMA parameter is a pointer to a PCDMA_instance_t structure that
+  @param this_pcdma
+  The this_pcdma parameter is a pointer to a PCDMA_instance_t structure that
   holds all the data related to the CoreAXI4ProtoConv instance being
   initialized. A pointer to this data structure is used in all subsequent calls
   to the PCDMA driver functions that operate on this CoreAXI4ProtoConv instance.
@@ -319,8 +313,8 @@ PCDMA_init
          no effect. PCDMA_S2MM_get_len() provides the number of bytes received
          in an undefined burst transaction.
 
-  @param start_add
-  The start_add parameter specifies the 64-bit address of the AXI4 memory mapped
+  @param src_add
+  The src_add parameter specifies the 64-bit address of the AXI4 memory mapped
   interface.
 
   @param cmd_id
@@ -344,14 +338,14 @@ PCDMA_init
 
   @example
   @code
-       PCDMA_S2MM_configure(&g_pcdma, 0x30, 0x80000000, 0x66, INCR);
+  PCDMA_S2MM_configure(&g_pcdma, 0x30, 0x80000000, 0x66, PCDMA_BURST_TYPE_INCR);
   @endcode
  */
 void PCDMA_S2MM_configure
 (
-    PCDMA_instance_t  * this_PCDMA,
+    PCDMA_instance_t  * this_pcdma,
     uint32_t xfr_size,
-    uint64_t start_add,
+    uint64_t src_add,
     uint16_t cmd_id,
     uint8_t burst_type
 );
@@ -360,8 +354,8 @@ void PCDMA_S2MM_configure
   The PCDMA_S2MM_start_transfer() function is used to initiate the S2MM data
   transfer from the AXI4-Stream interface to the AXI4-Memory Mapped interface.
 
-  @param this_PCDMA
-  The this_PCDMA parameter is a pointer to a PCDMA_instance_t structure that
+  @param this_pcdma
+  The this_pcdma parameter is a pointer to a PCDMA_instance_t structure that
   holds all the data related to the CoreAXI4ProtoConv instance being
   initialized. A pointer to this data structure is used in all subsequent calls
   to the PCDMA driver functions that operate on this CoreAXI4ProtoConv instance.
@@ -376,15 +370,15 @@ void PCDMA_S2MM_configure
  */
 void PCDMA_S2MM_start_transfer
 (
-    PCDMA_instance_t  * this_PCDMA
+    PCDMA_instance_t  * this_pcdma
 );
 
 /***************************************************************************//**
   The PCDMA_S2MM_get_status() function is used to know the current status of
   the data transfer.
 
-  @param this_PCDMA
-  The this_PCDMA parameter is a pointer to a PCDMA_instance_t structure that
+  @param this_pcdma
+  The this_pcdma parameter is a pointer to a PCDMA_instance_t structure that
   holds all the data related to the CoreAXI4ProtoConv instance being
   initialized. A pointer to this data structure is used in all subsequent calls
   to the PCDMA driver functions that operate on this CoreAXI4ProtoConv instance.
@@ -399,15 +393,15 @@ void PCDMA_S2MM_start_transfer
  */
 uint32_t PCDMA_S2MM_get_status
 (
-    PCDMA_instance_t  * this_PCDMA
+    PCDMA_instance_t  * this_pcdma
 );
 
 /***************************************************************************//**
   The PCDMA_S2MM_enable_irq() function enables the interrupts specified by the
   irq_type parameter.
 
-  @param this_PCDMA
-  The this_PCDMA parameter is a pointer to a PCDMA_instance_t structure that
+  @param this_pcdma
+  The this_pcdma parameter is a pointer to a PCDMA_instance_t structure that
   holds all the data related to the CoreAXI4ProtoConv instance being
   initialized. A pointer to this data structure is used in all subsequent calls
   to the PCDMA driver functions that operate on this CoreAXI4ProtoConv instance.
@@ -433,7 +427,7 @@ uint32_t PCDMA_S2MM_get_status
  */
 void PCDMA_S2MM_enable_irq
 (
-   PCDMA_instance_t  * this_PCDMA,
+   PCDMA_instance_t  * this_pcdma,
    uint32_t irq_type
 );
 
@@ -441,8 +435,8 @@ void PCDMA_S2MM_enable_irq
   The PCDMA_S2MM_disable_irq() function disables the interrupts specified by the
   irq_type parameter.
 
-  @param this_PCDMA
-  The this_PCDMA parameter is a pointer to a PCDMA_instance_t structure that
+  @param this_pcdma
+  The this_pcdma parameter is a pointer to a PCDMA_instance_t structure that
   holds all the data related to the CoreAXI4ProtoConv instance being
   initialized. A pointer to this data structure is used in all subsequent calls
   to the PCDMA driver functions that operate on this CoreAXI4ProtoConv instance.
@@ -463,12 +457,12 @@ void PCDMA_S2MM_enable_irq
 
   @example
   @code
-       PCDMA_S2MM_disable_irq(&g_pcdma, S2MM_IE_DONE_IRQ | S2MM_IE_AXI4_ERR_IRQ);
+      PCDMA_S2MM_disable_irq(&g_pcdma, S2MM_IE_DONE_IRQ | S2MM_IE_AXI4_ERR_IRQ);
   @endcode
  */
 void PCDMA_S2MM_disable_irq
 (
-   PCDMA_instance_t  * this_PCDMA,
+   PCDMA_instance_t  * this_pcdma,
    uint32_t irq_type
 );
 
@@ -476,8 +470,8 @@ void PCDMA_S2MM_disable_irq
   The PCDMA_S2MM_get_int_src() function is used to know the current status of
   the data transfer when interrupt method is used.
 
-  @param this_PCDMA
-  The this_PCDMA parameter is a pointer to a PCDMA_instance_t structure that
+  @param this_pcdma
+  The this_pcdma parameter is a pointer to a PCDMA_instance_t structure that
   holds all the data related to the CoreAXI4ProtoConv instance being
   initialized. A pointer to this data structure is used in all subsequent calls
   to the PCDMA driver functions that operate on this CoreAXI4ProtoConv instance.
@@ -492,15 +486,15 @@ void PCDMA_S2MM_disable_irq
  */
 uint32_t PCDMA_S2MM_get_int_src
 (
-   PCDMA_instance_t  * this_PCDMA
+   PCDMA_instance_t  * this_pcdma
 );
 
 /***************************************************************************//**
   The PCDMA_S2MM_clr_int_src() function clears the interrupts specified by the
   irq_type parameter.
 
-  @param this_PCDMA
-  The this_PCDMA parameter is a pointer to a PCDMA_instance_t structure that
+  @param this_pcdma
+  The this_pcdma parameter is a pointer to a PCDMA_instance_t structure that
   holds all the data related to the CoreAXI4ProtoConv instance being
   initialized. A pointer to this data structure is used in all subsequent calls
   to the PCDMA driver functions that operate on this CoreAXI4ProtoConv instance.
@@ -521,15 +515,15 @@ uint32_t PCDMA_S2MM_get_int_src
 
   @example
   @code
-       PCDMA_S2MM_clr_int_src(&g_pcdma, S2MM_IE_DONE_IRQ | S2MM_IE_AXI4_ERR_IRQ);
+      PCDMA_S2MM_clr_int_src(&g_pcdma, S2MM_IE_DONE_IRQ | S2MM_IE_AXI4_ERR_IRQ);
   @endcode
  */
 void PCDMA_S2MM_clr_int_src
 (
-   PCDMA_instance_t  * this_PCDMA,
+   PCDMA_instance_t  * this_pcdma,
    uint32_t irq_type
 );
-#ifdef S2MM_UNDEF_BSTLEN
+#ifdef IP_Config_S2MM_UNDEFINED_BURST_LENGTH_ENABLE
 
 /***************************************************************************//**
   The PCDMA_S2MM_get_len() function used to know the number of received bytes
@@ -539,8 +533,8 @@ void PCDMA_S2MM_clr_int_src
   Note: This API must be used when undefined burst transaction is enabled in the
         CoreAXI4ProtoConv IP configurator.
 
-  @param this_PCDMA
-  The this_PCDMA parameter is a pointer to a PCDMA_instance_t structure that
+  @param this_pcdma
+  The this_pcdma parameter is a pointer to a PCDMA_instance_t structure that
   holds all the data related to the CoreAXI4ProtoConv instance being
   initialized. A pointer to this data structure is used in all subsequent calls
   to the PCDMA driver functions that operate on this CoreAXI4ProtoConv instance.
@@ -556,7 +550,7 @@ void PCDMA_S2MM_clr_int_src
  */
 uint32_t PCDMA_S2MM_get_len
 (
-   PCDMA_instance_t  * this_PCDMA
+   PCDMA_instance_t  * this_pcdma
 );
 #endif
 
@@ -565,8 +559,8 @@ uint32_t PCDMA_S2MM_get_len
  (Indicates the total number of bytes to be transferred), 64-bit address,
  command id, and burst type.
 
-  @param this_PCDMA
-  The this_PCDMA parameter is a pointer to a PCDMA_instance_t structure that
+  @param this_pcdma
+  The this_pcdma parameter is a pointer to a PCDMA_instance_t structure that
   holds all the data related to the CoreAXI4ProtoConv instance being
   initialized. A pointer to this data structure is used in all subsequent calls
   to the PCDMA driver functions that operate on this CoreAXI4ProtoConv instance.
@@ -577,8 +571,8 @@ uint32_t PCDMA_S2MM_get_len
 
   Note1: xfr_size parameter must not program zero value.
 
-  @param start_add
-  The start_add parameter specifies the 64-bit address of the AXI4 memory mapped
+  @param src_add
+  The src_add parameter specifies the 64-bit address of the AXI4 memory mapped
   interface.
 
   @param cmd_id
@@ -602,14 +596,14 @@ uint32_t PCDMA_S2MM_get_len
 
   @example
   @code
-       PCDMA_MM2S_configure(&g_pcdma, 0x20, 0x70000000, 0xc6, INCR);
+  PCDMA_MM2S_configure(&g_pcdma, 0x20, 0x70000000, 0xc6, PCDMA_BURST_TYPE_INCR);
   @endcode
  */
 void PCDMA_MM2S_configure
 (
-    PCDMA_instance_t  * this_PCDMA,
+    PCDMA_instance_t  * this_pcdma,
     uint32_t xfr_size,
-    uint64_t start_add,
+    uint64_t src_add,
     uint16_t cmd_id,
     uint8_t burst_type
 );
@@ -618,8 +612,8 @@ void PCDMA_MM2S_configure
   The PCDMA_MM2S_start_transfer() function is used to initiate the S2MM data
   transfer from the AXI4-Memory Mapped interface to the AXI4-Stream interface.
 
-  @param this_PCDMA
-  The this_PCDMA parameter is a pointer to a PCDMA_instance_t structure that
+  @param this_pcdma
+  The this_pcdma parameter is a pointer to a PCDMA_instance_t structure that
   holds all the data related to the CoreAXI4ProtoConv instance being
   initialized. A pointer to this data structure is used in all subsequent calls
   to the PCDMA driver functions that operate on this CoreAXI4ProtoConv instance.
@@ -634,15 +628,15 @@ void PCDMA_MM2S_configure
  */
 void PCDMA_MM2S_start_transfer
 (
-    PCDMA_instance_t  * this_PCDMA
+    PCDMA_instance_t  * this_pcdma
 );
 
 /***************************************************************************//**
   The PCDMA_MM2S_get_status() function is used to know the current status of
   the data transfer.
 
-  @param this_PCDMA
-  The this_PCDMA parameter is a pointer to a PCDMA_instance_t structure that
+  @param this_pcdma
+  The this_pcdma parameter is a pointer to a PCDMA_instance_t structure that
   holds all the data related to the CoreAXI4ProtoConv instance being
   initialized. A pointer to this data structure is used in all subsequent calls
   to the PCDMA driver functions that operate on this CoreAXI4ProtoConv instance.
@@ -657,15 +651,15 @@ void PCDMA_MM2S_start_transfer
  */
 uint32_t PCDMA_MM2S_get_status
 (
-    PCDMA_instance_t  * this_PCDMA
+    PCDMA_instance_t  * this_pcdma
 );
 
 /***************************************************************************//**
   The PCDMA_MM2S_enable_irq() function enables the interrupts specified by the
   irq_type parameter.
 
-  @param this_PCDMA
-  The this_PCDMA parameter is a pointer to a PCDMA_instance_t structure that
+  @param this_pcdma
+  The this_pcdma parameter is a pointer to a PCDMA_instance_t structure that
   holds all the data related to the CoreAXI4ProtoConv instance being
   initialized. A pointer to this data structure is used in all subsequent calls
   to the PCDMA driver functions that operate on this
@@ -690,7 +684,7 @@ uint32_t PCDMA_MM2S_get_status
  */
 void PCDMA_MM2S_enable_irq
 (
-   PCDMA_instance_t  * this_PCDMA,
+   PCDMA_instance_t  * this_pcdma,
    uint32_t irq_type
 );
 
@@ -698,8 +692,8 @@ void PCDMA_MM2S_enable_irq
   The PCDMA_MM2S_disable_irq() function disables the interrupts specified by the
   irq_type parameter.
 
-  @param this_PCDMA
-  The this_PCDMA parameter is a pointer to a PCDMA_instance_t structure that
+  @param this_pcdma
+  The this_pcdma parameter is a pointer to a PCDMA_instance_t structure that
   holds all the data related to the CoreAXI4ProtoConv instance being
   initialized. A pointer to this data structure is used in all subsequent calls
   to the PCDMA driver functions that operate on this CoreAXI4ProtoConv instance.
@@ -718,12 +712,12 @@ void PCDMA_MM2S_enable_irq
 
   @example
   @code
-       PCDMA_MM2S_disable_irq(&g_pcdma, MM2S_IE_DONE_IRQ | MM2S_IE_AXI4_ERR_IRQ);
+      PCDMA_MM2S_disable_irq(&g_pcdma, MM2S_IE_DONE_IRQ | MM2S_IE_AXI4_ERR_IRQ);
   @endcode
  */
 void PCDMA_MM2S_disable_irq
 (
-   PCDMA_instance_t  * this_PCDMA,
+   PCDMA_instance_t  * this_pcdma,
    uint32_t irq_type
 );
 
@@ -731,8 +725,8 @@ void PCDMA_MM2S_disable_irq
   The PCDMA_MM2S_get_int_src() function is used to know the current status of
   the data transfer when interrupt method is used.
 
-  @param this_PCDMA
-  The this_PCDMA parameter is a pointer to a PCDMA_instance_t structure that
+  @param this_pcdma
+  The this_pcdma parameter is a pointer to a PCDMA_instance_t structure that
   holds all the data related to the CoreAXI4ProtoConv instance being
   initialized. A pointer to this data structure is used in all subsequent calls
   to the PCDMA driver functions that operate on this CoreAXI4ProtoConv instance.
@@ -749,15 +743,15 @@ void PCDMA_MM2S_disable_irq
 
 uint32_t PCDMA_MM2S_get_int_src
 (
-   PCDMA_instance_t  * this_PCDMA
+   PCDMA_instance_t  * this_pcdma
 );
 
 /***************************************************************************//**
   The PCDMA_MM2S_clr_int_src() function clears the interrupts specified by the
   irq_type parameter.
 
-  @param this_PCDMA
-  The this_PCDMA parameter is a pointer to a PCDMA_instance_t structure that
+  @param this_pcdma
+  The this_pcdma parameter is a pointer to a PCDMA_instance_t structure that
   holds all the data related to the CoreAXI4ProtoConv instance being
   initialized. A pointer to this data structure is used in all subsequent calls
   to the PCDMA driver functions that operate on this CoreAXI4ProtoConv instance.
@@ -776,12 +770,12 @@ uint32_t PCDMA_MM2S_get_int_src
 
   @example
   @code
-       PCDMA_MM2S_clr_int_src(&g_pcdma, MM2S_IE_DONE_IRQ | MM2S_IE_AXI4_ERR_IRQ);
+      PCDMA_MM2S_clr_int_src(&g_pcdma, MM2S_IE_DONE_IRQ | MM2S_IE_AXI4_ERR_IRQ);
   @endcode
  */
 void PCDMA_MM2S_clr_int_src
 (
-   PCDMA_instance_t  * this_PCDMA,
+   PCDMA_instance_t  * this_pcdma,
    uint32_t irq_type
 );
 

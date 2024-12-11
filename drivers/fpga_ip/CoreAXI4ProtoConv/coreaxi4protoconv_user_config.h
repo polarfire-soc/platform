@@ -1,5 +1,5 @@
 /*******************************************************************************
- * (c) Copyright 2024 Microchip FPGA Embedded Systems Solutions.
+ * (c) Copyright 2025 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
