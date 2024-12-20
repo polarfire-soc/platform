@@ -27,11 +27,14 @@
  * Local Defines
  */
 /* This string is updated if any change to ddr driver */
-#define DDR_DRIVER_VERSION_STRING   "0.4.024"
+#define DDR_DRIVER_VERSION_STRING   "0.4.026"
 const char DDR_DRIVER_VERSION[] = DDR_DRIVER_VERSION_STRING;
 /* Version     |  Comment                                                     */
+/* 0.4.026     |  Added power features                                        */
+/* 0.4.025     |  Corrected cache flush funtion so upper address range        */
+/*             |  (0x10_xxxx_xxxx) is now included in the flush.              */
 /* 0.4.024     |  Self-refresh is disabled from UI, api functions added for   */
-/*             |  turning self-refresh off and on.                                         */
+/*             |  turning self-refresh off and on.                            */
 /* 0.4.023     |  Changed default ADDCMD CLK push order for DDR4 to 0,45,90   */
 /* 0.4.022     |  Tidied comments and simulation reference- no code change    */
 /* 0.4.021     |  Added options to increase post training tests during        */
@@ -220,6 +223,17 @@ static void lpddr4_manual_training(DDR_TYPE ddr_type, uint8_t * refclk_sweep_ind
 static void non_lpddr4_address_cmd_training(DDR_TYPE ddr_type, uint8_t * refclk_sweep_index, uint32_t *bclk_phase, uint32_t *bclk90_phase, uint32_t *refclk_phase );
 #endif
 static void address_cmd_training_with_ck_push(DDR_TYPE ddr_type, uint8_t * refclk_sweep_index, uint32_t retry_count, uint32_t *bclk_phase, uint32_t *bclk90_phase, uint32_t *refclk_phase, uint8_t *refclk_offset);
+static uint32_t set_low_power_ddr_addcmd_pins(void);
+static uint32_t revert_low_power_ddr_addcmd_pins(uint32_t reg_value);
+static uint32_t set_low_power_ddr_clk_pin(void);
+static uint32_t revert_low_power_ddr_clk_pins(uint32_t reg_value);
+static uint32_t set_low_power_ddr_dq_pins(void);
+static uint32_t revert_low_power_ddr_dq_pins(uint32_t reg_value);
+static uint32_t set_low_power_ddr_dqs_pins(void);
+static uint32_t revert_low_power_ddr_dqs_pins(uint32_t reg_value);
+static void set_low_power_odt(void);
+static void revert_low_power_odt(void);
+static void reset_sync_iog(void);
 
 /*******************************************************************************
  * External function declarations
@@ -246,6 +260,11 @@ uint32_t noise_ena = 0x0;
  * Public Functions - API
  ******************************************************************************/
 
+/**
+ * mpfs_hal_turn_ddr_selfrefresh_on(void)
+ *
+ * DDR self refresh is turned on by thwe controller
+ */
 void mpfs_hal_turn_ddr_selfrefresh_on(void)
 {
     uint32_t chip_selects;
@@ -269,14 +288,21 @@ void mpfs_hal_turn_ddr_selfrefresh_on(void)
 	DDRCFG->MC_BASE2.INIT_SELF_REFRESH.INIT_SELF_REFRESH = chip_selects;
 }
 
+/**
+ * mpfs_hal_turn_ddr_selfrefresh_off()
+ *
+ * Turn off self refresh.
+ */
 void mpfs_hal_turn_ddr_selfrefresh_off(void)
 {
-	/*
-	 * Turn on user setting for self refresh
-	 */
 	DDRCFG->MC_BASE2.INIT_SELF_REFRESH.INIT_SELF_REFRESH = 0U;
 }
 
+/**
+ * mpfs_hal_ddr_selfrefresh_status()
+ *
+ * @return Selff refresh status
+ */
 uint32_t mpfs_hal_ddr_selfrefresh_status(void)
 {
     uint32_t status = 1U; /* self refresh on */
@@ -296,6 +322,161 @@ uint32_t mpfs_hal_ddr_selfrefresh_status(void)
         }
     }
     return status;
+}
+
+/**
+ *
+ * @param lp_state
+ * @param lp_options
+ */
+void mpfs_hal_ddr_logic_power_state(uint32_t lp_state, uint32_t lp_options)
+{
+    static uint32_t lp_addcmd = 4U;
+    static uint32_t lp_clk_pin = 4U;
+    static uint32_t lp_dq_pins = 4U;
+    static uint32_t lp_dqs_pins = 4U;
+
+    switch(lp_state)
+    {
+        case DDR_LOW_POWER:
+            if((lp_options & (0x01 << 0U)) != 0U)
+            {
+                ddr_pll_config_scb_turn_off_pll_outputs();
+            }
+            if((lp_options & (0x01 << 1U)) != 0U)
+            {
+                lp_addcmd = set_low_power_ddr_addcmd_pins();
+            }
+            if((lp_options & (0x01 << 2U)) != 0U)
+            {
+                lp_clk_pin = set_low_power_ddr_clk_pin();
+            }
+            if((lp_options & (0x01 << 3U)) != 0U)
+            {
+                lp_dq_pins = set_low_power_ddr_dq_pins();
+            }
+            if((lp_options & (0x01 << 4U)) != 0U)
+            {
+                lp_dqs_pins = set_low_power_ddr_dqs_pins();
+            }
+            if((lp_options & (0x01 << 5U)) != 0U)
+            {
+                set_low_power_odt();
+            }
+            break;
+
+        default:
+        case DDR_NORMAL_POWER:
+            if((lp_options & (0x01 << 0U)) != 0U)
+            {
+                ddr_pll_config_scb_turn_on_pll_outputs();
+                delay(DELAY_CYCLES_2MS);
+                reset_sync_iog();
+            }
+            if((lp_options & (0x01 << 1U)) != 0U)
+            {
+                revert_low_power_ddr_addcmd_pins(lp_addcmd);
+            }
+            if((lp_options & (0x01 << 2U)) != 0U)
+            {
+                revert_low_power_ddr_clk_pins(lp_clk_pin);
+            }
+            if((lp_options & (0x01 << 3U)) != 0U)
+            {
+                revert_low_power_ddr_dq_pins(lp_dq_pins);
+            }
+            if((lp_options & (0x01 << 4U)) != 0U)
+            {
+                revert_low_power_ddr_dqs_pins(lp_dqs_pins);
+            }
+            if((lp_options & (0x01 << 5U)) != 0U)
+            {
+                revert_low_power_odt();
+            }
+            break;
+    }
+}
+
+static uint32_t set_low_power_ddr_addcmd_pins(void)
+{
+    uint32_t reg_setting;
+    /*
+     * set ibuff mode to 7 in off mode
+     */
+    CFG_DDR_SGMII_PHY->rpc95.rpc95 = 0x07;      /* addcmd I/O*/
+    return (reg_setting);
+}
+
+static uint32_t revert_low_power_ddr_addcmd_pins(uint32_t reg_value)
+{
+    CFG_DDR_SGMII_PHY->rpc95.rpc95 = reg_value;
+}
+
+static uint32_t set_low_power_ddr_clk_pin(void)
+{
+    uint32_t reg_setting;
+    /*
+     * set ibuff mode to 7 in off mode
+     */
+    CFG_DDR_SGMII_PHY->rpc96.rpc96 = 0x07;      /* clk */
+    return (reg_setting);
+}
+
+static uint32_t revert_low_power_ddr_clk_pins(uint32_t reg_value)
+{
+    CFG_DDR_SGMII_PHY->rpc96.rpc96 = reg_value;
+}
+static uint32_t set_low_power_ddr_dq_pins(void)
+{
+    uint32_t reg_setting;
+    /*
+     * set ibuff mode to 7 in off mode
+     */
+    CFG_DDR_SGMII_PHY->rpc97.rpc97 = 0x07;      /* dq */
+    return (reg_setting);
+}
+static uint32_t revert_low_power_ddr_dq_pins(uint32_t reg_value)
+{
+    CFG_DDR_SGMII_PHY->rpc97.rpc97 = reg_value;
+}
+
+static uint32_t set_low_power_ddr_dqs_pins(void)
+{
+    uint32_t reg_setting;
+    /*
+     * set ibuff mode to 7 in off mode
+     */
+    CFG_DDR_SGMII_PHY->rpc98.rpc98 = 0x07;      /* dqs */
+    return (reg_setting);
+}
+
+static uint32_t revert_low_power_ddr_dqs_pins(uint32_t reg_value)
+{
+    CFG_DDR_SGMII_PHY->rpc98.rpc98 = reg_value;
+}
+
+static void set_low_power_odt(void)
+{
+    //CFG_DDR_SGMII_PHY->rpc1_ODT.rpc1_ODT = LIBERO_SETTING_RPC_ODT_ADDCMD;
+    //CFG_DDR_SGMII_PHY->rpc2_ODT.rpc2_ODT = LIBERO_SETTING_RPC_ODT_CLK;
+    CFG_DDR_SGMII_PHY->rpc3_ODT.rpc3_ODT = 0U;
+    CFG_DDR_SGMII_PHY->rpc4_ODT.rpc4_ODT = 0U;
+}
+
+static void revert_low_power_odt(void)
+{
+    //CFG_DDR_SGMII_PHY->rpc1_ODT.rpc1_ODT = LIBERO_SETTING_RPC_ODT_ADDCMD;
+    //CFG_DDR_SGMII_PHY->rpc2_ODT.rpc2_ODT = LIBERO_SETTING_RPC_ODT_CLK;
+    CFG_DDR_SGMII_PHY->rpc3_ODT.rpc3_ODT = LIBERO_SETTING_RPC_ODT_DQ;
+    CFG_DDR_SGMII_PHY->rpc4_ODT.rpc4_ODT = LIBERO_SETTING_RPC_ODT_DQS;
+}
+
+static void reset_sync_iog(void)
+{
+    CFG_DDR_SGMII_PHY->expert_mode_en.expert_mode_en = 0x9U;
+    CFG_DDR_SGMII_PHY->expert_dlycnt_pause.expert_dlycnt_pause = 0x0000003FU;
+    CFG_DDR_SGMII_PHY->expert_dlycnt_pause.expert_dlycnt_pause = 0x00000000U;
+    CFG_DDR_SGMII_PHY->expert_mode_en.expert_mode_en = 0x8U;
 }
 
 /***************************************************************************//**
@@ -2693,7 +2874,6 @@ static void ddr_off_mode(void)
 
      /*
       * set ibuff mode to 7 in off mode
-      *
       */
      CFG_DDR_SGMII_PHY->rpc95.rpc95 = 0x07;     /* addcmd I/O*/
      CFG_DDR_SGMII_PHY->rpc96.rpc96 = 0x07;     /* clk */
@@ -4466,6 +4646,19 @@ __attribute__((weak)) void clear_bootup_cache_ways(void)
     /* clear using my d-cache ways */
     fill_cache_new_seg_address((void *)BASE_ADDRESS_CACHED_32_DDR,
                                (void *)(BASE_ADDRESS_CACHED_32_DDR +
+                                        TWO_MBYTES));
+
+    /* clear using pdma routine, uses the 4 channels */
+    pattern_test.base = LIBERO_SETTING_DDR_64_CACHE;
+    pattern_test.size = TWO_MBYTES*4;
+    pattern_test.pattern_type = DDR_INIT_FILL;
+    pattern_test.pattern_offset = 0U;
+
+    load_ddr_pattern(&pattern_test);
+
+    /* clear using my d-cache ways */
+    fill_cache_new_seg_address((void *)BASE_ADDRESS_CACHED_64_DDR,
+                               (void *)(BASE_ADDRESS_CACHED_64_DDR +
                                         TWO_MBYTES));
 }
 
