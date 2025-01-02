@@ -338,7 +338,16 @@ PCDMA_init
 
   @example
   @code
-  PCDMA_S2MM_configure(&g_pcdma, 0x30, 0x80000000, 0x66, PCDMA_BURST_TYPE_INCR);
+    #define COREAXI4PROTOCONV_BASE_ADDR                 0x60030000u
+    #define DDR_BASE_ADDR                               0x80010000u
+    #define S2MM_CMD_ID                                 0xb6
+    #define TRANSFER_SIZE_BYTES                         1000
+
+    PCDMA_instance_t  g_pcdma;
+
+    PCDMA_init(&g_pcdma, COREAXI4PROTOCONV_BASE_ADDR);
+    PCDMA_S2MM_configure(&g_pcdma, TRANSFER_SIZE_BYTES, DDR_BASE_ADDR, \
+                               S2MM_CMD_ID, PCDMA_BURST_TYPE_INCR);
   @endcode
  */
 void PCDMA_S2MM_configure
@@ -365,7 +374,17 @@ void PCDMA_S2MM_configure
 
   @example
   @code
-       PCDMA_S2MM_start_transfer(&g_pcdma);
+    #define COREAXI4PROTOCONV_BASE_ADDR                 0x60030000u
+    #define DDR_BASE_ADDR                               0x80010000u
+    #define S2MM_CMD_ID                                 0xb6
+    #define TRANSFER_SIZE_BYTES                         1000
+
+    PCDMA_instance_t  g_pcdma;
+
+    PCDMA_init(&g_pcdma, COREAXI4PROTOCONV_BASE_ADDR);
+    PCDMA_S2MM_configure(&g_pcdma, TRANSFER_SIZE_BYTES, DDR_BASE_ADDR, \
+                                       S2MM_CMD_ID, PCDMA_BURST_TYPE_INCR);
+    PCDMA_S2MM_start_transfer(&g_pcdma);
   @endcode
  */
 void PCDMA_S2MM_start_transfer
@@ -388,7 +407,18 @@ void PCDMA_S2MM_start_transfer
 
   @example
   @code
-       uint32_t reg_value = PCDMA_S2MM_get_status(&g_pcdma);
+    #define COREAXI4PROTOCONV_BASE_ADDR                 0x60030000u
+    #define DDR_BASE_ADDR                               0x80010000u
+    #define S2MM_CMD_ID                                 0xb6
+    #define TRANSFER_SIZE_BYTES                         1000
+
+    PCDMA_instance_t  g_pcdma;
+
+    PCDMA_init(&g_pcdma, COREAXI4PROTOCONV_BASE_ADDR);
+    PCDMA_S2MM_configure(&g_pcdma, TRANSFER_SIZE_BYTES, DDR_BASE_ADDR, \
+                                       S2MM_CMD_ID, PCDMA_BURST_TYPE_INCR);
+    PCDMA_S2MM_start_transfer(&g_pcdma);
+    uint32_t reg_value = PCDMA_S2MM_get_status(&g_pcdma);
   @endcode
  */
 uint32_t PCDMA_S2MM_get_status
@@ -422,7 +452,18 @@ uint32_t PCDMA_S2MM_get_status
 
   @example
   @code
-       PCDMA_S2MM_enable_irq(&g_pcdma, S2MM_IE_DONE_IRQ | S2MM_IE_AXI4_ERR_IRQ);
+    #define COREAXI4PROTOCONV_BASE_ADDR                 0x60030000u
+    #define DDR_BASE_ADDR                               0x80010000u
+    #define S2MM_CMD_ID                                 0xb6
+    #define TRANSFER_SIZE_BYTES                         1000
+
+    PCDMA_instance_t  g_pcdma;
+
+    PCDMA_init(&g_pcdma, COREAXI4PROTOCONV_BASE_ADDR);
+    PCDMA_S2MM_enable_irq(&g_pcdma, S2MM_IE_DONE_IRQ | S2MM_IE_AXI4_ERR_IRQ);
+    PCDMA_S2MM_configure(&g_pcdma, TRANSFER_SIZE_BYTES, DDR_BASE_ADDR, \
+                                       S2MM_CMD_ID, PCDMA_BURST_TYPE_INCR);
+    PCDMA_S2MM_start_transfer(&g_pcdma);
   @endcode
  */
 void PCDMA_S2MM_enable_irq
@@ -457,7 +498,19 @@ void PCDMA_S2MM_enable_irq
 
   @example
   @code
-      PCDMA_S2MM_disable_irq(&g_pcdma, S2MM_IE_DONE_IRQ | S2MM_IE_AXI4_ERR_IRQ);
+    #define COREAXI4PROTOCONV_BASE_ADDR                 0x60030000u
+    #define DDR_BASE_ADDR                               0x80010000u
+    #define S2MM_CMD_ID                                 0xb6
+    #define TRANSFER_SIZE_BYTES                         1000
+
+    PCDMA_instance_t  g_pcdma;
+
+    PCDMA_init(&g_pcdma, COREAXI4PROTOCONV_BASE_ADDR);
+    PCDMA_S2MM_enable_irq(&g_pcdma, S2MM_IE_DONE_IRQ | S2MM_IE_AXI4_ERR_IRQ);
+    PCDMA_S2MM_configure(&g_pcdma, TRANSFER_SIZE_BYTES, DDR_BASE_ADDR, \
+                                       S2MM_CMD_ID, PCDMA_BURST_TYPE_INCR);
+    PCDMA_S2MM_start_transfer(&g_pcdma);
+    PCDMA_S2MM_disable_irq(&g_pcdma, S2MM_IE_DONE_IRQ | S2MM_IE_AXI4_ERR_IRQ);
   @endcode
  */
 void PCDMA_S2MM_disable_irq
@@ -481,7 +534,19 @@ void PCDMA_S2MM_disable_irq
 
   @example
   @code
-       uint32_t reg_value = PCDMA_S2MM_get_int_src(&g_pcdma);
+    #define COREAXI4PROTOCONV_BASE_ADDR                 0x60030000u
+    #define DDR_BASE_ADDR                               0x80010000u
+    #define S2MM_CMD_ID                                 0xb6
+    #define TRANSFER_SIZE_BYTES                         1000
+
+    PCDMA_instance_t  g_pcdma;
+
+    PCDMA_init(&g_pcdma, COREAXI4PROTOCONV_BASE_ADDR);
+    PCDMA_S2MM_enable_irq(&g_pcdma, S2MM_IE_DONE_IRQ | S2MM_IE_AXI4_ERR_IRQ);
+    PCDMA_S2MM_configure(&g_pcdma, TRANSFER_SIZE_BYTES, DDR_BASE_ADDR, \
+                                       S2MM_CMD_ID, PCDMA_BURST_TYPE_INCR);
+    PCDMA_S2MM_start_transfer(&g_pcdma);
+    uint32_t reg_value = PCDMA_S2MM_get_int_src(&g_pcdma);
   @endcode
  */
 uint32_t PCDMA_S2MM_get_int_src
@@ -515,7 +580,19 @@ uint32_t PCDMA_S2MM_get_int_src
 
   @example
   @code
-      PCDMA_S2MM_clr_int_src(&g_pcdma, S2MM_IE_DONE_IRQ | S2MM_IE_AXI4_ERR_IRQ);
+    #define COREAXI4PROTOCONV_BASE_ADDR                 0x60030000u
+    #define DDR_BASE_ADDR                               0x80010000u
+    #define S2MM_CMD_ID                                 0xb6
+    #define TRANSFER_SIZE_BYTES                         1000
+
+    PCDMA_instance_t  g_pcdma;
+
+    PCDMA_init(&g_pcdma, COREAXI4PROTOCONV_BASE_ADDR);
+    PCDMA_S2MM_enable_irq(&g_pcdma, S2MM_IE_DONE_IRQ | S2MM_IE_AXI4_ERR_IRQ);
+    PCDMA_S2MM_configure(&g_pcdma, TRANSFER_SIZE_BYTES, DDR_BASE_ADDR, \
+                                       S2MM_CMD_ID, PCDMA_BURST_TYPE_INCR);
+    PCDMA_S2MM_start_transfer(&g_pcdma);
+    PCDMA_S2MM_clr_int_src(&g_pcdma, S2MM_IE_DONE_IRQ | S2MM_IE_AXI4_ERR_IRQ);
   @endcode
  */
 void PCDMA_S2MM_clr_int_src
@@ -545,7 +622,18 @@ void PCDMA_S2MM_clr_int_src
 
   @example
   @code
-       PCDMA_S2MM_get_len(&g_pcdma);
+    #define COREAXI4PROTOCONV_BASE_ADDR                 0x60030000u
+    #define DDR_BASE_ADDR                               0x80010000u
+    #define S2MM_CMD_ID                                 0xb6
+    #define TRANSFER_SIZE_BYTES                         1000
+
+    PCDMA_instance_t  g_pcdma;
+
+    PCDMA_init(&g_pcdma, COREAXI4PROTOCONV_BASE_ADDR);
+    PCDMA_S2MM_configure(&g_pcdma, TRANSFER_SIZE_BYTES, DDR_BASE_ADDR, \
+                                       S2MM_CMD_ID, PCDMA_BURST_TYPE_INCR);
+    PCDMA_S2MM_start_transfer(&g_pcdma);
+    uint32_t reg_value = PCDMA_S2MM_get_len(&g_pcdma);
   @endcode
  */
 uint32_t PCDMA_S2MM_get_len
@@ -596,7 +684,16 @@ uint32_t PCDMA_S2MM_get_len
 
   @example
   @code
-  PCDMA_MM2S_configure(&g_pcdma, 0x20, 0x70000000, 0xc6, PCDMA_BURST_TYPE_INCR);
+    #define COREAXI4PROTOCONV_BASE_ADDR                 0x60030000u
+    #define DDR_BASE_ADDR                               0x80010000u
+    #define MM2S_CMD_ID                                 0xa6
+    #define TRANSFER_SIZE_BYTES                         1000
+
+    PCDMA_instance_t  g_pcdma;
+
+    PCDMA_init(&g_pcdma, COREAXI4PROTOCONV_BASE_ADDR);
+    PCDMA_MM2S_configure(&g_pcdma, TRANSFER_SIZE_BYTES, DDR_BASE_ADDR, \
+                                          MM2S_CMD_ID, PCDMA_BURST_TYPE_INCR);
   @endcode
  */
 void PCDMA_MM2S_configure
@@ -623,7 +720,17 @@ void PCDMA_MM2S_configure
 
   @example
   @code
-       PCDMA_MM2S_start_transfer(&g_pcdma);
+    #define COREAXI4PROTOCONV_BASE_ADDR                 0x60030000u
+    #define DDR_BASE_ADDR                               0x80010000u
+    #define MM2S_CMD_ID                                 0xa6
+    #define TRANSFER_SIZE_BYTES                         1000
+
+    PCDMA_instance_t  g_pcdma;
+
+    PCDMA_init(&g_pcdma, COREAXI4PROTOCONV_BASE_ADDR);
+    PCDMA_MM2S_configure(&g_pcdma, TRANSFER_SIZE_BYTES, DDR_BASE_ADDR, \
+                                          MM2S_CMD_ID, PCDMA_BURST_TYPE_INCR);
+    PCDMA_MM2S_start_transfer(&g_pcdma);
   @endcode
  */
 void PCDMA_MM2S_start_transfer
@@ -646,7 +753,18 @@ void PCDMA_MM2S_start_transfer
 
   @example
   @code
-       uint32_t reg_value = PCDMA_MM2S_get_status(&g_pcdma);
+    #define COREAXI4PROTOCONV_BASE_ADDR                 0x60030000u
+    #define DDR_BASE_ADDR                               0x80010000u
+    #define MM2S_CMD_ID                                 0xa6
+    #define TRANSFER_SIZE_BYTES                         1000
+
+    PCDMA_instance_t  g_pcdma;
+
+    PCDMA_init(&g_pcdma, COREAXI4PROTOCONV_BASE_ADDR);
+    PCDMA_MM2S_configure(&g_pcdma, TRANSFER_SIZE_BYTES, DDR_BASE_ADDR, \
+                                          MM2S_CMD_ID, PCDMA_BURST_TYPE_INCR);
+    PCDMA_MM2S_start_transfer(&g_pcdma);
+    uint32_t reg_value = PCDMA_MM2S_get_status(&g_pcdma);
   @endcode
  */
 uint32_t PCDMA_MM2S_get_status
@@ -679,7 +797,18 @@ uint32_t PCDMA_MM2S_get_status
 
   @example
   @code
-       PCDMA_MM2S_enable_irq(&g_pcdma, MM2S_IE_DONE_IRQ | MM2S_IE_AXI4_ERR_IRQ);
+    #define COREAXI4PROTOCONV_BASE_ADDR                 0x60030000u
+    #define DDR_BASE_ADDR                               0x80010000u
+    #define MM2S_CMD_ID                                 0xa6
+    #define TRANSFER_SIZE_BYTES                         1000
+
+    PCDMA_instance_t  g_pcdma;
+
+    PCDMA_init(&g_pcdma, COREAXI4PROTOCONV_BASE_ADDR);
+    PCDMA_MM2S_enable_irq(&g_pcdma, MM2S_IE_DONE_IRQ | MM2S_IE_AXI4_ERR_IRQ);
+    PCDMA_MM2S_configure(&g_pcdma, TRANSFER_SIZE_BYTES, DDR_BASE_ADDR, \
+                                          MM2S_CMD_ID, PCDMA_BURST_TYPE_INCR);
+    PCDMA_MM2S_start_transfer(&g_pcdma);
   @endcode
  */
 void PCDMA_MM2S_enable_irq
@@ -712,7 +841,19 @@ void PCDMA_MM2S_enable_irq
 
   @example
   @code
-      PCDMA_MM2S_disable_irq(&g_pcdma, MM2S_IE_DONE_IRQ | MM2S_IE_AXI4_ERR_IRQ);
+    #define COREAXI4PROTOCONV_BASE_ADDR                 0x60030000u
+    #define DDR_BASE_ADDR                               0x80010000u
+    #define MM2S_CMD_ID                                 0xa6
+    #define TRANSFER_SIZE_BYTES                         1000
+
+    PCDMA_instance_t  g_pcdma;
+
+    PCDMA_init(&g_pcdma, COREAXI4PROTOCONV_BASE_ADDR);
+    PCDMA_MM2S_enable_irq(&g_pcdma, MM2S_IE_DONE_IRQ | MM2S_IE_AXI4_ERR_IRQ);
+    PCDMA_MM2S_configure(&g_pcdma, TRANSFER_SIZE_BYTES, DDR_BASE_ADDR, \
+                                          MM2S_CMD_ID, PCDMA_BURST_TYPE_INCR);
+    PCDMA_MM2S_start_transfer(&g_pcdma);
+    PCDMA_MM2S_disable_irq(&g_pcdma, MM2S_IE_DONE_IRQ | MM2S_IE_AXI4_ERR_IRQ);
   @endcode
  */
 void PCDMA_MM2S_disable_irq
@@ -736,7 +877,19 @@ void PCDMA_MM2S_disable_irq
 
   @example
   @code
-       uint32_t reg_value = PCDMA_MM2S_get_int_src(&g_pcdma);
+    #define COREAXI4PROTOCONV_BASE_ADDR                 0x60030000u
+    #define DDR_BASE_ADDR                               0x80010000u
+    #define MM2S_CMD_ID                                 0xa6
+    #define TRANSFER_SIZE_BYTES                         1000
+
+    PCDMA_instance_t  g_pcdma;
+
+    PCDMA_init(&g_pcdma, COREAXI4PROTOCONV_BASE_ADDR);
+    PCDMA_MM2S_enable_irq(&g_pcdma, MM2S_IE_DONE_IRQ | MM2S_IE_AXI4_ERR_IRQ);
+    PCDMA_MM2S_configure(&g_pcdma, TRANSFER_SIZE_BYTES, DDR_BASE_ADDR, \
+                                          MM2S_CMD_ID, PCDMA_BURST_TYPE_INCR);
+    PCDMA_MM2S_start_transfer(&g_pcdma);
+    uint32_t reg_value = PCDMA_MM2S_get_int_src(&g_pcdma);
   @endcode
  */
 
@@ -770,7 +923,19 @@ uint32_t PCDMA_MM2S_get_int_src
 
   @example
   @code
-      PCDMA_MM2S_clr_int_src(&g_pcdma, MM2S_IE_DONE_IRQ | MM2S_IE_AXI4_ERR_IRQ);
+    #define COREAXI4PROTOCONV_BASE_ADDR                 0x60030000u
+    #define DDR_BASE_ADDR                               0x80010000u
+    #define MM2S_CMD_ID                                 0xa6
+    #define TRANSFER_SIZE_BYTES                         1000
+
+    PCDMA_instance_t  g_pcdma;
+
+    PCDMA_init(&g_pcdma, COREAXI4PROTOCONV_BASE_ADDR);
+    PCDMA_MM2S_enable_irq(&g_pcdma, MM2S_IE_DONE_IRQ | MM2S_IE_AXI4_ERR_IRQ);
+    PCDMA_MM2S_configure(&g_pcdma, TRANSFER_SIZE_BYTES, DDR_BASE_ADDR, \
+                                          MM2S_CMD_ID, PCDMA_BURST_TYPE_INCR);
+    PCDMA_MM2S_start_transfer(&g_pcdma);
+    PCDMA_MM2S_clr_int_src(&g_pcdma, MM2S_IE_DONE_IRQ | MM2S_IE_AXI4_ERR_IRQ);
   @endcode
  */
 void PCDMA_MM2S_clr_int_src
