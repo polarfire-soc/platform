@@ -34,7 +34,7 @@
   Introduction
 ==============================================================================
 
-  CoreAXI4ProtoConv is an IP component and designed for high throughput data
+  CoreAXI4ProtoConv is an IP component and is designed for high throughput data
   transfer between the AXI4 memory-mapped and AXI4-stream interfaces.
   CoreAXI4ProtoConv supports the Memory Mapped to Stream (MM2S) and Stream to
   Memory Mapped (S2MM) conversion independently in a full-duplex like method.
@@ -47,15 +47,15 @@
   system's driver model is outside the scope of this driver.
 
   Note: PCDMA is used as the short form for CoreAXI4ProtoConv throughout the
-        driver.
+        driver or document.
 
   ==============================================================================
   Driver Configuration
   ==============================================================================
-  Your application software must configure the PCDMA driver through calls to
-  PCDMA_init() for each CoreAXI4ProtoConv instance in the hardware design.
-  PCDMA_init() function configures CoreAXI4ProtoConv hardware instance base
-  address. The PCDMA_init() function must be called before any other PCDMA
+  Your application software must configure the PCDMA driver by calling the
+  PCDMA_init() function for each CoreAXI4ProtoConv instance in the hardware
+  design. PCDMA_init() function configures CoreAXI4ProtoConv hardware instance
+  base address. The PCDMA_init() function must be called before any other PCDMA
   driver functions can be called.
 
   ==============================================================================
@@ -74,7 +74,7 @@
           driver function.
 
   Note 2: PCDMA_init() function initializes both the Stream to Memory Map (S2MM)
-          & Memory Map to Stream (MM2S) blocks.
+          and Memory Map to Stream (MM2S) blocks.
 
   CoreAXI4ProtoConv has two main blocks:
     - Stream to Memory Map (S2MM)
@@ -85,7 +85,7 @@
   ----------------------------
   The S2MM block is responsible for transmitting transactions between the AXI4-
   Stream Interface and AXI4-Memory Mapped Interface. It has its dedicated sets
-  of registers to load command and read the status of corresponding commands.
+  of registers to load command and read the status of the corresponding commands.
   S2MM block supports queuing both commands and status. Registers can be
   accessed through AXI4-Lite interface.
 
@@ -100,15 +100,15 @@
     - PCDMA_S2MM_configure()
     - PCDMA_S2MM_start_transfer()
 
-  To initiate an S2MM (Stream-to-Memory-Map) data transfer, first call the
-  PCDMA_S2MM_configure() function to configure transfer size (Indicates the
-  total number of bytes to be transferred), 64-bit address, command id, and
-  burst type. After configuration, the PCDMA_S2MM_start_transfer() function is
-  used to begin the data transfer from the AXI4-Stream interface to the
-  AXI4-Memory Mapped interface.
+  To initiate an S2MM (Stream to Memory Map) data transfer, first call the
+  PCDMA_S2MM_configure() function to configure transfer size (indicates the
+  total number of bytes to be transferred), 64-bit address, command ID, and
+  burst type. After configuration, the PCDMA_S2MM_start_transfer() function
+  begins the data transfer from the AXI4-Stream interface to the AXI4-Memory
+  Mapped interface.
 
   When S2MM Undefined Burst Length Enable feature is enabled in the
-  CoreAXI4ProtoConv IP configurator, refer to the PCDMA_S2MM_get_len() function
+  CoreAXI4ProtoConv IP configurator, see the PCDMA_S2MM_get_len() function
   for additional details.
 
   PCDMA_S2MM_get_status() function is used to get the current status of the S2MM
@@ -121,15 +121,15 @@
     - PCDMA_S2MM_disable_irq()
     - PCDMA_S2MM_clr_int_src()
 
-  Additionally, the PCDMA_S2MM_get_int_src() function used to get the current
+  Additionally, the PCDMA_S2MM_get_int_src() function is used to get the current
   status of the S2MM data transfer when the interrupt method is used.
 
   ----------------------------
   Memory Map to Stream (MM2S)
   ----------------------------
   The MM2S block is responsible for transactions from the AXI4-Memory Mapped
-  Interface to AXI4-Stream Interface. It has its dedicated sets of registers
-  to command and read the status of corresponding commands. MM2S block supports
+  Interface to AXI4-Stream interface. It has its dedicated sets of registers
+  to command and read the status of the corresponding commands. MM2S block supports
   queuing both commands and status. Registers can be accessed through AXI4-Lite
   interface.
 
@@ -144,17 +144,17 @@
     - PCDMA_MM2S_configure()
     - PCDMA_MM2S_start_transfer()
 
-  To initiate an MM2S (Memory-Map-to-Stream) data transfer, first call the
-  PCDMA_MM2S_configure() function to configure transfer size (Indicates the
-  total number of bytes to be transferred), 64-bit address, command id, and
+  To initiate an MM2S (Memory Map to Stream) data transfer, first call the
+  PCDMA_MM2S_configure() function to configure transfer size (indicates the
+  total number of bytes to be transferred), 64-bit address, command ID, and
   burst type. After the configuration, the PCDMA_MM2S_start_transfer() function
-  is used to begin the data transfer from the AXI4-Memory Mapped Interface and
-  AXI4-Stream Interface.
+  begins the data transfer from the AXI4-Memory Mapped interface and AXI4-Stream
+  interface.
 
   PCDMA_MM2S_get_status() function is used to get the current status of the MM2S
   data transfer.
 
-  The following functions used to enable, disable and clear the specific MM2S
+  The following functions are used to enable, disable and clear the specific MM2S
   interrupt by using the irq_type parameter respectively.
 
     - PCDMA_MM2S_enable_irq()
@@ -184,9 +184,9 @@ extern "C" {
 /*-------------------------------------------------------------------------*//**
   S2MM Interrupt Identifier
   ============================
-  The following constants specify the interrupt identifier number which is
+  The following constants specify the interrupt identifier number, which is
   specifically used by the driver API. The S2MM_IE_DONE_IRQ,
-  S2MM_IE_AXI4_ERR_IRQ, S2MM_IE_PKT_DROP_OVF_IRQ, and S2MM_IE_PKT_DROP_ERR_IRQ
+  S2MM_IE_AXI4_ERR_IRQ, S2MM_IE_PKT_DROP_OVF_IRQ and S2MM_IE_PKT_DROP_ERR_IRQ
   are used by S2MM enable interrupt, S2MM disable interrupt and S2MM clear
   interrupt functions.
 
@@ -207,8 +207,8 @@ extern "C" {
 /*-------------------------------------------------------------------------*//**
   MM2S Interrupt Identifier
   =======================================
-  The following constants specify the interrupt identifier number which is
-  specifically used by the driver API. The MM2S_IE_DONE_IRQ, and
+  The following constants specify the interrupt identifier number, which is
+  specifically used by the driver API. The MM2S_IE_DONE_IRQ and
   MM2S_IE_AXI4_ERR_IRQ are used by MM2S enable interrupt, MM2S disable interrupt
   and MM2S clear interrupt functions.
 
@@ -293,8 +293,8 @@ PCDMA_init
 
 /***************************************************************************//**
   The PCDMA_S2MM_configure() function is used to configure the transfer size
-  (Indicates the total number of bytes to be transferred), 64-bit address,
-  command id, and burst type.
+  (indicates the total number of bytes to be transferred), 64-bit address,
+  command ID, and burst type.
 
   @param this_pcdma
   The this_pcdma parameter is a pointer to a PCDMA_instance_t structure that
@@ -304,17 +304,15 @@ PCDMA_init
 
   @param xfr_size
   The xfr_size parameter specifies the total number of bytes to be transferred
-  from AXI4-Stream interface to the AXI4-Memory Mapped interface (S2MM).
-
-  Note1: xfr_size parameter must not program zero value.
-
-  Note2: When S2MM Undefined Burst Length Enable feature is enabled within the
+  from AXI4-Stream interface to the AXI4-Memory Mapped interface (S2MM).  
+  Note 1: xfr_size parameter must not program zero value.  
+  Note 2: When S2MM Undefined Burst Length Enable feature is enabled within the
          CoreAXI4ProtoConv IP configurator, configuring the xfr_size will have
          no effect. PCDMA_S2MM_get_len() provides the number of bytes received
          in an undefined burst transaction.
 
   @param src_add
-  The src_add parameter specifies the 64-bit address of the AXI4 memory mapped
+  The src_add parameter specifies the 64-bit address of the AXI4-Memory Mapped
   interface.
 
   @param cmd_id
@@ -325,12 +323,10 @@ PCDMA_init
 
   @param burst_type
   The burst_type parameter allows you to specify the burst type, which can be
-  either fixed burst or increment burst.
-
-  Note1: Fixed burst transfer should be used to access peripheral device which
-  supports fixed address like FIFO.
-
-  Note2: Increment burst transfer should be used to access peripheral device
+  either fixed burst or increment burst.  
+  Note 1: Fixed burst transfer should be used to access peripheral device which
+  supports fixed address like FIFO.  
+  Note 2: Increment burst transfer should be used to access peripheral device,
   which supports incremental address like SRAM.
 
   @return
@@ -403,7 +399,7 @@ void PCDMA_S2MM_start_transfer
   to the PCDMA driver functions that operate on this CoreAXI4ProtoConv instance.
 
   @return
-  This function returns current value of the S2MM status register.
+  This function returns the current value of the S2MM status register.
 
   @example
   @code
@@ -438,12 +434,11 @@ uint32_t PCDMA_S2MM_get_status
 
   @param irq_type
   The irq_type parameter specify the type of interrupt(s). The possible
-  interrupts are
+  interrupts are:
       - S2MM_IE_DONE_IRQ
       - S2MM_IE_AXI4_ERR_IRQ
       - S2MM_IE_PKT_DROP_OVF_IRQ
-      - S2MM_IE_PKT_DROP_ERR_IRQ
-
+      - S2MM_IE_PKT_DROP_ERR_IRQ  
   To enable multiple interrupts in single call, use
       S2MM_IE_DONE_IRQ | S2MM_IE_AXI4_ERR_IRQ.
 
@@ -484,12 +479,11 @@ void PCDMA_S2MM_enable_irq
 
   @param irq_type
   The irq_type parameter specify the type of interrupt(s). The possible
-  interrupts are
+  interrupts are:
       - S2MM_IE_DONE_IRQ
       - S2MM_IE_AXI4_ERR_IRQ
       - S2MM_IE_PKT_DROP_OVF_IRQ
-      - S2MM_IE_PKT_DROP_ERR_IRQ
-
+      - S2MM_IE_PKT_DROP_ERR_IRQ  
   To disable multiple interrupts in single call, use
       S2MM_IE_DONE_IRQ | S2MM_IE_AXI4_ERR_IRQ.
 
@@ -530,7 +524,7 @@ void PCDMA_S2MM_disable_irq
   to the PCDMA driver functions that operate on this CoreAXI4ProtoConv instance.
 
   @return
-  This function returns current value of the S2MM interrupt source register.
+  This function returns the current value of the S2MM interrupt source register.
 
   @example
   @code
@@ -566,12 +560,11 @@ uint32_t PCDMA_S2MM_get_int_src
 
   @param irq_type
   The irq_type parameter specify the type of interrupt(s). The possible
-  interrupts are
+  interrupts are:
       - S2MM_IE_DONE_IRQ
       - S2MM_IE_AXI4_ERR_IRQ
       - S2MM_IE_PKT_DROP_OVF_IRQ
-      - S2MM_IE_PKT_DROP_ERR_IRQ
-
+      - S2MM_IE_PKT_DROP_ERR_IRQ  
   To clear multiple interrupts in single call, use
       S2MM_IE_DONE_IRQ | S2MM_IE_AXI4_ERR_IRQ
 
@@ -644,8 +637,8 @@ uint32_t PCDMA_S2MM_get_len
 
 /***************************************************************************//**
  The PCDMA_MM2S_configure() function is used to configure the transfer size
- (Indicates the total number of bytes to be transferred), 64-bit address,
- command id, and burst type.
+ (indicates the total number of bytes to be transferred), 64-bit address,
+ command ID, and burst type.
 
   @param this_pcdma
   The this_pcdma parameter is a pointer to a PCDMA_instance_t structure that
@@ -655,12 +648,11 @@ uint32_t PCDMA_S2MM_get_len
 
   @param xfr_size
   The xfr_size parameter specifies the total number of bytes to be transferred
-  from AXI4-Memory Mapped interface to the AXI4-Stream interface (MM2S).
-
-  Note1: xfr_size parameter must not program zero value.
+  from AXI4-Memory Mapped interface to the AXI4-Stream interface (MM2S).  
+  Note: xfr_size parameter must not program zero value.
 
   @param src_add
-  The src_add parameter specifies the 64-bit address of the AXI4 memory mapped
+  The src_add parameter specifies the 64-bit address of the AXI4-Memory Mapped
   interface.
 
   @param cmd_id
@@ -671,12 +663,10 @@ uint32_t PCDMA_S2MM_get_len
 
   @param burst_type
   The burst_type parameter allows you to specify the burst type, which can be
-  either fixed burst or increment burst.
-
-  Note1: Fixed burst transfer should be used to access peripheral device which
-  supports fixed address like FIFO.
-
-  Note2: Increment burst transfer should be used to access peripheral device
+  either fixed burst or increment burst.  
+  Note 1: Fixed burst transfer should be used to access peripheral device which
+  supports fixed address like FIFO.  
+  Note 2: Increment burst transfer should be used to access peripheral device,
   which supports incremental address like SRAM.
 
   @return
@@ -749,7 +739,7 @@ void PCDMA_MM2S_start_transfer
   to the PCDMA driver functions that operate on this CoreAXI4ProtoConv instance.
 
   @return
-  This function returns current value of the MM2S status register.
+  This function returns the current value of the MM2S status register.
 
   @example
   @code
@@ -785,10 +775,9 @@ uint32_t PCDMA_MM2S_get_status
 
   @param irq_type
   The irq_type parameter specify the type of interrupt(s). The possible
-  interrupts are
+  interrupts are:
       - MM2S_IE_DONE_IRQ
-      - MM2S_IE_AXI4_ERR_IRQ
-
+      - MM2S_IE_AXI4_ERR_IRQ  
   To enable both interrupts in single call, use
       MM2S_IE_DONE_IRQ | MM2S_IE_AXI4_ERR_IRQ
 
@@ -829,10 +818,9 @@ void PCDMA_MM2S_enable_irq
 
   @param irq_type
   The irq_type parameter specify the type of interrupt(s). The possible
-  interrupts are
+  interrupts are:
       - MM2S_IE_DONE_IRQ
-      - MM2S_IE_AXI4_ERR_IRQ
-
+      - MM2S_IE_AXI4_ERR_IRQ  
   To disable both interrupts in single call, use
       MM2S_IE_DONE_IRQ | MM2S_IE_AXI4_ERR_IRQ
 
@@ -873,7 +861,7 @@ void PCDMA_MM2S_disable_irq
   to the PCDMA driver functions that operate on this CoreAXI4ProtoConv instance.
 
   @return
-  This function returns current value of the MM2S interrupt source register.
+  This function returns the current value of the MM2S interrupt source register.
 
   @example
   @code
@@ -911,10 +899,9 @@ uint32_t PCDMA_MM2S_get_int_src
 
   @param irq_type
   The irq_type parameter specify the type of interrupt(s). The possible
-  interrupts are
+  interrupts are:
       - MM2S_IE_DONE_IRQ
-      - MM2S_IE_AXI4_ERR_IRQ
-
+      - MM2S_IE_AXI4_ERR_IRQ  
   To disable both interrupts in single call, use
       MM2S_IE_DONE_IRQ | MM2S_IE_AXI4_ERR_IRQ
 
