@@ -920,9 +920,15 @@ typedef enum DDR_MEMORY_ACCESS_
 #if !defined (RPC_OVERRIDE_166_LANE_FIFO)
 #define RPC_OVERRIDE_166_LANE_FIFO 0
 #endif
-
+ /*
+  * 2 power size is used by the MTC. If using these in your code, the number of
+  * lanes used must be subtracted from this number. x16, subtract 1, x32
+  * subtract 2.
+  */
 #define ONE_GB_MTC      30U
 #define HALF_GB_MTC     29U
+#define FOUR_MB_MTC     22U
+#define TWO_MB_MTC      21U
 #define ONE_MB_MTC      20U
 
 
