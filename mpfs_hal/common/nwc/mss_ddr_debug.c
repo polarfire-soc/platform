@@ -292,19 +292,19 @@ void display_ddr_driver_info(mss_uart_instance_t *debug_uart)
     uprint(debug_uart,
                (const char*)"\n\r\n\rFPGA electrical settings\n\r");
     uprint(debug_uart, (const char*)"\n\rFPGA DQ_DRIVE: ");
-    uprint(debug_uart, (const char*)ddr_drive_str[DDR_MODE][DDR_FPFA_DQ_DRIVE]);
+    uprint(debug_uart, (const char*)ddr_drive_str[DDR_MODE][DDR_FPGA_DQ_DRIVE]);
 
     uprint(debug_uart, (const char*)"\n\rFPGA DQS_DRIVE(mV): ");
     uprint(debug_uart, (const char*)ddr_drive_str[DDR_MODE]
-                                                 [DDR_FPFA_DQS_DRIVE]);
+                                                 [DDR_FPGA_DQS_DRIVE]);
 
     uprint(debug_uart, (const char*)"\n\rFPGA ADD_CMD_DRIV(mV): ");
     uprint(debug_uart, (const char*)ddr_drive_str[DDR_MODE]
-                                                 [DDR_FPFA_ADD_CMD_DRIVE]);
+                                                 [DDR_FPGA_ADD_CMD_DRIVE]);
 
     uprint(debug_uart, (const char*)"\n\rFPGA ADD_CMD_DRIVE(mV): ");
     uprint(debug_uart, (const char*)ddr_drive_str[DDR_MODE]
-                                                 [DDR_FPFA_CLOCK_OUT_DRIVE]);
+                                                 [DDR_FPGA_CLOCK_OUT_DRIVE]);
 
     uprint(debug_uart, (const char*)"\n\rFPGA DQ_TERMINATION(Ohm): ");
     uprint(debug_uart, (const char*)ddr_term_str[DDR_MODE]
