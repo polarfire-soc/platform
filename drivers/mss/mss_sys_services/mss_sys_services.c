@@ -1975,7 +1975,7 @@ static uint16_t request_system_service
     uint8_t* byte_buf ;
     uint8_t byte_off;
     uint8_t byte_index;
-    uint32_t * mailbox_reg;
+    volatile uint32_t * mailbox_reg;
     uint32_t mailbox_val = 0u;
 
     if (MSS_SCBCTRL->SERVICES_SR & SCBCTRL_SERVICESSR_BUSY_MASK)
