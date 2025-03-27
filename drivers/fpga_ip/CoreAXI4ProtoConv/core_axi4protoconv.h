@@ -124,6 +124,9 @@
   Additionally, the PCDMA_S2MM_get_int_src() function is used to get the current
   status of the S2MM data transfer when the interrupt method is used.
 
+  Note: When using the interrupt method, either the S2MM interrupt source
+        register or the S2MM status register should be read, but not both
+        simultaneously.
   ----------------------------
   Memory Map to Stream (MM2S)
   ----------------------------
@@ -163,6 +166,10 @@
 
   Additionally, the PCDMA_MM2S_get_int_src() function used to get the current
   status of the MM2S data transfer when the interrupt method is used.
+
+  Note: When using the interrupt method, either the MM2S interrupt source
+        register or the MM2S status register should be read, but not both
+		simultaneously.
 
 *//*=========================================================================*/
 
