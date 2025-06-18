@@ -27,9 +27,10 @@
  * Local Defines
  */
 /* This string is updated if any change to ddr driver */
-#define DDR_DRIVER_VERSION_STRING   "0.4.032"
+#define DDR_DRIVER_VERSION_STRING   "0.4.033"
 const char DDR_DRIVER_VERSION[] = DDR_DRIVER_VERSION_STRING;
 /* Version     |  Comment                                                     */
+/* 0.4.033     |  Fix bug that causes crash when post-stimulus test fails     */
 /* 0.4.032     |  Increase size of cache flush to fully clear                 */
 /* 0.4.031     |  Minor change to correct definition of MTC size define       */
 /* 0.4.030     |  Minor cleanup- removed unused code, renamed function        */
@@ -702,16 +703,14 @@ static uint32_t ddr_setup(void)
 #ifdef DEBUG_DDR_INIT
             (void)uprint32(g_debug_uart, "\n\r DDR_SANITY_CHECKS FAIL: ",\
                                                                 addr_cmd_value);
-            ddr_training_state = DDR_TRAINING_FAIL;
 #endif
+            ddr_training_state = DDR_TRAINING_FAIL;
             break;
-
         case DDR_TRAINING_FAIL:
 #ifdef DEBUG_DDR_INIT
             {
                 tip_register_status (g_debug_uart);
                 (void)uprint32(g_debug_uart, "\n\r ****************************************************", 0U);
-
             }
 #endif
             DDRCFG->MC_BASE2.INIT_CS.INIT_CS = 0x1;
