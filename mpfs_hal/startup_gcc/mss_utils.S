@@ -9,6 +9,7 @@
  *
  */
 
+  .option arch, +zicsr
   .section .text.init,"ax", %progbits
   .align 3
   
