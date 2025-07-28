@@ -1859,6 +1859,13 @@ mss_mmc_status_t MSS_MMC_error_recovery(void)
 /*-------------------------------------------------------------------------*//**
  * See "mss_mmc.h" for details of how to use this function.
  */
+uint8_t MSS_MMC_read_phy_delay(void)
+{
+    return new_phy_delay;
+}
+/*-------------------------------------------------------------------------*//**
+ * See "mss_mmc.h" for details of how to use this function.
+ */
 mss_mmc_status_t MSS_MMC_get_transfer_status(void)
 {
     return g_mmc_trs_status.state;

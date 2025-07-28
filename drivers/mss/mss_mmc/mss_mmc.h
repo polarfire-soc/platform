@@ -1488,6 +1488,22 @@ MSS_MMC_erase
  */
 mss_mmc_status_t MSS_MMC_error_recovery(void);
 
+/*-------------------------------------------------------------------------*//**
+  The MSS_MMC_read_phy_delay() function returns the PHY delay value used by the 
+  phy_write_set() function.
+
+  @param
+    None.
+
+  @return
+    An 8-bit value indicating the current PHY delay.
+ */
+uint8_t 
+MSS_MMC_read_phy_delay
+(
+    void
+);
+
 #ifdef __cplusplus
 }
 #endif
