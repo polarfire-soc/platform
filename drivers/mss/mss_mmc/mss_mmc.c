@@ -5440,7 +5440,7 @@ static mss_mmc_status_t  set_sdhost_power(uint32_t voltage)
 /******************************************************************************/
 static void mmc_delay(uint32_t value)
 {
-    uint32_t tempValue = value;
+    volatile uint32_t tempValue = value;
 
     while (tempValue-- != 0u) asm volatile("");
 }
