@@ -18,6 +18,8 @@
 #define NUM_CACHEWAYS_AT_RESET 1
 
   .option norvc
+  .option arch, +zicsr
+  .option arch, +zifencei
   .section .text.init,"ax", %progbits
   .globl reset_vector
   .globl _start
@@ -514,12 +516,10 @@ trap_vector:
     STORE t6,31*REGBYTES(sp)
     # Invoke the handler.
     mv a0, sp                          # a0 <- regs
-    # Please note: mtval is the newer name for register mbadaddr
-    # If you get a compile failure here, use the newer name
-    # At this point (2019), both are supported in latest compiler
-    # older compiler versions only support mbadaddr, so going with this.
-    # See: https://github.com/riscv/riscv-gcc/issues/133
-    csrr a1, mbadaddr                 # useful for anaysis when things go wrong
+    # A previous name for mtval was mbadaddr.  Support for mbadaddr was removed
+    # from the GNU assembler in 2024, see commit:
+    # "RISC-V: Removed privileged spec 1.9.1 support in assembler."
+    csrr a1, mtval                     # useful for analysis when things go wrong
     csrr a2, mepc
     jal trap_from_machine_mode
 
