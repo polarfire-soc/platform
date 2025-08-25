@@ -1,13 +1,14 @@
-/*******************************************************************************
+/**
  * Copyright 2019 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file mss_usb_common_cif.h
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief PolarFire SoC Microprocessor Subsystem (MSS) USB Driver Stack
- *          USB Core Interface Layer (USB-CIFL)
- *            USB-CIF driver
+ * @brief mss_usb common CIF header file
+ * 
+ * PolarFire SoC Microprocessor Subsystem (MSS) USB Driver Stack USB Core 
+ * Interface Layer (USB-CIFL) USB-CIF driver
  *
  * USB-CIF driver public API.
  *

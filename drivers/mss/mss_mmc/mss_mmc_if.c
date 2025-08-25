@@ -1,13 +1,15 @@
-/*******************************************************************************
+/**
  * Copyright 2019 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file mss_mmc_if.c
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief PolarFire SoC Microprocessor Subsystem (MSS) eMMC SD Interface Level
- * Driver.
- *
+ * @brief mss_mmc interface source file
+ * 
+ * See file "mss_mmc_if.h" for description of the functions implemented
+ * in this file.
+ * 
  * This eMMC/SD Interface driver provides functions for transferring
  * configuration and programming commands to the eMMC/SD device. Functions
  * contained within the eMMC/SD interface driver are accessed through the

@@ -1,11 +1,11 @@
-/*******************************************************************************
- * (c) Copyright 2025 Microchip FPGA Embedded Systems Solutions.
+/**
+ * Copyright 2025 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file coreaxi4protoconv_user_config.h
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief CoreAXI4ProtoConv user configuration
+ * @brief CoreAXI4ProtoConv user configuration header file
  *
  */
 

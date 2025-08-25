@@ -1,12 +1,12 @@
 
-/*******************************************************************************
+/**
  * Copyright 2023 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file null_phy.c
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief NULL PHY implementation
+ * @brief NULL PHY source file
  *
  */
 

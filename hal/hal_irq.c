@@ -1,11 +1,13 @@
-/*******************************************************************************
+/**
  * Copyright 2019 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file hal_irq.c
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief Legacy interrupt control functions for the Microchip driver library
+ * @brief hal_irq source file
+ * 
+ * Legacy interrupt control functions for the Microchip driver library
  * hardware abstraction layer.
  *
  */

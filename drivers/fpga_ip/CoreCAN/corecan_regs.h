@@ -1,12 +1,11 @@
-/*******************************************************************************
- * (c) Copyright 2025 Microchip FPGA Embedded Systems Solutions.
+/**
+ * Copyright 2025 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file corecan_regs.h
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief CoreCAN IP bare metal driver implementation.
- * See file "core_can.h" for description of the functions.
+ * @brief CoreCAN register header file
  *
  */
 

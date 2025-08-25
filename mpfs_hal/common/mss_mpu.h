@@ -1,12 +1,14 @@
-/*******************************************************************************
+/**
  * Copyright 2019 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file mss_mpu.h
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief PolarFire SoC MSS MPU driver APIs for configuring access regions for
- * the external masters.
+ * @brief mss_mpu header file
+ * 
+ * PolarFire SoC MSS MPU driver APIs for configuring access regions for the
+ * external masters.
  *
  */
 

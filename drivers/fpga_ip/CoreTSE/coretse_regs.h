@@ -1,13 +1,14 @@
-/*******************************************************************************
+/**
  * Copyright 2014 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file coretse_regs.h
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief Register bit offsets and masks definitions for CoreTSE.
+ * @brief CoreTSE register header file
  *
  */
+
 #ifndef CORE_TSE_REGS_H_
 #define CORE_TSE_REGS_H_
 

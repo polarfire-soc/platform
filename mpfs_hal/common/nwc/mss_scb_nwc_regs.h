@@ -1,11 +1,11 @@
-/*******************************************************************************
+/**
  * Copyright 2019 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file mss_scb_nwc_regs.h
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief SCB registers and associated structures relating to the NWC
+ * @brief mss_scb_nwc registers and associated structures header file
  *
  */
 

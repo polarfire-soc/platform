@@ -1,12 +1,12 @@
-/*******************************************************************************
+/**
  * Copyright 2019 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file pac1934.c
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief The PAC1934 bare metal software driver implementation.
- *
+ * @brief pac1934 source file
+ * 
  */
 
 /*-------------------------------------------------------------------------*//**

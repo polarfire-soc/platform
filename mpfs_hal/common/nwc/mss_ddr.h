@@ -1,11 +1,11 @@
-/*******************************************************************************
+/**
  * Copyright 2019 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file mss_ddr.h
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief DDR related defines
+ * @brief mss_ddr header file
  *
  */
 

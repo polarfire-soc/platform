@@ -1,17 +1,18 @@
-/***************************************************************************//**
- * Copyright 2013-2023 Microchip FPGA Embedded Systems Solutions.
+/**
+ * Copyright 2023 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
- * CoreSPI bare metal driver implementation for CoreSPI.
- *
+ * @file core_spi.c
+ * @author Microchip FPGA Embedded Systems Solutions
+ * @brief CoreSPI source file
+ * 
+ * See file "core_spi.h" for description of the functions implemented
+ * in this file.
+ * 
  * This Core SPI driver provides functions for implementing SPI master or
  * SPI slave operations with the CoreSPI version 4.2.xxx It is not compatible
  * with CoreSPI version 3.0.xxx.
- *
- * @file core_spi.c
- * @author Microchip FPGA Embedded Systems Solutions
- * @brief CoreSPI software configuration
  *
  */
 

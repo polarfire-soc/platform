@@ -1,11 +1,11 @@
-/*******************************************************************************
+/**
  * Copyright 2024 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file core_qspi_regs.h
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief CoreQSPI register bit offsets and masks definitions
+ * @brief CoreQSPI register header file
  *
  */
 

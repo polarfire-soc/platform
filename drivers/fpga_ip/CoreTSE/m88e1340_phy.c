@@ -1,12 +1,12 @@
 
-/*******************************************************************************
+/**
  * Copyright 2014 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file m88e1340_phy.c
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief Marvell's M88E1340 PHY interface driver implementation.
+ * @brief Marvell's M88E1340 PHY interface driver source file
  *
  */
 

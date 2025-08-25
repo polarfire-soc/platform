@@ -1,11 +1,11 @@
-/*******************************************************************************
+/**
  * Copyright 2019 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file mss_peripherals.h
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief PolarFire SoC MSS fumnctions related to MSS peripherals.
+ * @brief mss_peripherals header file
  *
  */
 

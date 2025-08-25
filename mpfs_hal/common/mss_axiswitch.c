@@ -1,11 +1,11 @@
-/*******************************************************************************
+/**
  * Copyright 2019 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file mss_axiswitch.c
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief PolarFire SoC MSS AXI switch configuration
+ * @brief mss_axiswitch source file
  *
  */
 

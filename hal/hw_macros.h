@@ -1,11 +1,11 @@
-/*******************************************************************************
+/**
  * Copyright 2019 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file hw_macros.h
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief Hardware registers access macros.
+ * @brief hw_macros header file
  * 
  * THE MACROS DEFINED IN THIS FILE ARE DEPRECATED. DO NOT USE FOR NEW 
  * DEVELOPMENT.

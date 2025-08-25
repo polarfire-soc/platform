@@ -1,11 +1,11 @@
-/*******************************************************************************
+/**
  * Copyright 2019 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file newlib_stubs.c
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief Stubs for Newlib system calls.
+ * @brief newlib_stubs source file
  *
  */
 

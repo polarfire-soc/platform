@@ -1,12 +1,15 @@
-/*******************************************************************************
- * (c) Copyright 2007 Microchip FPGA Embedded Systems Solutions.
+/**
+ * Copyright 2007 Microchip FPGA Embedded Systems Solutions.
  * 
  * SPDX-License-Identifier: MIT
  *
  * @file core_timer.c
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief CoreTimer bare metal driver public API.
+ * @brief CoreTimer source file
  *
+ * See file "core_timer.h" for description of the functions implemented
+ * in this file.
+ * 
  */
 
 #include "core_timer.h"

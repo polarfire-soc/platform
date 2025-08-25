@@ -1,13 +1,16 @@
 
-/*******************************************************************************
+/**
  * Copyright 2014 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file core_tse.c
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief CoreTSE 10/100/1000 Mbps Ethernet MAC bare metal software driver implementation.
- *
+ * @brief CoreTSE source file
+ * 
+ * See file "core_tse.h" for description of the functions implemented
+ * in this file.
+ * 
  */
 
 #include "coretse_regs.h"

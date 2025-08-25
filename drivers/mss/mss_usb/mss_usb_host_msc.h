@@ -1,13 +1,11 @@
-/*******************************************************************************
+/**
  * Copyright 2019 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file mss_usb_host_msc.h
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief PolarFire SoC Microprocessor Subsystem (MSS) USB Driver Stack
- *          USB Logical Layer (USB-LL)
- *            USBH-MSC class driver.
+ * @brief mss_usb host MSC header file
  *
  * USBH-MSC driver public API.
  *

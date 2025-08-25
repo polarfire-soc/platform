@@ -1,12 +1,12 @@
-/*******************************************************************************
+/**
  * Copyright 2022 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file mss_utils.S
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief utilities used by mpfs-hal startup code
- *
+ * @brief mss_utils assembly file
+ * 
  */
 
   .section .text.init,"ax", %progbits

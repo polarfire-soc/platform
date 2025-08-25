@@ -5,7 +5,7 @@
  *
  * @file core_mmc.c
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief CoreMMC Source
+ * @brief CoreMMC source file
  *
  */
 

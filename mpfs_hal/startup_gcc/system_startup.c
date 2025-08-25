@@ -1,13 +1,14 @@
-/*******************************************************************************
+/**
  * Copyright 2019 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file system_startup.c
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief first C code called on startup. Will call user code created outside
- * the HAL.
- *
+ * @brief system_startup source file
+ * 
+ * First C code called on startup. Will call user code created outside
+ * 
  */
 
 #include <stddef.h>

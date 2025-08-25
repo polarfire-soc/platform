@@ -1,12 +1,11 @@
-/*******************************************************************************
+/**
  * Copyright 2019 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file vsc8575_phy.c
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief Microsemi VSC8575 PHY interface driver implementation to support the
- * peripheral daughter board for the G5 SoC Emulation Platform.
+ * @brief VSC8575 PHY source file
  *
  */
 

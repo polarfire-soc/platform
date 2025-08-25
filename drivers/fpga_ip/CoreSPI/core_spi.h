@@ -1,42 +1,11 @@
-/***************************************************************************//**
- * Copyright 2013-2023 Microchip FPGA Embedded Systems Solutions.
+/**
+ * Copyright 2023 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to
- * deal in the Software without restriction, including without limitation the
- * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
- * sell copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
- * IN THE SOFTWARE.
- *
- * Core SPI bare metal software driver public API.
- *
- * This Core SPI driver provides functions for implementing SPI master or
- * SPI slave operations with the CoreSPI version 4.2.xxx It is not compatible
- * with CoreSPI version 3.0.xxx.
- *
- * The Core SPI driver supports two classes of data transfer operation:
- * SPI frame operation or SPI block transfer operations.
- *
- * Frame operations allow transferring individual SPI frames from 4 to 32-bits
- * in length. Block operations allow transferring blocks of data organized as
- * 8-bit frames.
- *
  * @file core_spi.h
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief CoreSPI prototypes
+ * @brief CoreSPI header file
  * 
  */
  

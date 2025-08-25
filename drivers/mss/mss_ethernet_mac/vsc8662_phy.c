@@ -1,12 +1,11 @@
-/*******************************************************************************
+/**
  * Copyright 2019 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file vsc8662_phy.c
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief Microsemi VSC8662 PHY interface driver implementation to support the
- * silicon validation board.
+ * @brief VSC8662 PHY source file
  *
  * Will need to modify FW based on MSS GPIO configuration.
  *

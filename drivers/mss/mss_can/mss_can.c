@@ -1,13 +1,15 @@
-/*******************************************************************************
+/**
  * Copyright 2019 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file mss_can.c
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief PolarFire SoC Microprocessor Subsystem (MSS) CAN bare metal software
- * driver implementation.
- *
+ * @brief mss_can source file
+ * 
+ * See file "mss_can.h" for description of the functions implemented
+ * in this file.
+ * 
  */
 
 /*******************************************************************************

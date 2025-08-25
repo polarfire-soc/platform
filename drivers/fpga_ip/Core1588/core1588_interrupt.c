@@ -1,11 +1,14 @@
-/*******************************************************************************
- * Copyright 2009-2025 Microchip FPGA Embedded Systems Solutions.
+/**
+ * Copyright 2025 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
- * Core1588 driver interrupt control.
+ * @file core1588_interrupt.c
+ * @author Microchip FPGA Embedded Systems Solutions
+ * @brief Core1588 interrupt source file
  *
  */
+
 #include "core1588.h"
 
 /*------------------------------------------------------------------------------

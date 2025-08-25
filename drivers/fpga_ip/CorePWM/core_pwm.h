@@ -1,15 +1,14 @@
-/*******************************************************************************
+/**
  * Copyright 2008 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file core_pwm.h
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief CorePWM driver Application Programming Interface(API). This file
- * contains defines and function declarations allowing to interface with the
- * CorePWM software driver.
+ * @brief CorePWM header file
  *
  */
+
 /*=========================================================================*//**
   @mainpage CorePWM Bare Metal Driver.
 

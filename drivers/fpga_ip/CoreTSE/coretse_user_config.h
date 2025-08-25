@@ -1,12 +1,12 @@
 
-/*******************************************************************************
+/**
  * Copyright 2014 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file coretse_user_config.h
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief Firmware:CORE_TSE_Driver:1.0.1 configuration
+ * @brief CoreTSE user configuration header file
  *
  */
 

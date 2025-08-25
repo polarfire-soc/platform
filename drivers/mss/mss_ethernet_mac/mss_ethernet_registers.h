@@ -1,11 +1,13 @@
-/*******************************************************************************
+/**
  * Copyright 2019 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file mss_ethernet_registers.h
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief This file contains the type definitions for the GEM Ethernet MAC as
+ * @brief mss_ethernet_mac register header file
+ * 
+ * This file contains the type definitions for the GEM Ethernet MAC as
  * implemented for the PolarFire SoC Microprocessor Subsystem (MSS). This also
  * covers the subset implemented for the FU540 on the Aloe board with the
  * proviso that many of the registers will not be present on that device.

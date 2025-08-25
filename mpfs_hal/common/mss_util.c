@@ -1,11 +1,13 @@
-/*******************************************************************************
+/**
  * Copyright 2019 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file mss_util.c
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief Utility functions
+ * @brief mss_util source file
+ * 
+ * There are utility functions
  *
  */
 

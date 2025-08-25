@@ -1,11 +1,11 @@
-/*******************************************************************************
+/**
  * Copyright 2019 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file mss_pll.h
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief PLL defines
+ * @brief mss_pll header file
  *
  */
 

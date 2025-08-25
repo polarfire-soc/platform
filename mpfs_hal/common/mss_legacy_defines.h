@@ -1,11 +1,11 @@
-/*******************************************************************************
+/**
  * Copyright 2021 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file mss_legacy_defines.h
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief MPFS legacy defines
+ * @brief mss_legacy_defines header file
  *
  */
 

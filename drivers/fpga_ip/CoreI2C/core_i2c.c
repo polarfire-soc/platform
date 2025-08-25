@@ -1,10 +1,15 @@
-/*******************************************************************************
- * Copyright 2009-2023 Microchip FPGA Embedded Systems Solutions.
+/**
+ * Copyright 2023 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
- *
- * CoreI2C software driver implementation.
- *
+ * 
+ * @file core_i2c.c
+ * @author Microchip FPGA Embedded Systems Solutions
+ * @brief CoreI2C source file
+ * 
+ * See file "core_i2c.h" for description of the functions implemented
+ * in this file.
+ * 
  */
 
 #include "core_smbus_regs.h"

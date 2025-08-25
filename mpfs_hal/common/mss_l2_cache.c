@@ -1,13 +1,15 @@
-/*******************************************************************************
+/**
  * Copyright 2019 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file mss_l2_cache.c
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief The code in this file is executed before any code/data sections are
- * copied. This code must not rely sdata/data section content. Hence, global
- * variables should not be used unless they are constants.
+ * @brief mss_l2_cache source file
+ * 
+ * The code in this file is executed before any code/data sections are copied.
+ * This code must not rely sdata/data section content. Hence, global variables
+ * should not be used unless they are constants.
  *
  */
 

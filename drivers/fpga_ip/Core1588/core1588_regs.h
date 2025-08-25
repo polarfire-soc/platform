@@ -5,7 +5,7 @@
  *
  * @file core1588_regs.h
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief Register bit offsets and masks definitions for Core1588.
+ * @brief Core1588 register header file
  *
  */
 

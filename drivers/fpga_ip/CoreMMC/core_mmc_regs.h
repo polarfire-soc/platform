@@ -5,7 +5,7 @@
  *
  * @file core_mmc_regs.h
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief CoreMMC memory map
+ * @brief CoreMMC register header file
  *
  */
 

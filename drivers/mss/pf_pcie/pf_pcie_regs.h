@@ -1,11 +1,16 @@
-/*******************************************************************************
- * Copyright 2019-2020 Microchip FPGA Embedded Systems Solutions.
+/**
+ * Copyright 2020 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
+ * @file pf_pcie_regs.h
+ * @author Microchip FPGA Embedded Systems Solutions
+ * @brief pf_pcie register header file
+ * 
  * PolarFire and PolarFire SoC PCIe subsystem Core Registers data structures.
  *
  */
+
 #ifndef PF_PCIESS_REGS_H_
 #define PF_PCIESS_REGS_H_
 

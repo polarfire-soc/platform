@@ -1,12 +1,11 @@
-/*******************************************************************************
+/**
  * Copyright 2019 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file vsc8541_phy.c
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief Microsemi VSC8541 PHY interface driver implementation to support the
- * FU540 Aloe board.
+ * @brief VSC8541 PHY source file
  *
  */
 

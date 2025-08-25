@@ -1,12 +1,11 @@
-/*******************************************************************************
+/**
  * Copyright 2019 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file mss_ethernet_mac_sw_cfg.h
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief This file contains system specific definitions for the PolarFire SoC
- * Microprocessor Subsystem (MSS) Ethernet MAC device driver.
+ * @brief mss_ethernet_mac software configuration header file
  * 
  * Note: This file is maintained in the driver source repository in the same
  *       folder as the driver source to keep them consistent but in the example

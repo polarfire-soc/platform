@@ -1,12 +1,12 @@
 
-/*******************************************************************************
+/**
  * Copyright 2018 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file vsc8575.c
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief Microchip's VSC8575 PHY driver implementation.
+ * @brief Microchip's VSC8575 PHY source file
  *
  */
 

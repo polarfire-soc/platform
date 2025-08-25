@@ -1,13 +1,17 @@
-/*******************************************************************************
+/**
  * Copyright 2008 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file core_pwm.c
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief CorePWM driver implementation.
- *
+ * @brief CorePWM source file
+ * 
+ * See file "core_pwm.h" for description of the functions implemented
+ * in this file.
+ * 
  */
+
 #include "core_pwm.h"
 #include "corepwm_regs.h"
 
@@ -658,7 +662,7 @@ void PWM_generate_aligned_wave
                         else
                         {
                             /*
-                             * When period = duty_cycle, we’ve reached the
+                             * When period = duty_cycle, weï¿½ve reached the
                              * right shift limit for the neg_edge
                              */
                             neg_edge = 0u;

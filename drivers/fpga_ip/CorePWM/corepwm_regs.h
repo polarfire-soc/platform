@@ -1,14 +1,14 @@
-/*******************************************************************************
+/**
  * Copyright 2008 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file core_pwm_regs.h
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief IP core registers definitions. This file contains the definitions 
- * required for accessing the IP core through the hardware abstraction layer(HAL).
+ * @brief CorePWM register header file 
  *
  */
+
 #ifndef COREPWM_REGISTERS_H_
 #define COREPWM_REGISTERS_H_
 

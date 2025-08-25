@@ -1,8 +1,15 @@
-/*****************************************************************************
- * Copyright 2019-2020 Microchip FPGA Embedded Systems Solutions.
+/**
+ * Copyright 2020 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
+ * @file pf_pcie.c
+ * @author Microchip FPGA Embedded Systems Solutions
+ * @brief pf_pcie source file
+ * 
+ * See file "pf_pcie.h" for description of the functions implemented
+ * in this file.
+ * 
  * PolarFire and PolarFire SoC PCIe subsystem software driver implementation.
  *
  */

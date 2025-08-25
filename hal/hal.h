@@ -1,11 +1,11 @@
-/*******************************************************************************
+/**
  * Copyright 2019 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file hal.h
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief Hardware abstraction layer functions.
+ * @brief hal header file
  * 
  * Legacy register interrupt functions
  * Pointers are now recommended for use in drivers

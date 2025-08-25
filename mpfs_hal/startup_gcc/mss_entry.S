@@ -1,11 +1,11 @@
-/*******************************************************************************
+/**
  * Copyright 2019 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file mss_entry.S
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief entry functions.
+ * @brief mss_entry assembly file
  *
  */
 

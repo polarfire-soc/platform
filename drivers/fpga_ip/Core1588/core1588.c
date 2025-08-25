@@ -1,11 +1,12 @@
-/*******************************************************************************
- * (c) Copyright 2025 Microchip FPGA Embedded Systems Solutions.
+/**
+ * Copyright 2025 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file core1588.c
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief Core1588 IP bare metal driver implementation.
+ * @brief Core1588 source file
+ * 
  * See file "core1588.h" for description of the functions implemented
  * in this file.
  *

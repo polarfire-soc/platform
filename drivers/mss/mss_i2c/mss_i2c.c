@@ -1,13 +1,15 @@
-/*******************************************************************************
+/**
  * Copyright 2019 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file mss_i2c.c
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief PolarFire SoC Microprocessor Subsystem (MSS) I2C bare metal software
- * driver implementation.
- *
+ * @brief mss_i2c source file
+ * 
+ * See file "mss_i2c.h" for description of the functions implemented
+ * in this file.
+ * 
  */
 
 #include "mpfs_hal/mss_hal.h"

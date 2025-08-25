@@ -1,14 +1,15 @@
-/*******************************************************************************
+/**
  * Copyright 2023 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file mss_usb_device_vc.c
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief PolarFire SoC Microprocessor Subsystem (MSS) USB Driver Stack
- *          USB Logical Layer (USB-LL)
- *            USBD Video class driver
+ * @brief mss_usb device register VC source file
  *
+ * See file "mss_usb_device_vc.h" for description of the functions implemented
+ * in this file.
+ * 
  * USBD Video class driver implementation:
  * This source file implements USB video class functionality.
  *

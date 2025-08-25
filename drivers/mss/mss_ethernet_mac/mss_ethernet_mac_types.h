@@ -1,14 +1,11 @@
-/*******************************************************************************
- * Copyright 2019-2024 Microchip FPGA Embedded Systems Solutions.
+/**
+ * Copyright 2024 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file mss_ethernet_mac_types.h
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief This file contains type definitions used throughout the PolarFire SoC
- * Microprocessor Subsystem (MSS) Ethernet MAC and PHY device drivers. User need
- * not include this file in application source code.
- * Inclusion of mss_ethernet_mac.h inherits these types.
+ * @brief mss_ethernet_mac type definition header file
  * 
  */
 

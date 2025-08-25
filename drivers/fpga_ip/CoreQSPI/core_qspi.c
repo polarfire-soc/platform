@@ -1,12 +1,14 @@
-/*******************************************************************************
+/**
  * Copyright 2024 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
- * @file core_qspi.h
+ * @file core_qspi.c
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief CoreQSPI driver implementation. Please refer to core_qspi.h file for
- * description of functions implemented in this file.
+ * @brief CoreQSPI source file
+ * 
+ * See file "core_qspi.h" for description of the functions implemented
+ * in this file.
  *
  */
 

@@ -1,11 +1,11 @@
-/*******************************************************************************
+/**
  * Copyright 2019 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
- * @file  mss_l2_cache.h
+ * @file mss_l2_cache.h
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief MACROs defines and prototypes associated with L2 Cache
+ * @brief mss_l2_cache header file
  *
  */
 

@@ -1,16 +1,14 @@
-/*******************************************************************************
+/**
  * Copyright 2019 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file mss_usb_host_reg_io.h
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief PolarFire SoC Microprocessor Subsystem (MSS) USB Driver Stack
- *          USB Core Interface Layer (USB-CIFL)
- *            USBH-CIF
+ * @brief mss_usb host register header file
  *
  * This file provides interfaces to perform register and register bit level
- * read / write operations in USB Host mode.
+ * read/write operations in USB Host mode.
  *
  */
 

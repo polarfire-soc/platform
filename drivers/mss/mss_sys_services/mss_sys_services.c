@@ -1,13 +1,15 @@
-/*******************************************************************************
+/**
  * Copyright 2019 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file mss_sys_services.c
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief PolarFire SoC Microprocessor Subsystem (MSS) System Services bare
- * metal driver implementation.
- *
+ * @brief mss_sys_services source file
+ * 
+ * See file "mss_sys_services.h" for description of the functions implemented
+ * in this file.
+ * 
  */
 
 #include "mpfs_hal/mss_hal.h"

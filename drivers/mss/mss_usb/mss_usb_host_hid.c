@@ -1,14 +1,15 @@
-/*******************************************************************************
+/**
  * Copyright 2019 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file mss_usb_host_hid.c
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief PolarFire SoC Microprocessor Subsystem (MSS) USB Driver Stack
- *         USB Logical Layer (USB-LL)
- *           USBH-HID class driver.
- *
+ * @brief mss_usb host HID source file
+ * 
+ * See file "mss_usb_host_hid.h" for description of the functions implemented
+ * in this file.
+ * 
  * This file implements Host side HID class specific initialization
  * and request handling.
  *

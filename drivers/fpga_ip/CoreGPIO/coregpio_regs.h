@@ -1,11 +1,11 @@
-/*******************************************************************************
- * (c) Copyright 2008-2023 Microchip FPGA Embedded Systems Solutions.
+/**
+ * Copyright 2023 Microchip FPGA Embedded Systems Solutions.
  * 
  * SPDX-License-Identifier: MIT
  *
  * @file coregpio_regs.h
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief CoreGPIO register definitions
+ * @brief CoreGPIO register header file
  *
  */
  

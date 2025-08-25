@@ -1,13 +1,14 @@
-/*******************************************************************************
+/**
  * Copyright 2019 Microchip FPGA Embedded Systems Solutions.
  *
  * SPDX-License-Identifier: MIT
  *
  * @file mss_usb_common_reg_io.h
  * @author Microchip FPGA Embedded Systems Solutions
- * @brief PolarFire SoC Microprocessor Subsystem (MSS) USB Driver Stack
- *          USB Core Interface Layer (USB-CIFL)
- *            USB-CIF.
+ * @brief mss_usb common register header file
+ * 
+ * PolarFire SoC Microprocessor Subsystem (MSS) USB Driver Stack USB Core
+ * Interface Layer (USB-CIFL) USB-CIF.
  *
  * This file provides interfaces to perform register bit level
  * I\O operations which are independent of USB Device/host mode.
