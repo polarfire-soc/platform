@@ -6,9 +6,9 @@
  * @file mss_nwc_init.h
  * @author Microchip FPGA Embedded Systems Solutions
  * @brief mss_nwc initiation header file
- * 
+ *
  * north west corner (NWC) initiation
- * 
+ *
  */
 
 /*=========================================================================*//**

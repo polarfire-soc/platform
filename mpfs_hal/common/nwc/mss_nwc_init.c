@@ -6,12 +6,12 @@
  * @file mss_nwc_init.c
  * @author Microchip FPGA Embedded Systems Solutions
  * @brief mss_nwc initiation source file
- * 
+ *
  * north west corner (NWC) initiation
- * 
+ *
  * See file "mss_nwc_init.h" for description of the functions implemented
  * in this file.
- * 
+ *
  */
 
 #include <string.h>

@@ -6,7 +6,7 @@
  * @file mss_usb_device_cif.c
  * @author Microchip FPGA Embedded Systems Solutions
  * @brief mss_usb device CIF source file
- * 
+ *
  * PolarFire SoC Microprocessor Subsystem (MSS) USB Driver Stack USB Core
  * Interface Layer (USB-CIFL) USBD-CIF driver
  *

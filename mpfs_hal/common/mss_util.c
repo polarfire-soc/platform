@@ -6,7 +6,7 @@
  * @file mss_util.c
  * @author Microchip FPGA Embedded Systems Solutions
  * @brief mss_util source file
- * 
+ *
  * There are utility functions
  *
  */

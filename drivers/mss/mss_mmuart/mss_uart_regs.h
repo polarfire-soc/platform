@@ -128,7 +128,7 @@ extern "C" {
 #define ELINBI_MASK                 (0x01u << 3u)      /* Enable LIN break interrupt */
 #define ELINSI_MASK                 (0x01u << 4u)      /* Enable LIN sync detection interrupt */
 
-#ifdef __cplusplus                       
+#ifdef __cplusplus
 }
 #endif
 

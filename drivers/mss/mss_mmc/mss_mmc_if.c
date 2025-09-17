@@ -6,10 +6,10 @@
  * @file mss_mmc_if.c
  * @author Microchip FPGA Embedded Systems Solutions
  * @brief mss_mmc interface source file
- * 
+ *
  * See file "mss_mmc_if.h" for description of the functions implemented
  * in this file.
- * 
+ *
  * This eMMC/SD Interface driver provides functions for transferring
  * configuration and programming commands to the eMMC/SD device. Functions
  * contained within the eMMC/SD interface driver are accessed through the
@@ -84,7 +84,7 @@ cif_response_t cif_send_cmd
 
     /* Transfer the Command to the MMC device */
     send_mmc_cmd(cmd_arg, cmd_type, resp_type, CHECK_IF_CMD_SENT_POLL);
-    
+
     trans_status_isr = MMC->SRS12;
 
     if ( MMC_CLEAR != (trans_status_isr & SRS12_ERROR_INTERRUPT) )
@@ -104,7 +104,7 @@ cif_response_t cif_send_cmd
             (MMC_CLEAR == (SRS12_ERROR_INTERRUPT & trans_status_isr)))
         {
             /* If the response is an R1/B response */
-            if ((MSS_MMC_RESPONSE_R1 == (MSS_MMC_response_type)resp_type) 
+            if ((MSS_MMC_RESPONSE_R1 == (MSS_MMC_response_type)resp_type)
             || (MSS_MMC_RESPONSE_R1B == (MSS_MMC_response_type)resp_type))
             {
                 ret_status = response_1_parser();
@@ -136,7 +136,7 @@ cif_response_t cif_send_cmd
     return(ret_status);
 }
 
-/***************************************************************************//** 
+/***************************************************************************//**
  * The send_mmc_cmd() function transfers the eMMC/SD command and argument to the
  * eMMC/SD device and waits until the core indicates that the command has been
  * transferred successfully.
@@ -180,8 +180,8 @@ void send_mmc_cmd
     }
 }
 
-/***************************************************************************//** 
- * The response_1_parser() returns the contents of the Card Status Register. 
+/***************************************************************************//**
+ * The response_1_parser() returns the contents of the Card Status Register.
  * This function checks that none of the error fields are set within the CSR
  * and the status of the READY_FOR_DATA flag (Bit 8).
  */
@@ -189,7 +189,7 @@ static cif_response_t response_1_parser(void)
 {
     cif_response_t ret_status = TRANSFER_IF_FAIL;
     uint32_t response;
-    
+
     response = MMC->SRS04;
     if (MMC_CLEAR == (CARD_STATUS_ALL_ERRORS_MASK & response)) /* no error */
     {
@@ -261,7 +261,7 @@ cif_response_t cif_send_cq_direct_command
     uint32_t reg;
     uint32_t cmd_response;
     cif_response_t ret_status = TRANSFER_IF_FAIL;
-    
+
     /* Enable direct command */
     reg = MMC->CQRS02;
     reg |= (uint32_t)CQRS02_DIRECT_CMD_ENABLE;
@@ -347,7 +347,7 @@ static cif_response_t cq_execute_task(uint8_t task_id)
     MMC->CQRS10 = reg;
 
     while (value-- != 0u);
-    
+
     do
     {
         trans_status_isr = MMC->SRS12;

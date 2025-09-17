@@ -687,7 +687,7 @@ extern "C" {
   # Frame Filter configuration options
 
 | Constant                         | Description |
-| -------------------------------- |----------------------------------------------------------------------------------- | 
+| -------------------------------- |----------------------------------------------------------------------------------- |
 | TSE_FC_PASS_BROADCAST_MASK       | Pass all broadcast frames.                                                         |
 | TSE_FC_PASS_MULTICAST_MASK       | Pass all broadcast frames.                                                         |
 | TSE_FC_PASS_UNICAST_MASK         | Pass the frame if its Unicast-DA matches the configured destination address.       |
@@ -793,7 +793,7 @@ extern "C" {
   ## Framedrop if Length Out of Range
 
   | Constant                          | Description                                                       |
-  | --------------------------------- | ----------------------------------------------------------------- | 
+  | --------------------------------- | ----------------------------------------------------------------- |
   |  TSE_OUTOFRANGE_LEN_FRAMEDROP_MASK | Drop the frame if a frame with Length Out of Range is  received. |
 
   ### Length Out of Range

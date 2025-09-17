@@ -6,7 +6,7 @@
  * @file core_can.c
  * @author Microchip FPGA Embedded Systems Solutions
  * @brief CoreCAN source file
- * 
+ *
  * See file "core_can.h" for description of the functions implemented in this
  * file.
  *

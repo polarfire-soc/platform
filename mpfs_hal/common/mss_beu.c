@@ -6,7 +6,7 @@
  * @file mss_beu.c
  * @author Microchip FPGA Embedded Systems Solutions
  * @brief mss_beu source file
- * 
+ *
  * PolarFire SoC MSS MPU driver for configuring the Bus Error Unit
  *
  */

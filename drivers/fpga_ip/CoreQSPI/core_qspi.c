@@ -6,7 +6,7 @@
  * @file core_qspi.c
  * @author Microchip FPGA Embedded Systems Solutions
  * @brief CoreQSPI source file
- * 
+ *
  * See file "core_qspi.h" for description of the functions implemented
  * in this file.
  *

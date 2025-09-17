@@ -6,10 +6,10 @@
  * @file mss_pdma.c
  * @author Microchip FPGA Embedded Systems Solutions
  * @brief mss_pdma source file
- * 
+ *
  * See file "mss_pdma.h" for description of the functions implemented
  * in this file.
- * 
+ *
  */
 
 #include "mpfs_hal/mss_hal.h"
@@ -18,7 +18,7 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif 
+#endif
 
 
 /* MACRO to set the correct channel memory offset for the memory mapped
@@ -28,9 +28,9 @@ extern "C" {
                     (uint64_t)(PDMA_REG_BASE + (PDMA_CHL_REG_OFFSET * (x)))
 
 /* Default is maximum transaction size for both write_size and read_size. */
-uint8_t g_channel_nextcfg_wsize[MSS_PDMA_lAST_CHANNEL] = 
+uint8_t g_channel_nextcfg_wsize[MSS_PDMA_lAST_CHANNEL] =
                                                 { 0x0Fu, 0x0Fu, 0x0Fu, 0x0Fu };
-uint8_t g_channel_nextcfg_rsize[MSS_PDMA_lAST_CHANNEL] = 
+uint8_t g_channel_nextcfg_rsize[MSS_PDMA_lAST_CHANNEL] =
                                                 { 0x0Fu, 0x0Fu, 0x0Fu, 0x0Fu };
 
 /* Callback handler declaration */
@@ -312,7 +312,7 @@ MSS_PDMA_get_transfer_error_status
     {
         return 0u;
     }
-    
+
     /* Set the register structure pointer for the PDMA channel. */
     volatile mss_pdma_t *pdmareg = (mss_pdma_t *)MSS_PDMA_REG_OFFSET(channel_id);
 

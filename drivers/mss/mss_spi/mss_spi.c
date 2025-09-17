@@ -6,10 +6,10 @@
  * @file mss_spi.c
  * @author Microchip FPGA Embedded Systems Solutions
  * @brief mss_spi source file
- * 
+ *
  * See file "mss_spi.h" for description of the functions implemented
  * in this file.
- * 
+ *
  */
 
 #include <string.h>

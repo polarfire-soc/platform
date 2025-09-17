@@ -138,7 +138,7 @@ extern "C" {
 #define UADDAR                                  0u
 #define UADDAR_MASK                             0xFFu
 
-#ifdef __cplusplus                       
+#ifdef __cplusplus
 }
 #endif
 

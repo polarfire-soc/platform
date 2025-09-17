@@ -6,12 +6,12 @@
  * @file mss_utils.S
  * @author Microchip FPGA Embedded Systems Solutions
  * @brief mss_utils assembly file
- * 
+ *
  */
 
   .section .text.init,"ax", %progbits
   .align 3
-  
+
 #include "../common/encoding.h"
 
 /***********************************************************************************

@@ -6,10 +6,10 @@
  * @file mss_gpio.c
  * @author Microchip FPGA Embedded Systems Solutions
  * @brief mss_gpio source file
- * 
+ *
  * See file "mss_gpio.h" for description of the functions implemented
  * in this file.
- * 
+ *
  */
 
 #include "mpfs_hal/mss_hal.h"
@@ -17,7 +17,7 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif 
+#endif
 
 /*-------------------------------------------------------------------------*//**
  * Defines.
@@ -247,7 +247,7 @@ void MSS_GPIO_drive_inout
 )
 {
     uint32_t config;
-    
+
     if (0U == gpio_number_validate(gpio, port_id))
     {
         switch (inout_state)

@@ -6,7 +6,7 @@
  * @file vsc8575_support.c
  * @author Microchip FPGA Embedded Systems Solutions
  * @brief VSC8575 PHY support source file
- * 
+ *
  * Support routines for the VTS API for the Microsemi VSC8575 PHY
  * interface to support the peripheral daughter board for the G5 SoC Emulation
  * Platform.

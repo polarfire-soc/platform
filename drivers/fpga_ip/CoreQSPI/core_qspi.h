@@ -160,7 +160,7 @@ extern "C" {
  # Generic constant definitions
  The following constants can be used to configure the CoreQSPI where a zero or
  non-zero value such as enable or disable is to be provided as input parameter.
- 
+
  @code
        qspi_config.xip = QSPI_DISABLE;
        QSPI_configure(&qspi_config);
@@ -176,7 +176,7 @@ extern "C" {
 #define QSPI_DISABLE                    0x00u
 
 /**
-The following table shows that these values are used to program the io_format 
+The following table shows that these values are used to program the io_format
 parameter of the configuration structure of this driver.
 
 @code

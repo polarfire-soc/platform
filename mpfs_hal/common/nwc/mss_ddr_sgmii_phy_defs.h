@@ -6,7 +6,7 @@
  * @file mss_ddr_sgmii_phy_defs.h
  * @author Microchip FPGA Embedded Systems Solutions
  * @brief Register bit offset and masks definition header file
- * 
+ *
  * This was generated directly from the RTL
  *
  */

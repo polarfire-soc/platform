@@ -6,10 +6,10 @@
  * @file mss_pll.c
  * @author Microchip FPGA Embedded Systems Solutions
  * @brief mss_pll source file
- * 
+ *
  * See file "mss_pll.h" for description of the functions implemented
  * in this file.
- * 
+ *
  */
 
 #include "mpfs_hal/mss_hal.h"

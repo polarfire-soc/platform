@@ -1290,7 +1290,7 @@ void MSS_SPI_set_cmd_handler
   @param resp_buff_size
     resp_buff_size specifies the size of the buffer pointed by the
     resp_tx_buffer parameter.
-  
+
   @return
     This function does not return any value.
  */

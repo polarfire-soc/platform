@@ -1,12 +1,12 @@
 /**
  * Copyright 2025 Microchip FPGA Embedded Systems Solutions.
- * 
+ *
  * SPDX-License-Identifier: MIT
  *
  * @file core_axi4protoconv.c
  * @author Microchip FPGA Embedded Systems Solutions
  * @brief CoreAXI4ProtoConv source file
- * 
+ *
  * See file "core_axi4protoconv.h" for description of the functions implemented
  * in this file.
  *

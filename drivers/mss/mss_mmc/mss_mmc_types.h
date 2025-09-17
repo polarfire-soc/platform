@@ -165,45 +165,45 @@ typedef enum
 
     MSS_MMC_PHY_IFM_MODE                     = 14u,
     MSS_MMC_PHY_DLL_RESET                    = 15u,
-    
-    /* PHY Register address: 0x3C 
+
+    /* PHY Register address: 0x3C
     * Bit shift: 20
     * Bit mask:  0x0F
     */
     MSS_MMC_PHY_DLL_MST_CTRL_PHASE_DET_SEL   = 16u,
 
-    /* PHY Register address: 0x3C 
+    /* PHY Register address: 0x3C
     * Bit shift: 16
     * Bit mask:  0x0F
     */
     MSS_MMC_PHY_DLL_MST_CTRL_DLL_LOCK        = 17u,
 
-    /* PHY Register address: 0x3C 
+    /* PHY Register address: 0x3C
     * Bit shift: 00
     * Bit mask:  0xFF
     */
     MSS_MMC_PHY_DLL_MST_CTRL_DLL_START_POINT = 18u,
 
     /* Default PHY register address (0x00)
-    * Read data is a result of OR operation on all four bytes 
-    * (i.e. data[31:24] | data[23:16]| data[15:8] | data[7:0]); Those registers 
+    * Read data is a result of OR operation on all four bytes
+    * (i.e. data[31:24] | data[23:16]| data[15:8] | data[7:0]); Those registers
     * are not implemented so write operation is ignored.
     */
     MSS_MMC_PHY_UNUSED_OR_READ_ONLY          = 19u,
 
-    /* PHY Register address: 0x40 
+    /* PHY Register address: 0x40
     * Bit shift: 16
     * Bit mask:  0xFF
     */
     MSS_MMC_PHY_DLL_OBS_DEC_SDM_CLK          = 20u,
 
-    /* PHY Register address: 0x40 
+    /* PHY Register address: 0x40
     * Bit shift: 8
     * Bit mask:  0xFF
     */
     MSS_MMC_PHY_DLL_OBS_DEC_SD_CLK           = 21u,
 
-    /* PHY Register address: 0x40 
+    /* PHY Register address: 0x40
     * Bit shift: 0
     * Bit mask:  0xFF
     */

@@ -6,7 +6,7 @@
  * @file pac1934.c
  * @author Microchip FPGA Embedded Systems Solutions
  * @brief pac1934 source file
- * 
+ *
  */
 
 /*-------------------------------------------------------------------------*//**

@@ -7,11 +7,11 @@
  * @file phy.h
  * @author Microchip FPGA Embedded Systems Solutions
  * @brief CoreTSE PHY header file
- * 
+ *
  * Register bit definitions for MII STA (station management entity)
  * standard interface. All basic MII register bits and enhanced capability
  * register bits are defined.
- * 
+ *
  * Complies with Clauses 22, 28, 37, 40 of IEEE RFC 802.3
  *
  */

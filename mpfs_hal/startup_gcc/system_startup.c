@@ -6,9 +6,9 @@
  * @file system_startup.c
  * @author Microchip FPGA Embedded Systems Solutions
  * @brief system_startup source file
- * 
+ *
  * First C code called on startup. Will call user code created outside
- * 
+ *
  */
 
 #include <stddef.h>
@@ -160,7 +160,7 @@ __attribute__((weak)) int main_first_hart(HLS_DATA* hls)
         stack_top = (ptrdiff_t)((uint8_t*)&__stack_top_h0$);
         hls = (HLS_DATA*)(stack_top - HLS_DEBUG_AREA_SIZE);
         hls->in_wfi_indicator = HLS_MAIN_HART_FIN_INIT;
-        
+
         /* Turn off peripheral RAM that is not being used */
         mss_turn_off_unused_ram_clks();
         /*

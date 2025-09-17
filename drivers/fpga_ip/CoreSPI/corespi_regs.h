@@ -6,7 +6,7 @@
  * @file corespi_regs.h
  * @author Microchip FPGA Embedded Systems Solutions
  * @brief CoreSPI register header file
- * 
+ *
  */
 
 #ifndef CORESPI_REGS_H_

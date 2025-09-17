@@ -15,14 +15,14 @@
   ==============================================================================
   Introduction
   ==============================================================================
-  The PolarFire SoC Microprocessor Sub-System (MSS) includes a Quad Serial 
-  Peripheral Interface (QSPI) controller for fast SPI transfers. The MSS QSPI is 
+  The PolarFire SoC Microprocessor Sub-System (MSS) includes a Quad Serial
+  Peripheral Interface (QSPI) controller for fast SPI transfers. The MSS QSPI is
   designed as a Serial Peripheral Interface (SPI) master to specifically work
-  with the QSPI and SPI memory devices. The PolarFire SoC MSS QSPI driver 
-  provides a set of functions for controlling MSS QSPI as part of a bare metal 
-  system where no operating system is available. This driver is adapted for use 
-  as part of an operating system, but the implementation of the adaptation layer 
-  between this driver and the operating system's driver model is outside the 
+  with the QSPI and SPI memory devices. The PolarFire SoC MSS QSPI driver
+  provides a set of functions for controlling MSS QSPI as part of a bare metal
+  system where no operating system is available. This driver is adapted for use
+  as part of an operating system, but the implementation of the adaptation layer
+  between this driver and the operating system's driver model is outside the
   scope of this driver.
 
   --------------------------------
@@ -38,28 +38,28 @@
   ==============================================================================
   Hardware Flow Dependencies
   ==============================================================================
-  The configuration of all the features of the MSS QSPI peripheral is covered by 
-  this driver, with the exception of the PolarFire SoC IOMUX configuration. The 
-  PolarFire SoC allows multiple non-concurrent uses of a few external pins 
-  through IOMUX configuration. This feature allows optimization of external pin 
-  usage by assigning external pins for use by either the microprocessor 
-  sub-system or the FPGA fabric. The MSS QSPI serial signals are routed through 
-  IOMUXs to the PolarFire SoC device's external pins. The MSS QSPI serial 
-  signals are also routed through IOMUXs to the PolarFire SoC FPGA fabric. 
-  For more information on IOMUX, refer to the PolarFire® SoC MSS Technical 
+  The configuration of all the features of the MSS QSPI peripheral is covered by
+  this driver, with the exception of the PolarFire SoC IOMUX configuration. The
+  PolarFire SoC allows multiple non-concurrent uses of a few external pins
+  through IOMUX configuration. This feature allows optimization of external pin
+  usage by assigning external pins for use by either the microprocessor
+  sub-system or the FPGA fabric. The MSS QSPI serial signals are routed through
+  IOMUXs to the PolarFire SoC device's external pins. The MSS QSPI serial
+  signals are also routed through IOMUXs to the PolarFire SoC FPGA fabric.
+  For more information on IOMUX, refer to the PolarFire® SoC MSS Technical
   Reference Manual and PolarFire Device Register Map.
 
   The IOMUXs are configured using the PolarFire SoC MSS configurator tool. You
   must ensure that the MSS QSPI peripherals are enabled and configured in the
   PolarFire SoC MSS configurator if you wish to use them. For more information
-  on IOMUXs, refer to the PolarFire® SoC MSS Technical Reference Manual and 
+  on IOMUXs, refer to the PolarFire® SoC MSS Technical Reference Manual and
   PolarFire Device Register Map.
 
   The base address and the register addresses are defined in this driver as
   constants. The interrupt number assignment for the MSS QSPI peripherals is
-  defined as constants in the Microchip PolarFire SoC (MPFS) Hardware 
-  Abstraction Layer (HAL). You must ensure that the latest MPFS HAL is included 
-  in the project settings of the SoftConsole toolchain and that it is generated 
+  defined as constants in the Microchip PolarFire SoC (MPFS) Hardware
+  Abstraction Layer (HAL). You must ensure that the latest MPFS HAL is included
+  in the project settings of the SoftConsole toolchain and that it is generated
   into your project.
 
   ==============================================================================
@@ -79,68 +79,68 @@
     - Quad SPI operations   (4-bit)
 
   The MSS QSPI driver provides the MSS_QSPI_init() function to initialize the
-  MSS QSPI hardware block. This initialization function must be called before 
+  MSS QSPI hardware block. This initialization function must be called before
   any other MSS QSPI driver functions are called.
 
-  The MSS QSPI driver provides the MSS_QSPI_config() function to configure MSS 
-  QSPI with the desired configuration values. It also provides the 
-  MSS_QSPI_get_config() function to read back the current configuration of MSS 
-  QSPI. You use MSS_QSPI_get_config() function to retrieve the current 
-  configurations and then overwrite them with application-specific values, such 
-  as SPI mode, SPI clock rate, SDI sampling, QSPI operation, XIP mode, and XIP 
-  address bits. All these configuration options are explained in detail in the 
+  The MSS QSPI driver provides the MSS_QSPI_config() function to configure MSS
+  QSPI with the desired configuration values. It also provides the
+  MSS_QSPI_get_config() function to read back the current configuration of MSS
+  QSPI. You use MSS_QSPI_get_config() function to retrieve the current
+  configurations and then overwrite them with application-specific values, such
+  as SPI mode, SPI clock rate, SDI sampling, QSPI operation, XIP mode, and XIP
+  address bits. All these configuration options are explained in detail in the
   API function description of the respective function.
 
   --------------------------------------
   SPI Master Block Transfer Control
   --------------------------------------
-  Once the driver is initialized and configured, data transmission and reception 
-  are achieved by configuring it to the desired value. MSS QSPI is designed to 
-  specifically work with SPI flash memories. It supports a single, active-low 
-  slave-select output. Block transfers are accomplished in the following ways:  
+  Once the driver is initialized and configured, data transmission and reception
+  are achieved by configuring it to the desired value. MSS QSPI is designed to
+  specifically work with SPI flash memories. It supports a single, active-low
+  slave-select output. Block transfers are accomplished in the following ways:
     - Polled block transfer
     - Interrupt-driven block transfer
 
   ---------------------------
   Polled Block Transfer
   ---------------------------
-  The MSS_QSPI_polled_transfer_block() function is provided to accomplish data 
-  transfers where no interrupt is used. The MSS_QSPI_polled_transfer_block() 
-  function polls the status register to know the current status of the on-going 
-  transfer. This is a blocking function. A MSS QSPI block transfer always has 
-  some amount of data to be transmitted (at least one command byte), but 
-  receiving useful data from the target memory device is optional. So, if the 
-  scheduled block transfer is only transferring data and not receiving any data, 
-  then MSS_QSPI_polled_transfer_block() function exits after transmitting the 
-  required bytes. If data needs to be received from the target memory device 
-  during a particular transfer, the MSS_QSPI_polled_transfer_block() function 
+  The MSS_QSPI_polled_transfer_block() function is provided to accomplish data
+  transfers where no interrupt is used. The MSS_QSPI_polled_transfer_block()
+  function polls the status register to know the current status of the on-going
+  transfer. This is a blocking function. A MSS QSPI block transfer always has
+  some amount of data to be transmitted (at least one command byte), but
+  receiving useful data from the target memory device is optional. So, if the
+  scheduled block transfer is only transferring data and not receiving any data,
+  then MSS_QSPI_polled_transfer_block() function exits after transmitting the
+  required bytes. If data needs to be received from the target memory device
+  during a particular transfer, the MSS_QSPI_polled_transfer_block() function
   terminates once the expected data is received from the target memory device.
 
   --------------------------------
   Interrupt Driven Block Transfer
   --------------------------------
   This block transfer is accomplished using interrupts instead of polling the
-  status register. The following functions are provided to support 
+  status register. The following functions are provided to support
   interrupt-driven block transfers:
             - MSS_QSPI_irq_transfer_block()
             - MSS_QSPI_set_status_handler()
 
-  The MSS_QSPI_set_status_handler() function must be used to set a status 
-  handler call-back function with the driver. The MSS_QSPI_set_status_handler() 
-  function is called back by the driver at two different stages of the transfer. 
-  At the first stage, it is called when the required number of bytes are 
-  transmitted. At the second stage, if there is data to be received from the 
-  target memory device, it is invoked again once the desired data is received. 
-  An appropriate status value is passed by the driver as a parameter of this 
+  The MSS_QSPI_set_status_handler() function must be used to set a status
+  handler call-back function with the driver. The MSS_QSPI_set_status_handler()
+  function is called back by the driver at two different stages of the transfer.
+  At the first stage, it is called when the required number of bytes are
+  transmitted. At the second stage, if there is data to be received from the
+  target memory device, it is invoked again once the desired data is received.
+  An appropriate status value is passed by the driver as a parameter of this
   call-back function so that the application infers that an event occurred.
 
   -----------
   QSPI Status
   -----------
-  The MSS_QSPI_read_status() function reads the current status of MSS QSPI. The 
-  MSS_QSPI_read_status() function is typically used to know the status of an 
-  ongoing transfer. The MSS_QSPI_read_status() function returns the status 
-  register value and is called at any time after MSS QSPI is initialized and 
+  The MSS_QSPI_read_status() function reads the current status of MSS QSPI. The
+  MSS_QSPI_read_status() function is typically used to know the status of an
+  ongoing transfer. The MSS_QSPI_read_status() function returns the status
+  register value and is called at any time after MSS QSPI is initialized and
   configured.
 
   -------------
@@ -148,14 +148,14 @@
   -------------
   MSS QSPI allows direct access to the QSPI interface pins to support access to
   non-standard SPI devices through direct CPU control.
-  
-  This driver provides the following functions to read and write the direct 
+
+  This driver provides the following functions to read and write the direct
   access register of MSS QSPI:
                   - MSS_QSPI_read_direct_access_reg()
                   - MSS_QSPI_write_direct_access_reg()
-  
+
   Using these functions, you generate any sequence of binary transitions on the
-  QSPI pins that might be needed to communicate with non-standard target 
+  QSPI pins that might be needed to communicate with non-standard target
   devices.
 
  *//*=========================================================================*/
@@ -167,13 +167,13 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif 
+#endif
 
 /*-------------------------------------------------------------------------*//**
   MSS QSPI Generic Constants
   ==========================
   The following constants are used as input parameter values to configure the
-  event on which the SDI pin is sampled. For example:  
+  event on which the SDI pin is sampled. For example:
   @code
     qspi_config.sample = MSS_QSPI_SAMPLE_POSAGE_SPICLK;
     MSS_QSPI_configure(&qspi_config);
@@ -181,14 +181,14 @@ extern "C" {
  * */
 /*-------------------------------------------------------------------------*//**
   ## MSS_QSPI_SAMPLE_POSAGE_SPICLK
-  The SDI pin is sampled at the rising edge of the SPI clock(SPICLK). 
+  The SDI pin is sampled at the rising edge of the SPI clock(SPICLK).
 */
 #define MSS_QSPI_SAMPLE_POSAGE_SPICLK       0x00u
 
 /*-------------------------------------------------------------------------*//**
   ## MSS_QSPI_SAMPLE_ACTIVE_SPICLK
-  The SDI pin is sampled on the last falling Hardwired Clock (HCLK) edge in the 
-  SPI clock(SPICLK) period. 
+  The SDI pin is sampled on the last falling Hardwired Clock (HCLK) edge in the
+  SPI clock(SPICLK) period.
 */
 #define MSS_QSPI_SAMPLE_ACTIVE_SPICLK       0x01u
 
@@ -201,9 +201,9 @@ The SDI pin is sampled at the rising HCLK edge as SPI clock(SPICLK) falls.
 /*-------------------------------------------------------------------------*//**
   Public Constant Definitions
   ===========================
-  The following constants are used to configure MSS QSPI where a zero or 
-  non-zero value, such as enable or disable, is to be provided as an input 
-  parameter. For example:  
+  The following constants are used to configure MSS QSPI where a zero or
+  non-zero value, such as enable or disable, is to be provided as an input
+  parameter. For example:
   @code
     qspi_config.xip = MSS_QSPI_DISABLE;
     MSS_QSPI_configure(&qspi_config);
@@ -214,7 +214,7 @@ The SDI pin is sampled at the rising HCLK edge as SPI clock(SPICLK) falls.
 
 /***************************************************************************//**
 These values are used to program the io_format parameter of the configuration
-structure of this driver, as shown below:  
+structure of this driver, as shown below:
   @code
     qspi_config.io_format = MSS_QSPI_QUAD_FULL;
     MSS_QSPI_configure(&qspi_config);
@@ -259,7 +259,7 @@ typedef enum mss_qspi_io_format_t
 
 /***************************************************************************//**
 These values are used to program the spi_mode parameter of the configuration
-structure of this driver. For example:  
+structure of this driver. For example:
   @code
     qspi_config.spi_mode = MSS_QSPI_MODE0;
     MSS_QSPI_configure(&qspi_config);
@@ -280,7 +280,7 @@ typedef enum mss_qspi_protocol_mode_t
 
 /***************************************************************************//**
 These values are used to program the spi_mode parameter of the configuration
-structure of this driver. For example:  
+structure of this driver. For example:
   @code
     qspi_config.clk_div =  MSS_QSPI_CLK_DIV_2;
     MSS_QSPI_configure(&qspi_config);
@@ -326,23 +326,23 @@ typedef enum mss_qspi_clk_div_t
 } mss_qspi_clk_div;
 
 /***************************************************************************//**
-This prototype defines the function prototype that must be followed by MSS QSPI 
-status handler functions. This function is registered with the MSS QSPI driver 
-through a call to the MSS_QSPI_set_status_handler() function.  
+This prototype defines the function prototype that must be followed by MSS QSPI
+status handler functions. This function is registered with the MSS QSPI driver
+through a call to the MSS_QSPI_set_status_handler() function.
 
-__Declaring and Implementing the Status Handler Function:__  
-The Slave frame receive handler functions must follow the following prototype.  
+__Declaring and Implementing the Status Handler Function:__
+The Slave frame receive handler functions must follow the following prototype.
     void transfer_status_handler(uint32_t status);
 
 The actual name of the status handler is unimportant. Use any name of your
-choice. The status parameter contains a value indicating which of the TX-DONE or 
+choice. The status parameter contains a value indicating which of the TX-DONE or
 RX-DONE events caused the interrupt.
 */
 typedef void (*mss_qspi_status_handler_t)(uint32_t status);
 
 
 /***************************************************************************//**
-  This is the structure definition for the MSS QSPI configuration instance. It 
+  This is the structure definition for the MSS QSPI configuration instance. It
   defines the configuration data that the application exchanges with the driver.
 
   The following parameters are the configuration options for MSS QSPI.
@@ -404,7 +404,7 @@ typedef struct
 /*-------------------------------------------------------------------------*//**
   QSPI_BASE
   =========
-  The QSPI_BASE constant provides the PolarFire SoC MSS QSPI base memory 
+  The QSPI_BASE constant provides the PolarFire SoC MSS QSPI base memory
   address.
 */
 #define QSPI_BASE               0x21000000u
@@ -430,7 +430,7 @@ typedef struct
   It enables the MSS QSPI hardware block and configures it with the default
   values.
 
-  @param 
+  @param
     The MSS_QSPI_init() function takes no function parameters.
 
   @return
@@ -443,10 +443,10 @@ void MSS_QSPI_init
 
 /***************************************************************************//**
   The MSS_QSPI_enable() function enables the MSS QSPI hardware block.
-  
-  @param 
+
+  @param
     The MSS_QSPI_enable() function takes no function parameters.
-    
+
   @return
     The MSS_QSPI_enable() function does not return a value.
  */
@@ -457,10 +457,10 @@ static inline void MSS_QSPI_enable(void)
 
 /***************************************************************************//**
   The MSS_QSPI_disable() function disables the MSS QSPI hardware block.
-  
-  @param 
+
+  @param
     The MSS_QSPI_disable() function takes no function parameters.
-    
+
   @return
     The MSS_QSPI_disable() function does not return a value.
  */
@@ -470,12 +470,12 @@ static inline void MSS_QSPI_disable(void)
 }
 
 /***************************************************************************//**
-  The MSS_QSPI_configure() function configures MSS QSPI to the desired 
+  The MSS_QSPI_configure() function configures MSS QSPI to the desired
   configuration values.
 
   @param config
-    The config parameter is a pointer to the mss_qspi_config_t structure that 
-    provides new configuration values. For more details, see mss_qspi_config_t 
+    The config parameter is a pointer to the mss_qspi_config_t structure that
+    provides new configuration values. For more details, see mss_qspi_config_t
     section.
 
   @return
@@ -487,14 +487,14 @@ void MSS_QSPI_configure
 );
 
 /***************************************************************************//**
-  The MSS_QSPI_get_config() function reads back the current configurations of 
-  MSS QSPI. The MSS_QSPI_get_config() function is used when you want to read 
-  the current configurations, modify the configuration values of your choice, 
+  The MSS_QSPI_get_config() function reads back the current configurations of
+  MSS QSPI. The MSS_QSPI_get_config() function is used when you want to read
+  the current configurations, modify the configuration values of your choice,
   and reconfigure the MSS QSPI hardware using the MSS_QSPI_configure() function.
 
   @param config
-    The config parameter is a pointer to the mss_qspi_config_t structure that 
-    returns the current configuration values of MSS QSPI. For more details, see 
+    The config parameter is a pointer to the mss_qspi_config_t structure that
+    returns the current configuration values of MSS QSPI. For more details, see
     mss_qspi_config_t section.
 
   @return
@@ -506,15 +506,15 @@ void MSS_QSPI_get_config
 );
 
 /***************************************************************************//**
-  The MSS_QSPI_polled_transfer_block() function carries out a QSPI transfer with 
-  the target memory device using the polling method of data transfer. The QSPI 
-  transfer characteristics are configured every time a new transfer is 
+  The MSS_QSPI_polled_transfer_block() function carries out a QSPI transfer with
+  the target memory device using the polling method of data transfer. The QSPI
+  transfer characteristics are configured every time a new transfer is
   initiated. This is a blocking function.
 
   @param num_addr_bytes
-    The num_addr_bytes parameter indicates the number of address bytes to be 
-    used while transacting with the target memory device. Depending on the 
-    target memory device, the address within the target memory device can be 
+    The num_addr_bytes parameter indicates the number of address bytes to be
+    used while transacting with the target memory device. Depending on the
+    target memory device, the address within the target memory device can be
     either 3 or 4 bytes long. You must make sure that you provide the exact same
     number with which the target memory device is configured.
 
@@ -522,7 +522,7 @@ void MSS_QSPI_get_config
     READ_ID. For such commands the num_addr_bytes parameter must be set to 0x0.
 
   @param target_mem_addr
-    The target_mem_addr parameter is the memory address in the target memory 
+    The target_mem_addr parameter is the memory address in the target memory
     device on which the read/write operation is to be carried out.
 
   @param tx_buffer
@@ -537,7 +537,7 @@ void MSS_QSPI_get_config
     as part of the data that needs to be transmitted.
 
   @param rd_buffer
-    The rd_buffer parameter is the pointer to the buffer that stores the data 
+    The rd_buffer parameter is the pointer to the buffer that stores the data
     returned by the target memory device.
 
   @param rd_byte_size
@@ -545,11 +545,11 @@ void MSS_QSPI_get_config
     received from the target memory device.
 
   @param num_idle_cycles
-    The num_idle_cycles parameter indicates the number of idle cycles, or dummy 
-    clock edges, that must be generated after the address bytes are transmitted 
-    and before the target memory device starts sending data. This must be 
-    correctly set based on the target memory device and the SPI command being 
-    used. This may also vary based on the SPI clock and the way the target 
+    The num_idle_cycles parameter indicates the number of idle cycles, or dummy
+    clock edges, that must be generated after the address bytes are transmitted
+    and before the target memory device starts sending data. This must be
+    correctly set based on the target memory device and the SPI command being
+    used. This may also vary based on the SPI clock and the way the target
     memory device is configured.
 
   @return
@@ -566,25 +566,25 @@ void MSS_QSPI_polled_transfer_block
 );
 
 /***************************************************************************//**
-  The MSS_QSPI_irq_transfer_block() function carries out a QSPI transfer with 
-  the target memory device using the interrupt method of data transfers. The 
-  QSPI transfer characteristics are configured every time a new transfer is 
-  initiated. This is a non-blocking function. You must configure the interrupt 
-  handler function before calling the MSS_QSPI_irq_transfer_block() function. It 
-  enables the interrupts and starts transmitting as many bytes as requested. 
-  When the Transmit-Done interrupt event occurs and this driver calls back the 
-  interrupt handler function that you previously provided, you get an indication 
-  that the actual SPI transmit process is complete. If the transfer includes 
-  receiving data from the target memory device, then the receive-available and 
-  receive-done interrupts are also enabled by the MSS_QSPI_irq_transfer_block() 
-  function. The data is received in the interrupt routine. When the Receive-Done 
+  The MSS_QSPI_irq_transfer_block() function carries out a QSPI transfer with
+  the target memory device using the interrupt method of data transfers. The
+  QSPI transfer characteristics are configured every time a new transfer is
+  initiated. This is a non-blocking function. You must configure the interrupt
+  handler function before calling the MSS_QSPI_irq_transfer_block() function. It
+  enables the interrupts and starts transmitting as many bytes as requested.
+  When the Transmit-Done interrupt event occurs and this driver calls back the
+  interrupt handler function that you previously provided, you get an indication
+  that the actual SPI transmit process is complete. If the transfer includes
+  receiving data from the target memory device, then the receive-available and
+  receive-done interrupts are also enabled by the MSS_QSPI_irq_transfer_block()
+  function. The data is received in the interrupt routine. When the Receive-Done
   interrupt event occurs, the interrupt handler you provided is called again.
 
   @param num_addr_bytes
-    The num_addr_bytes parameter indicates the number of address bytes to be 
-    used while transacting with the target memory device. Depending on the the 
-    target memory device, the address within the target memory device can be 
-    either 3 or 4 bytes long.  You must make sure that you provide the exact 
+    The num_addr_bytes parameter indicates the number of address bytes to be
+    used while transacting with the target memory device. Depending on the the
+    target memory device, the address within the target memory device can be
+    either 3 or 4 bytes long.  You must make sure that you provide the exact
     same number with which the target memory device is configured.
 
     Note: There will be some command opcodes for which no address needs to be
@@ -592,7 +592,7 @@ void MSS_QSPI_polled_transfer_block
     must be set to 0x0.
 
   @param target_mem_addr
-    The target_mem_addr parameter is the memory address in the target memory 
+    The target_mem_addr parameter is the memory address in the target memory
     device on which the read/write operation is to be carried out.
 
   @param tx_buffer
@@ -607,28 +607,28 @@ void MSS_QSPI_polled_transfer_block
     as part of the data that needs to be transmitted.
 
   @param rd_buffer
-  The rd_buffer parameter is the pointer to the buffer that stores the data 
-  returned by the target memory device. This must be correctly set based on the 
-  transfer. That is, for the status, readid, and other configuration read 
-  commands, this must be set, however for the configuration write commands, 
+  The rd_buffer parameter is the pointer to the buffer that stores the data
+  returned by the target memory device. This must be correctly set based on the
+  transfer. That is, for the status, readid, and other configuration read
+  commands, this must be set, however for the configuration write commands,
   this must be NULL.
 
   @param rd_byte_size
-    The rd_byte_size parameter indicates the exact number of bytes that need to 
+    The rd_byte_size parameter indicates the exact number of bytes that need to
     be received from the target memory device.
 
   @param num_idle_cycles
-    The num_idle_cycles parameter indicates the number of idle cycles, or dummy 
-    clock edges, that must be generated after the address bytes are transmitted 
-    and before target memory device starts sending data. This must be correctly 
-    set based on the target memory device and the SPI command being used, This 
-    may also vary based on the SPI clock and the way the target memory device is 
+    The num_idle_cycles parameter indicates the number of idle cycles, or dummy
+    clock edges, that must be generated after the address bytes are transmitted
+    and before target memory device starts sending data. This must be correctly
+    set based on the target memory device and the SPI command being used, This
+    may also vary based on the SPI clock and the way the target memory device is
     configured.
 
   @return
-    The MSS_QSPI_irq_transfer_block() function returns a non-zero value if MSS 
-    QSPI is busy completing the previous transfer and does not accept a new 
-    transfer. A zero return value indicates successful execution of the 
+    The MSS_QSPI_irq_transfer_block() function returns a non-zero value if MSS
+    QSPI is busy completing the previous transfer and does not accept a new
+    transfer. A zero return value indicates successful execution of the
     MSS_QSPI_irq_transfer_block function.
  */
 uint8_t MSS_QSPI_irq_transfer_block
@@ -642,16 +642,16 @@ uint8_t MSS_QSPI_irq_transfer_block
 );
 
 /***************************************************************************//**
-  The MSS_QSPI_set_status_handler() function registers an interrupt handler 
-  function with this driver that returns the interrupt status back to the 
-  application. This status handler function is called by this driver on two 
-  events. First, when the transmission of the required bytes is completed 
-  (Transmit-Done). Second, if data is to be received from the target memory 
-  device, the MSS_QSPI_set_status_handler() function is called again when the 
+  The MSS_QSPI_set_status_handler() function registers an interrupt handler
+  function with this driver that returns the interrupt status back to the
+  application. This status handler function is called by this driver on two
+  events. First, when the transmission of the required bytes is completed
+  (Transmit-Done). Second, if data is to be received from the target memory
+  device, the MSS_QSPI_set_status_handler() function is called again when the
   required data is received (Receive-Done).
 
   @param handler
-  The handler parameter is the interrupt handler function of the 
+  The handler parameter is the interrupt handler function of the
   mss_qspi_status_handler_t type that must be registered.
 
   @return
@@ -663,16 +663,16 @@ void MSS_QSPI_set_status_handler
 );
 
 /***************************************************************************//**
-  The MSS_QSPI_read_direct_access_reg() function reads the current value of the 
-  Direct Access Register (DAR) of MSS QSPI. DAR allows direct access to the QSPI 
-  interface pins to support access to non-standard SPI devices through direct 
+  The MSS_QSPI_read_direct_access_reg() function reads the current value of the
+  Direct Access Register (DAR) of MSS QSPI. DAR allows direct access to the QSPI
+  interface pins to support access to non-standard SPI devices through direct
   CPU control.
-  
-  @param 
+
+  @param
     The MSS_QSPI_read_direct_access_reg() function takes no function parameters.
 
   @return
-    The MSS_QSPI_read_direct_access_reg() function returns the current value of 
+    The MSS_QSPI_read_direct_access_reg() function returns the current value of
     DAR of MSS QSPI.
  */
 static inline uint32_t MSS_QSPI_read_direct_access_reg(void)
@@ -681,8 +681,8 @@ static inline uint32_t MSS_QSPI_read_direct_access_reg(void)
 }
 
 /***************************************************************************//**
-  The MSS_QSPI_write_direct_access_reg() function writes a value of DAR of MSS 
-  QSPI. DAR allows direct access to the QSPI interface pins to support access to 
+  The MSS_QSPI_write_direct_access_reg() function writes a value of DAR of MSS
+  QSPI. DAR allows direct access to the QSPI interface pins to support access to
   non-standard SPI devices through direct CPU control.
 
   @param value
@@ -697,15 +697,15 @@ static inline void MSS_QSPI_write_direct_access_reg(uint32_t value)
 }
 
 /***************************************************************************//**
-  The MSS_QSPI_read_status() function reads the status of MSS QSPI. This 
-  function returns the status register value and is called any time after MSS 
+  The MSS_QSPI_read_status() function reads the status of MSS QSPI. This
+  function returns the status register value and is called any time after MSS
   QSPI is initialized and configured.
 
-  @param 
+  @param
     The MSS_QSPI_read_status() function takes no function parameters.
-    
+
   @return
-    The MSS_QSPI_read_status() function returns the current value of the status 
+    The MSS_QSPI_read_status() function returns the current value of the status
     register of MSS QSPI.
  */
 static inline uint32_t MSS_QSPI_read_status(void)

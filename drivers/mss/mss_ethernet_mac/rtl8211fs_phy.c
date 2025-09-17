@@ -6,7 +6,7 @@
  * @file rtl8211fs_phy.c
  * @author Microchip FPGA Embedded Systems Solutions
  * @brief rtl8211fs PHY source file
- * 
+ *
  * Realtek RTL8211FS-CG PHY interface driver implementation for use with the
  * BeagleV-Fire board.
  *
@@ -16,7 +16,7 @@
  *
  * CFG_MODE[0 - 2] - Strap option 011, UTP <=> SGMII
  * PHYADD[0-2]     - Strap option 001, Address 1
- * 
+ *
  */
 
 #include "mpfs_hal/mss_hal.h"

@@ -6,7 +6,7 @@
  * @file core1588.c
  * @author Microchip FPGA Embedded Systems Solutions
  * @brief Core1588 source file
- * 
+ *
  * See file "core1588.h" for description of the functions implemented
  * in this file.
  *

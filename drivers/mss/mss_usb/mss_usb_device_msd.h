@@ -6,7 +6,7 @@
  * @file mss_usb_device_msd.h
  * @author Microchip FPGA Embedded Systems Solutions
  * @brief mss_usb device MSD header file
- * 
+ *
  * PolarFire SoC Microprocessor Subsystem (MSS) USB Driver Stack USB Logical
  * Layer (USB-LL) USBD-MSC class driver
  *

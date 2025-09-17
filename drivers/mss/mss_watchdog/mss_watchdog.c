@@ -9,7 +9,7 @@
  *
  * See file "mss_watchdog.h" for description of the functions implemented
  * in this file.
- * 
+ *
  */
 
 #include "mpfs_hal/mss_hal.h"
@@ -17,7 +17,7 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif 
+#endif
 
 WATCHDOG_TypeDef* wdog_hw_base[10] = {(WATCHDOG_TypeDef*)0x20001000,
                                       (WATCHDOG_TypeDef*)0x20101000,

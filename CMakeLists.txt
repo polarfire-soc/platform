@@ -18,9 +18,9 @@ else()
 endif()
 
 execute_process(
-    COMMAND ${PYTHON_EXECUTABLE} 
+    COMMAND ${PYTHON_EXECUTABLE}
     ${CMAKE_CURRENT_LIST_DIR}/soc_config_generator/mpfs_configuration_generator.py
-    ${CMAKE_BINARY_DIR}/board/fpga_design/design_description/ 
+    ${CMAKE_BINARY_DIR}/board/fpga_design/design_description/
     ${CMAKE_BINARY_DIR}/board
 )
 
@@ -38,12 +38,12 @@ list(APPEND PLATFORM_HEADERS
 if(${CONFIG_MEMORY} MATCHES "ddr")
     list(APPEND LIB_MSS_HEADERS
         ${CMAKE_BINARY_DIR}/board/platform_config_ddr/
-        ${CMAKE_BINARY_DIR}/board/platform_config_ddr/mpfs_hal_config/    
+        ${CMAKE_BINARY_DIR}/board/platform_config_ddr/mpfs_hal_config/
     )
 else()
     list(APPEND LIB_MSS_HEADERS
         ${CMAKE_BINARY_DIR}/board/platform_config/
-        ${CMAKE_BINARY_DIR}/board/platform_config/mpfs_hal_config/    
+        ${CMAKE_BINARY_DIR}/board/platform_config/mpfs_hal_config/
     )
 endif()
 
@@ -72,20 +72,20 @@ if(${CONFIG_MSS_GPIO})
         ${CMAKE_CURRENT_LIST_DIR}/drivers/mss/mss_gpio/mss_gpio.c
     )
 endif()
-    
+
 if(${CONFIG_MSS_I2C})
     list(APPEND MSS_DRIVERS
         ${CMAKE_CURRENT_LIST_DIR}/drivers/mss/mss_i2c/mss_i2c.c
     )
 endif()
-    
+
 if(${CONFIG_MSS_MMC})
     list(APPEND MSS_DRIVERS
         ${CMAKE_CURRENT_LIST_DIR}/drivers/mss/mss_mmc/mss_mmc_if.c
         ${CMAKE_CURRENT_LIST_DIR}/drivers/mss/mss_mmc/mss_mmc.c
     )
 endif()
-    
+
 if(${CONFIG_MSS_MMUART})
     list(APPEND MSS_DRIVERS
         ${CMAKE_CURRENT_LIST_DIR}/drivers/mss/mss_mmuart/mss_uart.c
@@ -97,13 +97,13 @@ if(${CONFIG_MSS_PDMA})
         ${CMAKE_CURRENT_LIST_DIR}/drivers/mss/mss_pdma/mss_pdma.c
     )
 endif()
-    
+
 if(${CONFIG_MSS_QSPI})
     list(APPEND MSS_DRIVERS
         ${CMAKE_CURRENT_LIST_DIR}/drivers/mss/mss_qspi/mss_qspi.c
     )
 endif()
-    
+
 if(${CONFIG_MSS_RTC})
     list(APPEND MSS_DRIVERS
         ${CMAKE_CURRENT_LIST_DIR}/drivers/mss/mss_rtc/mss_rtc.c

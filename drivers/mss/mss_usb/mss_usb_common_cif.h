@@ -6,8 +6,8 @@
  * @file mss_usb_common_cif.h
  * @author Microchip FPGA Embedded Systems Solutions
  * @brief mss_usb common CIF header file
- * 
- * PolarFire SoC Microprocessor Subsystem (MSS) USB Driver Stack USB Core 
+ *
+ * PolarFire SoC Microprocessor Subsystem (MSS) USB Driver Stack USB Core
  * Interface Layer (USB-CIFL) USB-CIF driver
  *
  * USB-CIF driver public API.
@@ -500,7 +500,7 @@ MSS_USB_CIF_rx_ep_configure
 );
 
 /*-------------------------------------------------------------------------*//**
-  Prepares the RX EP for receiving data as per parameters provided by upper 
+  Prepares the RX EP for receiving data as per parameters provided by upper
   layer
  */
 void

@@ -22,7 +22,7 @@
   protocol. Any node can initiate communication when the bus is free. Data is
   transmitted in frames with specific identifiers, not to specific nodes.
   Messages are broadcast to all nodes, which then decide whether to accept or
-  ignore them.  
+  ignore them.
 
   This driver provides a set of functions for controlling CoreCAN as part of the
   bare metal system where no operating system is available. This driver can be
@@ -84,7 +84,7 @@
   controller. Once initialized, during the normal mode of operation, the
   CoreCAN driver configuration can be changed using CAN_set_config_reg()
   function.
-  
+
   --------------------------------
   Operation Status
   --------------------------------
@@ -97,7 +97,7 @@
   --------------------------------
   Interrupt Support
   --------------------------------
-  The interrupt service routines are not part of the CAN driver. But access 
+  The interrupt service routines are not part of the CAN driver. But access
   functions for the interrupt registers are provided. The individual
   interrupt enable bits are set using CAN_enable_irq() function and individual
   interrupt enable bits are disabled using CAN_disable_irq() while
@@ -107,24 +107,24 @@
   at all. CAN_get_int_src() function shows the current state of the different
   interrupt status bits. Each interrupt status bit is cleared individually
   using CAN_clear_int_src() function.
-  
+
   --------------------------------
   Helper Functions
   --------------------------------
   CAN_get_amcr_mask_f() function returns the message filter settings of the
   selected received message. CAN_set_amcr_mask_f() configures the message filter
   settings for the selected receive message.
-  
+
   --------------------------------
   Basic CAN Message Handling
   --------------------------------
-  A basic CAN type controller contains one or more message filter and one 
-  common message buffer or FIFO. The CAN driver contains some functions to 
-  emulate basic CAN operation by linking several buffers together to form a 
-  buffer array that shares one message filter. Since this buffer array is not 
+  A basic CAN type controller contains one or more message filter and one
+  common message buffer or FIFO. The CAN driver contains some functions to
+  emulate basic CAN operation by linking several buffers together to form a
+  buffer array that shares one message filter. Since this buffer array is not
   a real FIFO, message inversion might happen (for example, a newer message
   might be pulled from the receive buffer prior to an older message).
-  
+
   Before using the basic CAN API, configure the CAN controller first by calling
   the CAN_config_buffer() function. This sets up the message array and
   configures the message filter. CAN_send_msg() function and CAN_get_msg()
@@ -154,15 +154,15 @@
   CAN_get_rtr_msg_abort_f() function aborts the transmit request of the RTR
   message.
 
-  NOTE: 
+  NOTE:
   1. To abort a pending RTR auto-reply, the RTR message filter should be
      configured to match the CAN_get_rtr_msg_abort_f() function.
   2. An error is generated if buffer is already reserved for basic CAN
      operation and is using the same buffer for Full CAN functionality.
   3. Special case of Full CAN where several messages are linked together to
-     create FIFOs that share an identical message filter configuration, can 
+     create FIFOs that share an identical message filter configuration, can
      be built upon the available Full CAN functions.
-  
+
 *//*=========================================================================*/
 
 #ifndef __CORE_CAN_H
@@ -442,7 +442,7 @@ typedef struct can_rxmsgobject
   transmit mailboxes in basic CAN operation. This function configures the CAN
   channel speed as per the “bitrate” parameter. It initializes all receive
   messages and makes it ready for configuration.
-  
+
   @param this_can
     The this_can parameter is a pointer to a can_instance_t structure that
     holds all data related to the CoreCAN instance being initialized. A
@@ -497,16 +497,16 @@ typedef struct can_rxmsgobject
          represents between 2 and 8 time quanta and if SAMPLING_MODE is 1,
          CFG_TSEG2 can have a value between 2 and 7 that represents between 3
          and 8 time quanta.
-      6. Receive sampling takes place at the end of the segment defined by 
+      6. Receive sampling takes place at the end of the segment defined by
          CFG_TSEG1.
     For example, if CFG_TSEG1 = 3 and CFG_TSEG2 = 2, we get:
-    
-          |<------------ 1 CAN bit time (8 time quanta)------------>|  
+
+          |<------------ 1 CAN bit time (8 time quanta)------------>|
            /------+------+------+------+------+------+------+------\
          -+ Synch |        CFG_TSEG1 + 1      | CFG_TSEG2 + 1       +-
            \------+------+------+------+------+------+------+------/
                                               |
-                Receiver samples date here -->|                     
+                Receiver samples date here -->|
 
   @param basic_can_rx_mb
     The can_rx_mb parameter lists the number of receive mailboxes used in
@@ -517,7 +517,7 @@ typedef struct can_rxmsgobject
     basic CAN mode.
 
   @return
-    This function returns CAN_OK on successful execution, otherwise, it will 
+    This function returns CAN_OK on successful execution, otherwise, it will
     return the following error codes:
     |  Constants            |  Description                                  |
     |-----------------------|-----------------------------------------------|
@@ -576,7 +576,7 @@ CAN_init
   configuration settings while the CAN controller is already initialized using
   CAN_init() function  and is also running. This function should not be used
   until the CAN controller is initialized.
-  
+
   It performs the following tasks:
       - Clears all pending interrupts
       - Stops CAN controller
@@ -591,10 +591,10 @@ CAN_init
     driver functions that operate on this CoreCAN instance.
 
   @param cfg
-    The cfg parameter is a 4 bytes variable used to set the configuration 
+    The cfg parameter is a 4 bytes variable used to set the configuration
     settings.
 
-  @return 
+  @return
     This function does not return a value.
 
   @example
@@ -609,7 +609,7 @@ CAN_init
           ....
 
           CAN_set_config_reg(&g_can, (CAN_SPEED_40M_1M | CAN_CONFIG));
-          
+
           ....
           return(0);
       }
@@ -634,7 +634,7 @@ CAN_set_config_reg
     driver functions that operate on this CoreCAN instance.
 
   @param mode
-    The mode parameter describes the desired operating mode of a CAN controller. 
+    The mode parameter describes the desired operating mode of a CAN controller.
     Following are the possible operating modes:
     |  Modes                     |  Description                             |
     |----------------------------|------------------------------------------|
@@ -670,7 +670,7 @@ CAN_set_mode
 );
 
 /***************************************************************************//**
-  The CAN_start() function clears all pending interrupts and enable CAN 
+  The CAN_start() function clears all pending interrupts and enable CAN
   controller to perform normal operation. It also enables receive interrupts.
 
   @param this_can
@@ -678,7 +678,7 @@ CAN_set_mode
     holds all data related to the CoreCAN instance being initialized. A
     pointer to this data structure is used in all subsequent calls to the CAN
     driver functions that operate on this CoreCAN instance.
- 
+
   @return
     This function does not return a value.
 
@@ -706,14 +706,14 @@ CAN_start
   The CAN_stop() function is used to stop the CAN controller.
 
   NOTE: Interrupt flags status remain unaffected.
- 
+
   @param this_can
     The this_can parameter is a pointer to a can_instance_t structure that
     holds all data related to the CoreCAN instance being initialized. A
     pointer to this data structure is used in all subsequent calls to the CAN
     driver functions that operate on this CoreCAN instance.
 
-  @return 
+  @return
     This function does not return a value.
 
   @example
@@ -726,9 +726,9 @@ CAN_start
 
           ....
           ....
-              
+
           CAN_stop(&g_can);
-          
+
           return(0);
       }
   @endcode
@@ -742,13 +742,13 @@ CAN_stop
 /***************************************************************************//**
   The CAN_enable_irq() function enable specific interrupts based on the irq_flag
   parameter.
- 
+
   @param this_can
     The this_can parameter is a pointer to a can_instance_t structure that
     holds all data related to the CoreCAN instance being initialized. A
     pointer to this data structure is used in all subsequent calls to the CAN
     driver functions that operate on this CoreCAN instance.
-  
+
   @param irq_flag
     The irq_flag parameter is a 4 byte variable that indicates the interrupt type.
     Following are the details of interrupt values:
@@ -771,7 +771,7 @@ CAN_stop
     | CAN_INT_OST_FAILURE    | Indicates one shot transmission failure        |
     |                        | interrupt                                      |
 
-  @return 
+  @return
     This function does not return a value.
 
   @example
@@ -781,7 +781,7 @@ CAN_stop
           ....
 
           CAN_enable_irq(&g_can, CAN_INT_TX_MSG | CAN_INT_RX_MSG);
-          
+
           ....
           return(0);
       }
@@ -826,7 +826,7 @@ CAN_enable_irq
     | CAN_INT_OST_FAILURE    | Indicates one shot transmission failure        |
     |                        | interrupt                                      |
 
-  @return 
+  @return
     This function does not return a value.
 
   @example
@@ -836,7 +836,7 @@ CAN_enable_irq
           ....
 
           CAN_disable_irq(&g_can, CAN_INT_TX_MSG | CAN_INT_RX_MSG);
-          
+
           ....
           return(0);
       }
@@ -889,7 +889,7 @@ CAN_get_global_int_en
     pointer to this data structure is used in all subsequent calls to the CAN
     driver functions that operate on this CoreCAN instance.
 
-  @return 
+  @return
     This function returns interrupt enable flag status.
 
   @example
@@ -897,7 +897,7 @@ CAN_get_global_int_en
       int main(void)
       {
           ....
-    
+
           CAN_get_int_en(&g_can);
           ....
           return(0);
@@ -912,13 +912,13 @@ CAN_get_int_en
 
 /***************************************************************************//**
   The CAN_get_int_src() function returns current status of interrupts.
- 
+
   @param this_can
     The this_can parameter is a pointer to a can_instance_t structure that
     holds all data related to the CoreCAN instance being initialized. A
     pointer to this data structure is used in all subsequent calls to the CAN
     driver functions that operate on this CoreCAN instance.
- 
+
   @return
     This function returns current status of interrupts.
 
@@ -942,13 +942,13 @@ CAN_get_int_src
 
 /***************************************************************************//**
   The CAN_clear_int_src() function clears the selected interrupt flags.
- 
+
   @param this_can
     The this_can parameter is a pointer to a can_instance_t structure that
     holds all data related to the CoreCAN instance being initialized. A
     pointer to this data structure is used in all subsequent calls to the CAN
     driver functions that operate on this CoreCAN instance.
-  
+
   @param irq_flag
     The irq_flag parameter is a 4 byte variable that indicates the interrupt type.
     Following are the details of interrupt values:
@@ -969,10 +969,10 @@ CAN_get_int_src
     | CAN_INT_STUCK_AT_0     | Indicates stuck at dominant error interrupt    |
     | CAN_INT_OST_FAILURE    | Indicates one shot transmission failure        |
     |                        | interrupt                                      |
-  
-  @return  
+
+  @return
     This function does not return a value.
- 
+
   @example
   @code
       int main(void)
@@ -1008,7 +1008,7 @@ CAN_clear_int_src
     operations. It must be a value from the can_mb_t enumeration (CAN_MB_0 to
     CAN_MB_31), which represents one of the 32 available mailboxes in the CAN
     peripheral.
-   
+
   @param pmsg
     The pmsg parameter is a pointer to the receiver message object. This
     structure is used either to configure the receive mailbox with filter and
@@ -1017,7 +1017,7 @@ CAN_clear_int_src
     Transmission Request), depending on the API usage.
 
   @return
-    This function returns CAN_OK on successful execution, otherwise, it will 
+    This function returns CAN_OK on successful execution, otherwise, it will
     return the following error codes:
     |  Constants            |  Description                                |
     |-----------------------|---------------------------------------------|
@@ -1062,16 +1062,16 @@ CAN_set_rtr_message_f
     operations. It must be a value from the can_mb_t enumeration (CAN_MB_0 to
     CAN_MB_31), which represents one of the 32 available mailboxes in the CAN
     peripheral.
- 
-  @return 
-    This function returns CAN_OK on successful execution, otherwise, it will 
+
+  @return
+    This function returns CAN_OK on successful execution, otherwise, it will
     return the following error codes:
     |  Constants            |  Description                                |
     |-----------------------|---------------------------------------------|
     | CAN_ERR               | Indicates error condition                   |
     | CAN_BASIC_CAN_MAILBOX | Indicates that mailbox is configured for    |
     |                       | basic CAN operation                         |
-    
+
   @example
   @code
       int main(void)
@@ -1093,20 +1093,20 @@ CAN_get_rtr_msg_abort_f
 
 /***************************************************************************//**
   The CAN_config_buffer() function configures the RX mailboxes initialized
-  for basic CAN operation.  
+  for basic CAN operation.
 
   @param this_can
     The this_can parameter is a pointer to a can_instance_t structure that
     holds all data related to the CoreCAN instance being initialized. A
     pointer to this data structure is used in all subsequent calls to the CAN
     driver functions that operate on this CoreCAN instance.
- 
+
   @param pmsg
     The pmsg parameter is a pointer to the receiver message object. This
     structure is used either to configure the receive mailbox with filter and
     mask settings, or to hold data of a received CAN message, depending on
     the API usage.
-  
+
   @return
     This function returns CAN_OK on successful execution, otherwise, it will
     return the following error codes:
@@ -1118,7 +1118,7 @@ CAN_get_rtr_msg_abort_f
   @code
       int main(void)
       {
-		  
+
           ret_status = CAN_config_buffer(&g_can, &rx_msg);
           ...
       }
@@ -1147,13 +1147,13 @@ CAN_config_buffer
     operations. It must be a value from the can_mb_t enumeration (CAN_MB_0 to
     CAN_MB_31), which represents one of the 32 available mailboxes in the CAN
     peripheral.
-  
+
   @param pmsg
     The pmsg parameter is a pointer to the receiver message object. This
     structure is used either to configure the receive mailbox with filter and
     mask settings, or to hold data of a received CAN message, depending on
     the API usage.
-  
+
   @return
     This function returns CAN_OK on successful execution, otherwise, it will
     return the following error codes:
@@ -1230,7 +1230,7 @@ CAN_get_msg
 /***************************************************************************//**
   The CAN_get_msg_f() function read message from the Rx mailbox specified in
   mailbox number (mb_num) parameter and returns the status of operation.
- 
+
   @param this_can
     The this_can parameter is a pointer to a can_instance_t structure that
     holds all data related to the CoreCAN instance being initialized. A
@@ -1242,22 +1242,22 @@ CAN_get_msg
     operations. It must be a value from the can_mb_t enumeration (CAN_MB_0 to
     CAN_MB_31), which represents one of the 32 available mailboxes in the CAN
     peripheral.
-  
+
   @param pmsg
     The pmsg parameter is a pointer to the receiver message object. This
     structure is used either to configure the receive mailbox with filter and
     mask settings, or to hold data of a received CAN message, depending on
     the API usage.
-  
-  @return 
-    This function returns CAN_VALID_MSG on successful execution, otherwise, it 
+
+  @return
+    This function returns CAN_VALID_MSG on successful execution, otherwise, it
     will return the following error codes:
     |  Constants            |  Description                                |
     |-----------------------|---------------------------------------------|
     | CAN_NO_MSG            | Indicates that there is no message received |
     | CAN_BASIC_CAN_MAILBOX | Indicates that mailbox is configured for    |
     |                       | basic CAN operation                         |
-    
+
   @example
   @code
       int main(void)
@@ -1287,14 +1287,14 @@ CAN_get_msg_f
     holds all data related to the CoreCAN instance being initialized. A
     pointer to this data structure is used in all subsequent calls to the CAN
     driver functions that operate on this CoreCAN instance.
- 
-  @return 
-    This function returns CAN_VALID_MSG on successful execution, otherwise, it 
+
+  @return
+    This function returns CAN_VALID_MSG on successful execution, otherwise, it
     will return the following error codes:
     |  Constants            |  Description                                |
     |-----------------------|---------------------------------------------|
     | CAN_NO_MSG            | Indicates that there is no message received |
-    
+
   @example
   @code
       int main(void)
@@ -1514,9 +1514,9 @@ CAN_send_msg
   @param pmsg
     The pmsg parameter is a pointer to the transmit message object that holds
     the CAN message.
- 
-  @return 
-    This function returns CAN_VALID_MSG on successful execution, otherwise, it 
+
+  @return
+    This function returns CAN_VALID_MSG on successful execution, otherwise, it
     will return the following error codes:
     |  Constants            |  Description                                |
     |-----------------------|---------------------------------------------|
@@ -1553,22 +1553,22 @@ CAN_send_msg_f
     holds all data related to the CoreCAN instance being initialized. A
     pointer to this data structure is used in all subsequent calls to the CAN
     driver functions that operate on this CoreCAN instance.
-   
+
   @param mb_num
     The mb_num parameter specifies the mailbox number used for message
     operations. It must be a value from the can_mb_t enumeration (CAN_MB_0 to
     CAN_MB_31), which represents one of the 32 available mailboxes in the CAN
     peripheral.
- 
-  @return 
-    This function returns CAN_OK on successful execution, otherwise, it 
+
+  @return
+    This function returns CAN_OK on successful execution, otherwise, it
     will return the following error codes:
     |  Constants            |  Description                                |
     |-----------------------|---------------------------------------------|
     | CAN_ERR               | Indicates error condition                   |
     | CAN_BASIC_CAN_MAILBOX | Indicates that mailbox is configured for    |
     |                       | basic CAN operation                         |
-   
+
   @example
   @code
       int main(void)
@@ -1580,7 +1580,7 @@ CAN_send_msg_f
              ...
           }
           ...
-      } 
+      }
   @endcode
  */
 uint32_t
@@ -1593,20 +1593,20 @@ CAN_abort_tx_msg_f
 /***************************************************************************//**
   The CAN_tx_msg_avail() function identifies the availability of a Tx mailbox
   to fill with a new message in Basic CAN operation.
- 
+
   @param this_can
     The this_can parameter is a pointer to a can_instance_t structure that
     holds all data related to the CoreCAN instance being initialized. A
     pointer to this data structure is used in all subsequent calls to the CAN
     driver functions that operate on this CoreCAN instance.
 
-  @return 
+  @return
     This function returns CAN_OK on successful identification of free mailbox,
     otherwise, it will return the following error codes:
     |  Constants            |  Description                                |
     |-----------------------|---------------------------------------------|
     | CAN_ERR               | Indicates error condition                   |
-  
+
   @example
   @code
       int main(void)
@@ -1671,14 +1671,14 @@ CAN_tx_msg_avail_f
 /***************************************************************************//**
   The CAN_get_rx_buff_sts() function returns the status of the buffer for all
   32 Rx messages.
- 
+
   @param this_can
     The this_can parameter is a pointer to a can_instance_t structure that
     holds all data related to the CoreCAN instance being initialized. A
     pointer to this data structure is used in all subsequent calls to the CAN
     driver functions that operate on this CoreCAN instance.
- 
-  @return 
+
+  @return
     This function returns status of the Rx buffers (32 buffers).
 
   @example
@@ -1702,14 +1702,14 @@ CAN_get_rx_buff_sts
 /***************************************************************************//**
   The CAN_get_tx_buff_sts() function returns the status of the buffer for all
   32 Tx messages.
- 
+
   @param this_can
     The this_can parameter is a pointer to a can_instance_t structure that
     holds all data related to the CoreCAN instance being initialized. A
     pointer to this data structure is used in all subsequent calls to the CAN
     driver functions that operate on this CoreCAN instance.
-  
-  @return 
+
+  @return
     This function returns the status of the Tx buffers (32 buffers).
 
   @example
@@ -1764,14 +1764,14 @@ CAN_get_rx_err_cnt
 /***************************************************************************//**
   The CAN_get_tx_err_cnt() function returns the current transmit error counter
   value. Counter value ranges from 0x00 to 0xFF.
- 
+
   @param this_can
     The this_can parameter is a pointer to a can_instance_t structure that
     holds all data related to the CoreCAN instance being initialized. A
     pointer to this data structure is used in all subsequent calls to the CAN
     driver functions that operate on this CoreCAN instance.
- 
-  @return 
+
+  @return
     This function returns the transmit error counter value.
 
   @example
@@ -1846,7 +1846,7 @@ CAN_get_err_sts
     |-------|---------------------------------------------------------|
     |  0    | If receive error count is less than 96.                 |
     |  1    | If receive error count is greater than or equals to 96. |
-      
+
   @example
   @code
       int main(void)
@@ -1869,20 +1869,20 @@ CAN_get_rx_gte96
   The CAN_get_tx_gte96() function provides information about transmit error
   count. It identifies that transmit error count is greater than or equals to
   96, and reports 1 if count exceeds 96.
- 
+
   @param this_can
     The this_can parameter is a pointer to a can_instance_t structure that
     holds all data related to the CoreCAN instance being initialized. A
     pointer to this data structure is used in all subsequent calls to the CAN
     driver functions that operate on this CoreCAN instance.
- 
+
   @return
     This function returns the following values:
     | Value |  Description                                             |
     |-------|----------------------------------------------------------|
     |  0    | If transmit error count is less than 96.                 |
     |  1    | If transmit error count is greater than or equals to 96. |
-    
+
   @example
   @code
       int main(void)
@@ -1892,7 +1892,7 @@ CAN_get_rx_gte96
           ...
           return_status = CAN_get_tx_gte96(&g_can);
           ...
-      } 
+      }
   @endcode
  */
 uint32_t

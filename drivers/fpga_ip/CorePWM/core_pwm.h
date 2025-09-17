@@ -218,11 +218,11 @@
 
   A typical sequence of function calls for measurement of a tachometer input
   signal is:
-  
+
     - Call the PWM_init() function to initialize the CorePWM instance and pass
       it the values for the prescale and period.
     - Call the PWM_tach_init() function to initialize a tachometer input and
-      pass it a tachometer prescale value. 
+      pass it a tachometer prescale value.
     - Call the PWM_tach_set_mode() function to set the tachometer measurement
       mode.
     - Call the PWM_tach_enable_irq() function, if interrupts are required.
@@ -247,7 +247,7 @@
     - PWM_tach_disable_irq()
     - PWM_tach_clear_irq()
     - PWM_tach_get_irq_source()
-  
+
   The PWM_tach_get_irq_source() function is used to identify which CorePWM
   tachometer input channel has generated an interrupt, among all the tachometer
   input channels that have interrupts enabled.
@@ -275,7 +275,7 @@ extern "C" {
   CorePWM allows the tachometer input measurement mode to be configured. The
   following constants are used as an argument to the PWM_tach_set_mode()
   function to specify the tachometer input measurement mode.
-  
+
   | Constant           | Description                                            |
   |--------------------|--------------------------------------------------------|
   | TACH_CONTINUOUS    | Continuous measurement mode                            |
@@ -576,18 +576,18 @@ void PWM_disable_synch_update
     The pwm_id parameter identifies the target PWM output.
 
   @param duty_cycle
-    The duty_cycle parameter specifies the PWM output duty cycle.  
+    The duty_cycle parameter specifies the PWM output duty cycle.
     In General Purpose PWM mode:
        This parameter corresponds to the number of period ticks for which
        the PWM output remains high. The value of this parameter should be
-       between 0 and the value of the period selected for the calling the PWM_init().  
+       between 0 and the value of the period selected for the calling the PWM_init().
     In Low Ripple DAC mode:
        This parameter corresponds to the average density duty cycle. The value
        of this parameter should be between 0 and (2^APB_DWIDTH - 1), where
        APB_DWIDTH  is the value selected for the APB_DWIDTH in the instantiation
        of the CorePWM DirectCore hardware instance. This sets the average
        density of the PWM output high pulses to between 0% and 100% in proportion
-       to the duty_cycle value as a percentage of the (2^APB_DWIDTH - 1) value.  
+       to the duty_cycle value as a percentage of the (2^APB_DWIDTH - 1) value.
     Note: The only role that prescale and period play in Low Ripple DAC mode is
           to set the point when synchronized register updates will take place,
           if the shadow register is enabled for a PWM output.
@@ -677,7 +677,7 @@ void PWM_set_edges
   ticks during which the output remains high and should be between 0 and the
   value of the period selected to call PWM_init().
 
-  Note: Duty Cycle (in %) is calculated as follows:  
+  Note: Duty Cycle (in %) is calculated as follows:
        ` Duty Cycle (%) = ( (returned duty cycle value) / (period +1) )*100`
 
   Note: The PWM_get_duty_cycle() function is intended to return the duty cycle
@@ -705,7 +705,7 @@ void PWM_set_edges
   @return
     This function returns the duty cycle of the PWM output as a 32-bit unsigned
     integer. The duty cycle is the number of period ticks during which the
-    output is high.  
+    output is high.
     Note: A returned duty cycle value of 0 normally means the PWM output is
           constantly low, However, it may also indicate that the PWM output
           waveform is set to toggle mode (50% duty cycle). See the note

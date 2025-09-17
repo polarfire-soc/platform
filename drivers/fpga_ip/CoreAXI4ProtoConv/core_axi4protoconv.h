@@ -1,6 +1,6 @@
 /**
  * Copyright 2025 Microchip FPGA Embedded Systems Solutions.
- * 
+ *
  * SPDX-License-Identifier: MIT
  *
  * @file core_axi4protoconv.h
@@ -293,8 +293,8 @@ PCDMA_init
 
   @param xfr_size
   The xfr_size parameter specifies the total number of bytes to be transferred
-  from AXI4-Stream interface to the AXI4-Memory Mapped interface (S2MM).  
-  Note 1: xfr_size parameter must not program zero value.  
+  from AXI4-Stream interface to the AXI4-Memory Mapped interface (S2MM).
+  Note 1: xfr_size parameter must not program zero value.
   Note 2: When S2MM Undefined Burst Length Enable feature is enabled within the
          CoreAXI4ProtoConv IP configurator, configuring the xfr_size will have
          no effect. PCDMA_S2MM_get_len() provides the number of bytes received
@@ -312,9 +312,9 @@ PCDMA_init
 
   @param burst_type
   The burst_type parameter allows you to specify the burst type, which can be
-  either fixed burst or increment burst.  
+  either fixed burst or increment burst.
   Note 1: Fixed burst transfer should be used to access peripheral device which
-  supports fixed address like FIFO.  
+  supports fixed address like FIFO.
   Note 2: Increment burst transfer should be used to access peripheral device,
   which supports incremental address like SRAM.
 
@@ -427,7 +427,7 @@ uint32_t PCDMA_S2MM_get_status
       - S2MM_IE_DONE_IRQ
       - S2MM_IE_AXI4_ERR_IRQ
       - S2MM_IE_PKT_DROP_OVF_IRQ
-      - S2MM_IE_PKT_DROP_ERR_IRQ  
+      - S2MM_IE_PKT_DROP_ERR_IRQ
   To enable multiple interrupts in single call, use
       S2MM_IE_DONE_IRQ | S2MM_IE_AXI4_ERR_IRQ.
 
@@ -472,7 +472,7 @@ void PCDMA_S2MM_enable_irq
       - S2MM_IE_DONE_IRQ
       - S2MM_IE_AXI4_ERR_IRQ
       - S2MM_IE_PKT_DROP_OVF_IRQ
-      - S2MM_IE_PKT_DROP_ERR_IRQ  
+      - S2MM_IE_PKT_DROP_ERR_IRQ
   To disable multiple interrupts in single call, use
       S2MM_IE_DONE_IRQ | S2MM_IE_AXI4_ERR_IRQ.
 
@@ -553,7 +553,7 @@ uint32_t PCDMA_S2MM_get_int_src
       - S2MM_IE_DONE_IRQ
       - S2MM_IE_AXI4_ERR_IRQ
       - S2MM_IE_PKT_DROP_OVF_IRQ
-      - S2MM_IE_PKT_DROP_ERR_IRQ  
+      - S2MM_IE_PKT_DROP_ERR_IRQ
   To clear multiple interrupts in single call, use
       S2MM_IE_DONE_IRQ | S2MM_IE_AXI4_ERR_IRQ
 
@@ -637,7 +637,7 @@ uint32_t PCDMA_S2MM_get_len
 
   @param xfr_size
   The xfr_size parameter specifies the total number of bytes to be transferred
-  from AXI4-Memory Mapped interface to the AXI4-Stream interface (MM2S).  
+  from AXI4-Memory Mapped interface to the AXI4-Stream interface (MM2S).
   Note: xfr_size parameter must not program zero value.
 
   @param src_add
@@ -652,9 +652,9 @@ uint32_t PCDMA_S2MM_get_len
 
   @param burst_type
   The burst_type parameter allows you to specify the burst type, which can be
-  either fixed burst or increment burst.  
+  either fixed burst or increment burst.
   Note 1: Fixed burst transfer should be used to access peripheral device which
-  supports fixed address like FIFO.  
+  supports fixed address like FIFO.
   Note 2: Increment burst transfer should be used to access peripheral device,
   which supports incremental address like SRAM.
 
@@ -766,7 +766,7 @@ uint32_t PCDMA_MM2S_get_status
   The irq_type parameter specify the type of interrupt(s). The possible
   interrupts are:
       - MM2S_IE_DONE_IRQ
-      - MM2S_IE_AXI4_ERR_IRQ  
+      - MM2S_IE_AXI4_ERR_IRQ
   To enable both interrupts in single call, use
       MM2S_IE_DONE_IRQ | MM2S_IE_AXI4_ERR_IRQ
 
@@ -809,7 +809,7 @@ void PCDMA_MM2S_enable_irq
   The irq_type parameter specify the type of interrupt(s). The possible
   interrupts are:
       - MM2S_IE_DONE_IRQ
-      - MM2S_IE_AXI4_ERR_IRQ  
+      - MM2S_IE_AXI4_ERR_IRQ
   To disable both interrupts in single call, use
       MM2S_IE_DONE_IRQ | MM2S_IE_AXI4_ERR_IRQ
 
@@ -890,7 +890,7 @@ uint32_t PCDMA_MM2S_get_int_src
   The irq_type parameter specify the type of interrupt(s). The possible
   interrupts are:
       - MM2S_IE_DONE_IRQ
-      - MM2S_IE_AXI4_ERR_IRQ  
+      - MM2S_IE_AXI4_ERR_IRQ
   To disable both interrupts in single call, use
       MM2S_IE_DONE_IRQ | MM2S_IE_AXI4_ERR_IRQ
 

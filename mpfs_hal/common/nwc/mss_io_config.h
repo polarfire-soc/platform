@@ -431,7 +431,7 @@ uint8_t  mss_is_alternate_io_setting_sd(void);
 /***************************************************************************//**
   switch_demux_using_fabric_ip()
   This is a function used to switch external mux.
-  It requires fpga switch IP in the fabric. This comes with reference icicle 
+  It requires fpga switch IP in the fabric. This comes with reference icicle
   kit design.
   You will need to create your own or copy when creating your own fpga design
   along with an external mux in your board design if you wish to use SD/eMMC
@@ -452,7 +452,7 @@ uint8_t  mss_is_alternate_io_setting_sd(void);
       }
       switch_demux_using_fabric_ip(SD_MSSIO_CONFIGURATION);
       break;
-  
+
   case EMMC_MSSIO_CONFIGURATION:
       if (mss_is_alternate_io_setting_emmc() == true)
       {

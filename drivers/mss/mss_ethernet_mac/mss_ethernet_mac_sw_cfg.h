@@ -6,7 +6,7 @@
  * @file mss_ethernet_mac_sw_cfg.h
  * @author Microchip FPGA Embedded Systems Solutions
  * @brief mss_ethernet_mac software configuration header file
- * 
+ *
  * Note: This file is maintained in the driver source repository in the same
  *       folder as the driver source to keep them consistent but in the example
  *       repositories the working copy resides in the current boards
@@ -43,7 +43,7 @@
 #endif
 
 /***************************************************************************//**
- * This macro is normally defined at project level to select MPFS as the 
+ * This macro is normally defined at project level to select MPFS as the
  * platform. The alternative is to define _TARGET_ALOE_ for the SiFive Aloe or
  * Aloe + Vera boards.
  */
@@ -84,7 +84,7 @@
 #endif
 
 /***************************************************************************//**
- * Supported PHY interface types: 
+ * Supported PHY interface types:
  */
 
 #define NULL_PHY                        (0x0001U) /*!< @brief No PHY in connection, for example GEM0 and GEM1 connected via fabric */
@@ -231,7 +231,7 @@
 /***************************************************************************//**
  * Defines for different memory areas. Set the macro _MSS_MAC_USE_DDR_ to one of
  * these values to select the area of memory and buffer sizes to use when
- * testing for non LIM based areas of memory. 
+ * testing for non LIM based areas of memory.
  */
 
 #define MSS_MAC_MEM_DDR    (0)

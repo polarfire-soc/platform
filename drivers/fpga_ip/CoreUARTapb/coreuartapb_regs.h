@@ -6,7 +6,7 @@
  * @file coreuartapb_regs.h
  * @author Microchip FPGA Embedded Systems Solutions
  * @brief CoreUARTapb register header file
- * 
+ *
  */
 
 #ifndef __CORE_UART_APB_REGISTERS

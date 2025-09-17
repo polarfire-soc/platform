@@ -6,7 +6,7 @@
  * @file mss_usb_core_regs.h
  * @author Microchip FPGA Embedded Systems Solutions
  * @brief mss_usb core register header file
- * 
+ *
  * PolarFire SoC Microprocessor Subsystem (MSS) USB Driver Stack USB Core
  * Interface Layer (USB-CIFL) USB-CIF driver
  *

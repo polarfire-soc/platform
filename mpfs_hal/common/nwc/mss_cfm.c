@@ -6,10 +6,10 @@
  * @file mss_cfm.c
  * @author Microchip FPGA Embedded Systems Solutions
  * @brief mss_cfm source file
- * 
+ *
  * See file "mss_cfm.h" for description of the functions implemented
  * in this file.
- * 
+ *
  */
 
 #include <stdint.h>

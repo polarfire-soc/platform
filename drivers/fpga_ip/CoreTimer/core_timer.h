@@ -62,7 +62,7 @@
   ==============================================================================
 
   The timer is loaded by writing to the load register and then counts down to
-  zero if enabled. 
+  zero if enabled.
   To load the timer with an initial value to decrement from, use TMR_init().
   To enable the timer to count down to zero, use TMR_start().
 
@@ -203,7 +203,7 @@ typedef struct __timer_instance_t
                       CoreTimer counter decrements
                       In Continuous mode, this value reloads the timer's counter
                       whenever it reaches zero.
- @return              This function does not return any value.                      
+ @return              This function does not return any value.
  */
 void TMR_init(timer_instance_t *this_timer,
               addr_t address,
@@ -216,12 +216,12 @@ void TMR_init(timer_instance_t *this_timer,
  This function must be called after calling TMR_init().
  It does not need to be called after each call to TMR_reload() when the timer is
  used in One-Shot Timer mode.
- 
+
  @param this_timer    Pointer to a timer_instance_t structure holding all
                       relevant data associated with the target timer hardware
                       instance. This pointer identifies the target
                       CoreTimer hardware instance.
- @return              This function does not return any value.                      
+ @return              This function does not return any value.
  */
 void TMR_start(timer_instance_t *this_timer);
 
@@ -234,7 +234,7 @@ void TMR_start(timer_instance_t *this_timer);
                       relevant data associated with the target timer hardware
                       instance. This pointer identifies the target
                       CoreTimer hardware instance.
- @return              This function does not return any value.                      
+ @return              This function does not return any value.
  */
 void TMR_stop(timer_instance_t *this_timer);
 
@@ -246,7 +246,7 @@ void TMR_stop(timer_instance_t *this_timer);
                       relevant data associated with the target timer hardware
                       instance. This pointer identifies the target
                       CoreTimer hardware instance.
- @return              This function does not return any value.                      
+ @return              This function does not return any value.
  */
 void TMR_enable_int(timer_instance_t *this_timer);
 
@@ -263,7 +263,7 @@ void TMR_enable_int(timer_instance_t *this_timer);
                       relevant data associated with the target timer hardware
                       instance. This pointer identifies the target
                       CoreTimer hardware instance.
- @return              This function does not return any value.                                     
+ @return              This function does not return any value.
  */
 void TMR_clear_int(timer_instance_t *this_timer);
 
@@ -282,7 +282,7 @@ uint32_t TMR_current_value(timer_instance_t *this_timer);
 /***************************************************************************//**
  This function is used in One-Shot Timer mode.
  It reloads the timer counter with the value passed as a parameter.
- The timer counter begins to decrement again after calling TMR_reload(), 
+ The timer counter begins to decrement again after calling TMR_reload(),
  it is not required to call TMR_start() again.
 
  @param this_timer    Pointer to a timer_instance_t structure holding all
@@ -291,12 +291,12 @@ uint32_t TMR_current_value(timer_instance_t *this_timer);
                       CoreTimer hardware instance.
  @param load_value    This parameter sets the timer's load value, from which the
                       CoreTimer counter decrements.
- @return              This function does not return any value.                    
+ @return              This function does not return any value.
  */
 void TMR_reload(timer_instance_t *this_timer, uint32_t load_value);
 
 #ifdef __cplusplus
 }
 #endif
-    
+
 #endif /* CORE_TIMER_H_ */

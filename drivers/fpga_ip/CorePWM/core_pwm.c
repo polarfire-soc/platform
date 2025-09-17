@@ -6,10 +6,10 @@
  * @file core_pwm.c
  * @author Microchip FPGA Embedded Systems Solutions
  * @brief CorePWM source file
- * 
+ *
  * See file "core_pwm.h" for description of the functions implemented
  * in this file.
- * 
+ *
  */
 
 #include "core_pwm.h"

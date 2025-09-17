@@ -6,7 +6,7 @@
  * @file mss_beu_def.h
  * @author Microchip FPGA Embedded Systems Solutions
  * @brief mss_beu defines header file
- * 
+ *
  * Bus Error Unit (BEU) fixed defines
  *
  */

@@ -934,7 +934,7 @@ void MSS_GPIO_drive_inout
     the number of the GPIO port, identifies the GPIO port. For example,
     MSS_GPIO_0 identifies the first GPIO port and MSS_GPIO_31 identifies the
     last GPIO port.
-    
+
   @return
     This function does not return a value.
 

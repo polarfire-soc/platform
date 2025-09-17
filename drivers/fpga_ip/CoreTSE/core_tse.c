@@ -7,10 +7,10 @@
  * @file core_tse.c
  * @author Microchip FPGA Embedded Systems Solutions
  * @brief CoreTSE source file
- * 
+ *
  * See file "core_tse.h" for description of the functions implemented
  * in this file.
- * 
+ *
  */
 
 #include "coretse_regs.h"

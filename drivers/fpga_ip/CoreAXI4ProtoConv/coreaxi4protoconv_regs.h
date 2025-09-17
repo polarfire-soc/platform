@@ -1,6 +1,6 @@
 /**
  * Copyright 2025 Microchip FPGA Embedded Systems Solutions.
- * 
+ *
  * SPDX-License-Identifier: MIT
  *
  * @file coreaxi4protoconv_regs.h

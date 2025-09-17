@@ -14,17 +14,17 @@ config MSS_GPIO
     bool
     prompt "Enable MSS GPIO"
     default n
-    
+
 config MSS_I2C
     bool
     prompt "Enable MSS I2C"
     default n
-    
+
 config MSS_MMC
     bool
     prompt "Enable MSS MMC"
     default n
-    
+
 config MSS_MMUART
     bool
     prompt "Enable MSS MMUART"
@@ -34,12 +34,12 @@ config MSS_PDMA
     bool
     prompt "Enable MSS PDMA"
     default n
-    
+
 config MSS_QSPI
     bool
     prompt "Enable MSS QSPI"
     default n
-    
+
 config MSS_RTC
     bool
     prompt "Enable MSS RTC"

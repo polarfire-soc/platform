@@ -6,7 +6,7 @@
  * @file core_smbus_regs.h
  * @author Microchip FPGA Embedded Systems Solutions
  * @brief CoreI2C smbus register header file
- * 
+ *
  */
 
 #ifndef __CORE_SMBUS_REGISTERS
@@ -89,7 +89,7 @@
 #define TARGET_ADDR_OFFSET    0x08u
 #define TARGET_ADDR_MASK      0xFEu
 #define TARGET_ADDR_SHIFT     1u
- 
+
 /*
  * DIR bit.
  */

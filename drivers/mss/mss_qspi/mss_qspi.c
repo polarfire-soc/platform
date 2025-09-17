@@ -6,10 +6,10 @@
  * @file mss_qspi.c
  * @author Microchip FPGA Embedded Systems Solutions
  * @brief mss_qspi source file
- * 
+ *
  * See file "mss_qspi.h" for description of the functions implemented
  * in this file.
- * 
+ *
  */
 
 #include "mpfs_hal/mss_hal.h"
