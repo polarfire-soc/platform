@@ -370,31 +370,31 @@ __attribute__((weak)) int main_other_hart(HLS_DATA* hls)
     {
 
     case 0U:
-        __asm volatile ("add sp, x0, %1" : "=r"(dummy) : "r"(app_stack_top_h0));
+        __asm volatile ("add sp, x0, %1" : "=r"(dummy) : "r"(app_stack_top_h0) : "memory");
         e51();
         break;
 
     case 1U:
         (void)init_pmp((uint8_t)1);
-        __asm volatile ("add sp, x0, %1" : "=r"(dummy) : "r"(app_stack_top_h1));
+        __asm volatile ("add sp, x0, %1" : "=r"(dummy) : "r"(app_stack_top_h1) : "memory");
         u54_1();
         break;
 
     case 2U:
         (void)init_pmp((uint8_t)2);
-        __asm volatile ("add sp, x0, %1" : "=r"(dummy) : "r"(app_stack_top_h2));
+        __asm volatile ("add sp, x0, %1" : "=r"(dummy) : "r"(app_stack_top_h2) : "memory");
         u54_2();
         break;
 
     case 3U:
         (void)init_pmp((uint8_t)3);
-        __asm volatile ("add sp, x0, %1" : "=r"(dummy) : "r"(app_stack_top_h3));
+        __asm volatile ("add sp, x0, %1" : "=r"(dummy) : "r"(app_stack_top_h3) : "memory");
         u54_3();
         break;
 
     case 4U:
         (void)init_pmp((uint8_t)4);
-        __asm volatile ("add sp, x0, %1" : "=r"(dummy) : "r"(app_stack_top_h4));
+        __asm volatile ("add sp, x0, %1" : "=r"(dummy) : "r"(app_stack_top_h4) : "memory");
         u54_4();
         break;
 
