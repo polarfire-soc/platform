@@ -14,7 +14,7 @@
 
 /* #define PRINT_CA_VREF_WINDOW "1" */
 #define MOVE_CK
-#define MANUAL_ADDCMD_TRAINIG
+#define MANUAL_ADDCMD_TRAINING
 /* #define FABRIC_NOISE_TEST */
 #include <string.h>
 #include <stdio.h>
@@ -76,7 +76,7 @@ const char DDR_DRIVER_VERSION[] = DDR_DRIVER_VERSION_STRING;
 /* 0.4.008     |  DQ/DQS push order has been parameterised                    */
 /* 0.4.007     |  Corrected write_latency print message                       */
 /* 0.4.006     |  Refactored delay() routine, skips extra checking in write   */
-/*             |  calibration once a failure has occured to shorten training  */
+/*             |  calibration once a failure has occurred to shorten training */
 /*             |  time.                                                       */
 /* 0.4.005     |  When LIBERO_FAST_START, now slects random as opposed to     */
 /*             |  counting pattern.                                           */
@@ -186,7 +186,7 @@ static const uint32_t test_string[] = {
  * external functions
  */
 
-/* Use to record instance of errors during calibration */
+/* Used to record instances of errors during calibration */
 static uint32_t ddr_error_count;
 
 /*******************************************************************************
@@ -227,7 +227,7 @@ static void load_dq(uint8_t lane);
 static uint8_t use_software_bclk_sclk_training(DDR_TYPE ddr_type);
 static uint8_t bclk_sclk_offset(DDR_TYPE ddr_type);
 static void config_ddr_io_pull_up_downs_rpc_bits(DDR_TYPE ddr_type);
-#ifdef MANUAL_ADDCMD_TRAINIG
+#ifdef MANUAL_ADDCMD_TRAINING
 static uint8_t ddr_manual_addcmd_refclk_offset(DDR_TYPE ddr_type, uint8_t * refclk_sweep_index);
 #endif
 static void lpddr4_manual_training(DDR_TYPE ddr_type, uint8_t * refclk_sweep_index, uint32_t retry_count, uint8_t *refclk_offset);
@@ -275,7 +275,7 @@ uint32_t noise_ena = 0x0;
 /**
  * mpfs_hal_turn_ddr_selfrefresh_on(void)
  *
- * DDR self refresh is turned on by thwe controller
+ * DDR self refresh is turned on by the controller
  */
 void mpfs_hal_turn_ddr_selfrefresh_on(void)
 {
@@ -313,7 +313,7 @@ void mpfs_hal_turn_ddr_selfrefresh_off(void)
 /**
  * mpfs_hal_ddr_selfrefresh_status()
  *
- * @return Selff refresh status
+ * @return Self refresh status
  */
 uint32_t mpfs_hal_ddr_selfrefresh_status(void)
 {
@@ -562,7 +562,7 @@ static uint32_t ddr_setup(void)
 #if (TUNE_RPC_166_VALUE == 1)
     static uint8_t num_rpc_166_retires = 0U;
 #endif
-#ifdef MANUAL_ADDCMD_TRAINIG
+#ifdef MANUAL_ADDCMD_TRAINING
     static uint8_t refclk_offset;
     static  uint8_t refclk_sweep_index =0xFU;
 #endif
@@ -584,7 +584,7 @@ static uint32_t ddr_setup(void)
  * a known pattern that will let us know we are in a simulation, and will skip
  * the training.
  * The RPC_RESET_MAIN_PLL register can usually only return 0x00 or 0x01, as
- * the other bits are set to Rreturns0. This signature string "REND" will only
+ * the other bits are set to returns 0. This signature string "REND" will only
  * ever be read when connected to the Renode MPFS_DDRMock module.
  */
 #ifndef RENODE_SIM_DDR_TRAINING
@@ -610,7 +610,7 @@ static uint32_t ddr_setup(void)
 #if (TUNE_RPC_166_VALUE == 1)
             rpc_166_fifo_offset = DEFAULT_RPC_166_VALUE;
 #endif
-#ifdef MANUAL_ADDCMD_TRAINIG
+#ifdef MANUAL_ADDCMD_TRAINING
             refclk_offset = LIBERO_SETTING_MAX_MANUAL_REF_CLK_PHASE_OFFSET + 1U;
 #endif
             ddr_error_count = 0U;
@@ -793,7 +793,7 @@ static uint32_t ddr_setup(void)
 
                     MSS_GPIO_init(GPIO2_LO);
                     MSS_GPIO_config_all(GPIO2_LO, MSS_GPIO_OUTPUT_MODE);
-                    MSS_GPIO_set_outputs(GPIO2_LO, 0x00000UL);      /* bits 15:0 - 0, noise logic  disabled */
+                    MSS_GPIO_set_outputs(GPIO2_LO, 0x00000UL); /* bits 15:0 - 0, noise logic disabled */
                     delay(DELAY_CYCLES_5_MICRO);
                     /*MSS_GPIO_set_outputs(GPIO2_LO, 0x00FFFUL);*/    /* bits 12:0 - 1,  56% enabled */
                     noise_ena = (1 << num_of_noise_blocks_en) - 1;
@@ -1446,7 +1446,7 @@ static uint32_t ddr_setup(void)
                 ddr_training_state = DDR_TRAINING_IP_SM_START_CHECK;
             }
 #ifdef DEBUG_DDR_INIT
-#ifdef MANUAL_ADDCMD_TRAINIG
+#ifdef MANUAL_ADDCMD_TRAINING
             (void)uprint32(g_debug_uart,  "\n\r\n\r ADDCMD_OFFSET ", refclk_offset);
 #endif
 #endif
@@ -4636,7 +4636,7 @@ void setup_ddr_segments(SEG_SETUP option)
 }
 
 /**
- * Clear cache ways used buring boot.
+ * Clear cache ways used during boot.
  * These are the ways associated with the PDMA and the current hart being run
  *
  * Assumption: We are calling this during early boot.
@@ -5110,7 +5110,7 @@ const uint8_t REFCLK_OFFSETS[][5U] = {
  * @param refclk_sweep_index
  * @return
  */
-#ifdef MANUAL_ADDCMD_TRAINIG
+#ifdef MANUAL_ADDCMD_TRAINING
 static uint8_t ddr_manual_addcmd_refclk_offset(DDR_TYPE ddr_type, uint8_t * refclk_sweep_index)
 {
     uint8_t refclk_offset;
@@ -5259,7 +5259,7 @@ uint32_t add_cmd_move_order_90_deg[]={\
 
 
 /**
- * LPDDR4 traing exclusive
+ * LPDDR4 training exclusive
  * @param ddr_type
  * @param refclk_sweep_index
  */
