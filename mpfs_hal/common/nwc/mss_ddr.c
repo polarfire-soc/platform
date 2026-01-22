@@ -33,6 +33,7 @@
 #define DDR_DRIVER_VERSION_STRING   "0.4.033"
 const char DDR_DRIVER_VERSION[] = DDR_DRIVER_VERSION_STRING;
 /* Version     |  Comment                                                     */
+/* 0.4.034     |  Fix bug relating to write_latency retry.                    */
 /* 0.4.033     |  Fix bug that causes crash when post-stimulus test fails     */
 /* 0.4.032     |  Increase size of cache flush to fully clear                 */
 /* 0.4.031     |  Minor change to correct definition of MTC size define       */
@@ -185,9 +186,6 @@ static const uint32_t test_string[] = {
 /*******************************************************************************
  * external functions
  */
-
-/* Used to record instances of errors during calibration */
-static uint32_t ddr_error_count;
 
 /*******************************************************************************
  * Local function declarations
@@ -613,7 +611,6 @@ static uint32_t ddr_setup(void)
 #ifdef MANUAL_ADDCMD_TRAINING
             refclk_offset = LIBERO_SETTING_MAX_MANUAL_REF_CLK_PHASE_OFFSET + 1U;
 #endif
-            ddr_error_count = 0U;
             error = 0U;
             memfill((uint8_t *)&calib_data,0U,sizeof(calib_data));
             memfill((uint8_t *)&ddr_diag,0U,sizeof(ddr_diag));
@@ -729,7 +726,6 @@ static uint32_t ddr_setup(void)
             (void)uprint32(g_debug_uart, "\n\r Retry Count: ", retry_count);
 #endif
             /* Init */
-            ddr_error_count = 0U;
             error = 0U;
             memfill((uint8_t *)&calib_data,0U,sizeof(calib_data));
             DDRCFG->DFI.PHY_DFI_INIT_START.PHY_DFI_INIT_START   = 0x0U;
@@ -1939,11 +1935,6 @@ static uint32_t ddr_setup(void)
                     error =\
                       write_calibration_using_mtc(number_of_lanes_to_calibrate);
                 }
-
-                if(error)
-                {
-                    ddr_error_count++;
-                 }
             }
 
             if(error == 0U)
@@ -2276,10 +2267,6 @@ static uint32_t ddr_setup(void)
              * This step is optional
              */
             error = VREFDQ_calibration_using_mtc();
-            if(error != 0U)
-            {
-                ddr_error_count++;
-            }
 #endif
             ddr_training_state = DDR_TRAINING_FPGA_VREFDQ_CALIB;
             break;
@@ -2290,10 +2277,6 @@ static uint32_t ddr_setup(void)
              * This step is optional
              */
             error = FPGA_VREFDQ_calibration_using_mtc();
-            if(error != 0U)
-            {
-                ddr_error_count++;
-            }
 #endif
             ddr_training_state = DDR_TRAINING_INIT_ALL_MEMORY;
             break;
@@ -2349,29 +2332,22 @@ static uint32_t ddr_setup(void)
 
             }
 #endif
-            if(ddr_error_count > 0)
-            {
-                ret_status |= DDR_SETUP_FAIL;
-            }
-            else
-            {
-                /*
-                 * Configure Segments- address mapping,  CFG0/CFG1
-                 */
-                setup_ddr_segments(LIBERO_SEG_SETUP);
-                /*
-                 * Clear the cache. Cache may have residue of writes related to the previous
-                 * seg setup. These can endup being written back to DDR, so make sure cache
-                 * is flushed. The cache is flushed by reading 2MB from cached backed memory
-                 * We need to read from each master that has accessed the cache, as all
-                 * masters may not have access to all the cache ways.
-                 * When this function is being called, it is fair to assume only this hart
-                 * and the PDMA has accessed the cache.
-                 * We also assume this is in the bootloader and we have sole access to the
-                 * PDMA
-                 */
-                clear_bootup_cache_ways();
-            }
+            /*
+             * Configure Segments- address mapping,  CFG0/CFG1
+             */
+            setup_ddr_segments(LIBERO_SEG_SETUP);
+            /*
+             * Clear the cache. Cache may have residue of writes related to the previous
+             * seg setup. These can endup being written back to DDR, so make sure cache
+             * is flushed. The cache is flushed by reading 2MB from cached backed memory
+             * We need to read from each master that has accessed the cache, as all
+             * masters may not have access to all the cache ways.
+             * When this function is being called, it is fair to assume only this hart
+             * and the PDMA has accessed the cache.
+             * We also assume this is in the bootloader and we have sole access to the
+             * PDMA
+             */
+            clear_bootup_cache_ways();
             ret_status |= DDR_SETUP_DONE;
             ddr_training_state = DDR_TRAINING_FINISHED;
             break;
@@ -2921,11 +2897,6 @@ static uint8_t memory_tests(void)
     {
         start_address = (uint64_t)(BASE_ADDRESS_NON_CACHED_32_DDR + (0x1U<<shift_walking_one));
         error = rw_sanity_chk((uint64_t *)start_address , (uint32_t)0x5U);
-
-        if(error)
-        {
-            ddr_error_count++;
-        }
         shift_walking_one++;
     }
     /*
@@ -2936,23 +2907,12 @@ static uint8_t memory_tests(void)
     {
         start_address = (uint64_t)(BASE_ADDRESS_NON_CACHED_64_DDR + (0x1U<<shift_walking_one));
         error = rw_sanity_chk((uint64_t *)start_address , (uint32_t)0x5U);
-
-        if(error)
-        {
-            ddr_error_count++;
-         }
-
         /* check upper bound */
         if(shift_walking_one >= 4U)
         {
             start_address = (uint64_t)(BASE_ADDRESS_NON_CACHED_64_DDR + \
                     (((0x1U<<(shift_walking_one +1)) - 1U) -0x0F) );
             error = rw_sanity_chk((uint64_t *)start_address , (uint32_t)0x5U);
-
-            if(error)
-            {
-                ddr_error_count++;
-            }
         }
 
         shift_walking_one++;
@@ -2965,23 +2925,12 @@ static uint8_t memory_tests(void)
     {
         start_address = (uint64_t)(0x1U<<shift_walking_one);
         error = mtc_sanity_check(start_address);
-
-        if(error)
-        {
-            ddr_error_count++;
-         }
-
         /* check upper bound */
         if(shift_walking_one >= 4U)
         {
              start_address = (uint64_t)((((0x1U<<(shift_walking_one +1)) - 1U)\
                      -0x0F) );
              error = mtc_sanity_check(start_address);
-
-             if(error)
-             {
-                 ddr_error_count++;
-              }
         }
         shift_walking_one++;
     }
@@ -2994,11 +2943,6 @@ static uint8_t memory_tests(void)
     {
         start_address = (uint64_t)(0x80000000U + (0x1U<<shift_walking_one));
         error = rw_sanity_chk((uint64_t *)start_address , (uint32_t)0x5U);
-
-        if(error)
-        {
-            ddr_error_count++;
-         }
         shift_walking_one++;
     }
 
@@ -3039,7 +2983,6 @@ static uint8_t rw_sanity_chk(uint64_t * address, uint32_t count)
             value = *DDR_word_ptr;
             if( value != test_string[i & 0xfU])
             {
-                ddr_error_count++;
                 error = 1;
             }
         }
@@ -3058,7 +3001,6 @@ static uint8_t rw_sanity_chk(uint64_t * address, uint32_t count)
         {
             if( *DDR_word_ptr != test_string[i & 0xfU])
             {
-                ddr_error_count++;
                 error = 1;
             }
             ++i;
