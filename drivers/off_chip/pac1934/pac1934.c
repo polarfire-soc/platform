@@ -416,10 +416,3 @@ mss_i2c_slave_handler_ret_t pac1934_slave_write_handler(
     return MSS_I2C_REENABLE_SLAVE_RX;
 }
 
-/*-------------------------------------------------------------------------*//**
-  SysTick Handler (empty)
- */
-void SysTick_Handler_h0_IRQHandler(void)
-{
-    /* Empty handler */
-}
