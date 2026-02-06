@@ -30,9 +30,10 @@
  * Local Defines
  */
 /* This string is updated if any change to ddr driver */
-#define DDR_DRIVER_VERSION_STRING   "0.4.033"
+#define DDR_DRIVER_VERSION_STRING   "0.4.035"
 const char DDR_DRIVER_VERSION[] = DDR_DRIVER_VERSION_STRING;
 /* Version     |  Comment                                                     */
+/* 0.4.035     |  Fix bug relating display of drv termination units.          */
 /* 0.4.034     |  Fix bug relating to write_latency retry.                    */
 /* 0.4.033     |  Fix bug that causes crash when post-stimulus test fails     */
 /* 0.4.032     |  Increase size of cache flush to fully clear                 */
