@@ -244,6 +244,8 @@
 #define MSS_ETHERNET_MAC_H_
 
 #include <stdbool.h>
+#include "mpfs_hal/mss_hal.h"
+
 #include "drivers/mss/mss_ethernet_mac/mss_ethernet_mac_types.h"
 
 #ifdef __cplusplus
