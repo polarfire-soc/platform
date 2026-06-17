@@ -22,21 +22,8 @@ void pac1934_draw_vb(void);
 void pac1934_draw_isense(void);
 int32_t pac1934_sensor_probe(void);
 
-extern const uint8_t msg_pac_show_menu_again_prompt[];
-extern const uint8_t msg_pac_page_break[];
-extern const uint8_t msg_pac_page_break_mid[];
-extern const uint8_t msg_pac_page_break_edge[];
-extern const uint8_t msg_pac_reading_current[];
-extern const uint8_t msg_pac_column_title_current_vals[];
-extern const uint8_t msg_pac_column_title_voltage_vals[];
-extern const uint8_t msg_pac_column_title_power_vals[];
-
-extern const uint8_t msg_pac_voltage_prints[];
-extern const uint8_t msg_pac_current_prints[];
-
 #ifdef __cplusplus
 }
 #endif
 
 #endif
-
