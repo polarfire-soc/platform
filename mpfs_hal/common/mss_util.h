@@ -44,7 +44,7 @@ extern "C" {
  */
 uint64_t readmcycle(void);
 
-void sleep_ms(uint64_t msecs);
+void sleep_us(uint64_t usecs);
 void sleep_cycles(uint64_t ncycles);
 
 

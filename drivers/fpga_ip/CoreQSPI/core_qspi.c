@@ -342,7 +342,7 @@ QSPI_irq_transfer_block
     HAL_set_32bit_reg(this_qspi->base_address, CONTROL,
                 (reg_read & (~CTRL_FLAGSX4_MASK)));
 
-    sleep_ms(10);
+    sleep_us(10);
     for (idx = (cbytes - (cbytes % 4u)); idx < cbytes; ++idx)
     {
         while ((uint32_t)(HAL_get_32bit_reg(this_qspi->base_address, STATUS)) &
@@ -363,7 +363,7 @@ QSPI_irq_transfer_block
      * the data available in RXFIFO is incorrect.
      */
     if (rd_byte_size != 0)
-       sleep_ms(10);
+       sleep_us(10);
 
     return (returnval);
 }

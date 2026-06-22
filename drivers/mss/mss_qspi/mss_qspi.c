@@ -41,7 +41,7 @@ static inline void MSS_QSPI_SleepExtRO_ExtRW()
 
     if(reg > MSS_QSPI_NORMAL && reg < MSS_QSPI_DUAL_FULL)
     {
-        sleep_ms(10);
+        sleep_us(10);
     }
 }
 
@@ -304,7 +304,7 @@ uint8_t MSS_QSPI_irq_transfer_block
      * the data available in RXFIFO is incorrect.
      */
     if (rd_byte_size != 0)
-       sleep_ms(10);
+       sleep_us(10);
 
     return 0;
 }
