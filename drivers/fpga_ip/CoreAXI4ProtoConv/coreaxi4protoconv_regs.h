@@ -599,6 +599,16 @@ extern "C" {
                      << COREAXI4PROTOCONV_REGS_S2MM_INTRSRC_S2MM_IS_CMDID_SHIFT)
 
 /*******************************************************************************
+ * Register: S2MM_TUSER_SIDEBAND
+ *
+ * Description: This register holds the S2MM TUSER sideband information captured
+ * from the AXI4-Stream interface.
+ *
+ * Field Type: read-only
+ */
+#define COREAXI4PROTOCONV_REGS_S2MM_TUSER_SIDEBAND_REG_OFFSET       (0x2CU)
+
+/*******************************************************************************
  * Register: S2MM_AXI4BUSERR_CNTR
  *
  * Description: This register provides S2MM AXI4 bus error count.
@@ -1122,6 +1132,15 @@ extern "C" {
 #define COREAXI4PROTOCONV_REGS_MM2S_INTRSRC_MM2S_IS_AXI4ERR_MASK \
                 (COREAXI4PROTOCONV_REGS_MM2S_INTRSRC_MM2S_IS_AXI4ERR_NS_MASK \
                    << COREAXI4PROTOCONV_REGS_MM2S_INTRSRC_MM2S_IS_AXI4ERR_SHIFT)
+
+/*******************************************************************************
+ * Register: MM2S_TUSER_SIDEBAND
+ *
+ * Description: This register provides MM2S TUSER sideband information.
+ *
+ * Field Type: write-only
+ */
+#define COREAXI4PROTOCONV_REGS_MM2S_TUSER_SIDEBAND_REG_OFFSET       (0x42CU)
 
 /*******************************************************************************
  * Register: MM2S_AXI4BUSERR_CNTR
