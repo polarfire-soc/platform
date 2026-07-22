@@ -570,7 +570,7 @@ static uint32_t ddr_setup(void)
     uint32_t ret_status = 0U;
     uint8_t number_of_lanes_to_calibrate;
     uint64_t mem_size;
-    volatile PATTERN_TEST_PARAMS pattern_test;
+    static volatile PATTERN_TEST_PARAMS pattern_test;
 
     ddr_type = LIBERO_SETTING_DDRPHY_MODE & DDRPHY_MODE_MASK;
 
